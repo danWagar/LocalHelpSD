@@ -29,9 +29,11 @@
 
   & nav {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
     width: 150px;
+    font-weight: 600;
+    color: white;
 
     & a,
     & a:visited {
@@ -43,6 +45,5 @@
 
 .Header_sign_up_btn {
   background-color: $emphasis-color;
-  color: $text-color;
   border-radius: 10px;
 }

@@ -36,12 +36,15 @@
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -ms-flex-pack: distribute;
-      justify-content: space-around;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
   width: 150px;
+  font-weight: 600;
+  color: white;
 }
 
 .Header nav a,
@@ -52,7 +55,6 @@
 
 .Header_sign_up_btn {
   background-color: #b4c540;
-  color: #3c3e4b;
   border-radius: 10px;
 }
 /*# sourceMappingURL=Header.css.map */

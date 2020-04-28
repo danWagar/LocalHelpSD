@@ -51,7 +51,10 @@
 .LandingPage_right_container {
   width: 40vw;
   right: 0;
-  background-color: rgba(54, 134, 201, 0.7);
+  background: -webkit-gradient(linear, left top, left bottom, from(rgba(54, 134, 201, 0.75)), to(rgba(54, 134, 201, 0.75))), url("../images/corona_volunteers.jpg");
+  background: linear-gradient(rgba(54, 134, 201, 0.75), rgba(54, 134, 201, 0.75)), url("../images/corona_volunteers.jpg");
+  background-position: 20%;
+  background-size: cover;
 }
 
 .LandingPage_right_content {
@@ -72,6 +75,7 @@
 
 .LandingPage_right_content span {
   font-size: 1.6em;
+  font-weight: 600;
   line-height: 3.2em;
 }
 
