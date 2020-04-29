@@ -13,6 +13,63 @@ body {
 }
 
 .button {
+  display: block;
   padding: 8px 12px 8px 12px;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  cursor: pointer;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.emphasis_bg_color {
+  background-color: #b4c540;
+}
+
+.compliment_bg_color {
+  background-color: #ffcb3e;
+}
+
+.grey_bg_color {
+  background-color: #3c3e4b;
+}
+
+.text_highlight {
+  background-color: #3686c9;
+}
+
+.light_text_color {
+  color: #fff;
+}
+
+.left_container,
+.right_container {
+  position: fixed;
+  top: 0;
+  height: 100%;
+  display: -ms-grid;
+  display: grid;
+  place-items: center;
+}
+
+.left_container {
+  left: 0;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 60vw;
+  background-color: #b4c540;
+}
+
+.right_container {
+  width: 40vw;
+  right: 0;
+  background: -webkit-gradient(linear, left top, left bottom, from(rgba(54, 134, 201, 0.75)), to(rgba(54, 134, 201, 0.75))), url("./images/corona_volunteers.jpg");
+  background: linear-gradient(rgba(54, 134, 201, 0.75), rgba(54, 134, 201, 0.75)), url("./images/corona_volunteers.jpg");
+  background-position: 20%;
+  background-size: cover;
 }
 /*# sourceMappingURL=index.css.map */

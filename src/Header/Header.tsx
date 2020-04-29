@@ -7,7 +7,7 @@ const Header: React.FC = () => {
 
   return (
     <header className="Header">
-      <h1>
+      <h1 className="clickable" onClick={() => history.push('/')}>
         LOCAL HELP<span>SD</span>
       </h1>
       <nav>

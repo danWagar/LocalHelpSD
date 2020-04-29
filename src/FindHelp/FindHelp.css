@@ -1,0 +1,99 @@
+.FindHelp {
+  width: 100vw;
+  height: 100vh;
+  display: -ms-grid;
+  display: grid;
+  place-content: center;
+}
+
+.FindHelp_left_content {
+  width: 500px;
+  font-size: 1.2em;
+  color: white;
+}
+
+.FindHelp_explanation_list li {
+  width: 100%;
+  padding: 10px;
+  list-style-position: inside;
+}
+
+.FindHelp_explanation_list li span {
+  display: inline-block;
+  padding-top: 10px;
+  margin-left: 30px;
+  padding-right: 10px;
+  font-size: 1rem;
+  color: white;
+}
+
+.FindHelp_form_container {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 20px;
+  padding-top: 3em;
+  width: 90%;
+  background-color: #fafafa;
+}
+
+.FindHelp_form_container div {
+  margin-top: 10px;
+}
+
+.FindHelp_form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.FindHelp_form legend,
+.FindHelp_form label {
+  padding-bottom: 20px;
+}
+
+.FindHelp_form legend {
+  font-weight: bold;
+}
+
+.FindHelp_form input {
+  margin-top: 5px;
+}
+
+.FindHelp_flex_label {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+}
+
+.FindHelp_form_nav {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  width: 60%;
+}
+/*# sourceMappingURL=FindHelp.css.map */

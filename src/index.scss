@@ -14,5 +14,57 @@ body {
 }
 
 .button {
+  display: block;
   padding: 8px 12px 8px 12px;
+  width: max-content;
+  cursor: pointer;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.emphasis_bg_color {
+  background-color: $emphasis-color;
+}
+
+.compliment_bg_color {
+  background-color: $compliment-color;
+}
+
+.grey_bg_color {
+  background-color: $text-color-dark;
+}
+
+.text_highlight {
+  background-color: $primary-color;
+}
+
+.light_text_color {
+  color: $text-color-light;
+}
+
+.left_container,
+.right_container {
+  position: fixed;
+  top: 0;
+  height: 100%;
+  display: grid;
+  place-items: center;
+}
+
+.left_container {
+  left: 0;
+  align-items: center;
+  width: 60vw;
+  background-color: $emphasis-color;
+}
+
+.right_container {
+  width: 40vw;
+  right: 0;
+  background: linear-gradient(rgba(54, 134, 201, 0.75), rgba(54, 134, 201, 0.75)),
+    url('./images/corona_volunteers.jpg');
+  background-position: 20%;
+  background-size: cover;
 }

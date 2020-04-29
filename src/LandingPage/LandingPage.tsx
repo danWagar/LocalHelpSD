@@ -1,10 +1,13 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import './LandingPage.css';
 
 const LandingPage: React.FC = () => {
+  const history = useHistory();
+
   return (
     <main className="LandingPage">
-      <div className="LandingPage_left_container">
+      <div className="left_container">
         <div className="LandingPage_left_content">
           <h1>
             <span>UNITE WITH NEIGHBORS</span>
@@ -17,12 +20,14 @@ const LandingPage: React.FC = () => {
           </p>
         </div>
       </div>
-      <div className="LandingPage_right_container">
+      <div className="right_container">
         <div className="LandingPage_right_content">
           <span>I want to:</span>
           <div className="LandingPage_buttons_container">
             <div className="LandingPage_big_button">Help Others</div>
-            <div className="LandingPage_big_button">Find Help</div>
+            <div className="LandingPage_big_button" onClick={() => history.push('/find-help')}>
+              Find Help
+            </div>
           </div>
         </div>
       </div>
