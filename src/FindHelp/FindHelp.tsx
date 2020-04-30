@@ -3,6 +3,7 @@ import FormZero from './Forms/FormZero';
 import FormOne from './Forms/FormOne';
 import FormTwo from './Forms/FormTwo';
 import FormThree from './Forms/FormThree';
+import Register from './Forms/Register';
 import classNames from 'classnames';
 import './FindHelp.css';
 
@@ -24,7 +25,7 @@ const FindHelp: React.FC = () => {
       case 1:
         return <FormOne />;
       case 2:
-        return <FormTwo />;
+        return <Register />;
       case 3:
         return <FormThree />;
       default:
