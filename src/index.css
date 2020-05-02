@@ -18,6 +18,7 @@ body {
   width: -webkit-max-content;
   width: -moz-max-content;
   width: max-content;
+  border: 0;
   cursor: pointer;
 }
 
@@ -43,6 +44,10 @@ body {
 
 .light_text_color {
   color: #fff;
+}
+
+.bold {
+  font-weight: 600;
 }
 
 .left_container,

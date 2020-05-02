@@ -1,0 +1,41 @@
+.Login {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100vh;
+  width: 100vw;
+  display: grid;
+  place-content: center;
+}
+
+.Login_form,
+.Login_user_name,
+.Login_password {
+  display: flex;
+  flex-direction: column;
+}
+
+.Login_user_name,
+.Login_password {
+  width: 100%;
+}
+
+.Login_form {
+  justify-content: space-between;
+  align-items: center;
+  height: 300px;
+  width: 400px;
+  background-color: white;
+  padding: 40px 80px 40px 80px;
+  z-index: 10;
+
+  & label {
+    line-height: 2em;
+  }
+}
+
+.Login_form_legend {
+  font-size: 1.5rem;
+  font-weight: 600;
+  align-self: center;
+}

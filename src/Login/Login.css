@@ -1,0 +1,54 @@
+.Login {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100vh;
+  width: 100vw;
+  display: -ms-grid;
+  display: grid;
+  place-content: center;
+}
+
+.Login_form,
+.Login_user_name,
+.Login_password {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.Login_user_name,
+.Login_password {
+  width: 100%;
+}
+
+.Login_form {
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  height: 300px;
+  width: 400px;
+  background-color: white;
+  padding: 40px 80px 40px 80px;
+  z-index: 10;
+}
+
+.Login_form label {
+  line-height: 2em;
+}
+
+.Login_form_legend {
+  font-size: 1.5rem;
+  font-weight: 600;
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
+}
+/*# sourceMappingURL=Login.css.map */

@@ -17,8 +17,6 @@ const Register: React.FC = props => {
 
   const handleSubmit = (ev: React.FormEvent<HTMLFormElement>) => {
     ev.preventDefault();
-    console.log(ev);
-    console.log(ev.currentTarget.user_name);
     const { user_name, password } = ev.currentTarget;
 
     setError(null);

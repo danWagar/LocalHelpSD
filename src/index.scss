@@ -17,6 +17,7 @@ body {
   display: block;
   padding: 8px 12px 8px 12px;
   width: max-content;
+  border: 0;
   cursor: pointer;
 }
 
@@ -42,6 +43,10 @@ body {
 
 .light_text_color {
   color: $text-color-light;
+}
+
+.bold {
+  font-weight: 600;
 }
 
 .left_container,
