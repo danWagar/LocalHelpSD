@@ -12,18 +12,14 @@ type Context = {
 
 const initialContext: Context = {
   hasToken: TokenService.hasAuthToken(),
-  setHasToken: (): void => {
-    throw new Error('setContext function must be overridden');
-  }
-  // setAuthContext: (): void => {
-  //   throw new Error('setContext function must be overridden');
-  // }
+  setHasToken: (value: SetStateAction<boolean>) => {}
 };
 
 const AuthContext = createContext<Context>(initialContext);
 
 const AuthContextProvider = ({ children }: Props): JSX.Element => {
   const [hasToken, setHasToken] = useState<boolean>(initialContext.hasToken);
+  console.log('in context hasToken is ', hasToken);
 
   return <AuthContext.Provider value={{ hasToken, setHasToken }}>{children}</AuthContext.Provider>;
 };

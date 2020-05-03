@@ -26,21 +26,29 @@
       letter-spacing: 0.15em;
     }
   }
+}
 
-  & nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 150px;
-    font-weight: 600;
+.Header_login_nav,
+.Header_logout_nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 600;
+  color: white;
+
+  & a,
+  & a:visited {
     color: white;
-
-    & a,
-    & a:visited {
-      color: white;
-      text-decoration: none;
-    }
+    text-decoration: none;
   }
+}
+
+.Header_login_nav {
+  width: 150px;
+}
+
+.Header_logout_nav {
+  width: 250px;
 }
 
 .Header_sign_up_btn {

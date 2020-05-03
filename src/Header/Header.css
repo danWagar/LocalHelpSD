@@ -32,7 +32,8 @@
   letter-spacing: 0.15em;
 }
 
-.Header nav {
+.Header_login_nav,
+.Header_logout_nav {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -42,15 +43,24 @@
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  width: 150px;
   font-weight: 600;
   color: white;
 }
 
-.Header nav a,
-.Header nav a:visited {
+.Header_login_nav a,
+.Header_login_nav a:visited,
+.Header_logout_nav a,
+.Header_logout_nav a:visited {
   color: white;
   text-decoration: none;
+}
+
+.Header_login_nav {
+  width: 150px;
+}
+
+.Header_logout_nav {
+  width: 250px;
 }
 
 .Header_sign_up_btn {

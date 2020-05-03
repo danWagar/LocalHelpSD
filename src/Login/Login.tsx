@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Input } from '../Form/Form';
 import AuthApiService from '../services/auth-api-service';
@@ -16,27 +16,27 @@ const Login: React.FC<Props> = props => {
   };
 
   const [error, setError] = useState<string | null>(null);
-  let history = useHistory();
+
+  const history = useHistory();
 
   const { hasToken, setHasToken } = useContext(AuthContext);
 
   const onLoginSuccess = () => {
-    console.log(hasToken);
     setHasToken(TokenService.hasAuthToken());
-    console.log(hasToken);
-    history.push('/dashboard');
+    history.push('/');
   };
 
   const handleSubmitJwtAuth = (ev: React.FormEvent<HTMLFormElement>) => {
     ev.preventDefault();
     setError(null);
     const { user_name, password } = ev.currentTarget;
-
+    localStorage.setItem('user_name', user_name.value);
     AuthApiService.postLogin({
       user_name: user_name.value,
       password: password.value
     })
       .then(res => {
+        console.log('postLogin response');
         user_name.value = '';
         password.value = '';
         TokenService.saveAuthToken(res.authToken);
