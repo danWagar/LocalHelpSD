@@ -6,23 +6,23 @@ type Props = {
 
 type Context = {
   userName: string;
-  userId: number | string;
+  userId: number | null;
   setUserName: Dispatch<SetStateAction<string>>;
-  setUserId: Dispatch<SetStateAction<number | string>>;
+  setUserId: Dispatch<SetStateAction<number | null>>;
 };
 
 const initialContext: Context = {
   userName: '',
-  userId: '',
+  userId: null,
   setUserName: (value: SetStateAction<string>) => {},
-  setUserId: (value: SetStateAction<number | string>) => {}
+  setUserId: (value: SetStateAction<number | null>) => {}
 };
 
 const UserContext = createContext<Context>(initialContext);
 
 const UserContextProvider: React.FC = props => {
   const [userName, setUserName] = useState<string>(initialContext.userName);
-  const [userId, setUserId] = useState<number | string>(initialContext.userId);
+  const [userId, setUserId] = useState<number | null>(initialContext.userId);
 
   return (
     <UserContext.Provider value={{ userName, setUserName, userId, setUserId }}>

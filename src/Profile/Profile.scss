@@ -1,0 +1,8 @@
+@import '../variables';
+
+.Profile {
+  width: 100vw;
+  height: $main_height;
+  display: grid;
+  place-content: center;
+}

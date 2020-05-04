@@ -1,34 +1,18 @@
 import React, { useContext } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import { useQuery } from '@apollo/react-hooks';
-import gqlQueries from '../services/gql-queries';
-import { RootQueryType, RootQueryTypeUserArgs } from '../generated/graphql';
 import { UserContext } from '../context/UserContext';
 import { AuthContext } from '../context/AuthContext';
-import TokenService from '../services/token-service';
 import './Header.css';
 
-const Header: React.FC = () => {
+interface iHeader {
+  signOut: () => void;
+}
+
+const Header: React.FC<iHeader> = props => {
+  const { signOut } = props;
   const history = useHistory();
-  const { hasToken, setHasToken } = useContext(AuthContext);
-  const { userName, setUserName, userId, setUserId } = useContext(UserContext);
-
-  const storedUserName = localStorage.getItem('user_name') 
-
-  const { data, loading, error } = useQuery<RootQueryType, RootQueryTypeUserArgs>(gqlQueries.GET_USER, {
-    variables: { user_name: storedUserName },
-    skip: !storedUserName
-  });
-
-  if (data !== undefined && data.user !== undefined) {
-    setUserName(data?.user?.user_name || '');
-    setUserId(data?.user?.id || '');
-  }
-
-  const handleSignOut = () => {
-    TokenService.clearAuthToken();
-    setHasToken(false);
-  };
+  const { hasToken } = useContext(AuthContext);
+  const { userName } = useContext(UserContext);
 
   return (
     <header className="Header">
@@ -44,7 +28,7 @@ const Header: React.FC = () => {
       ) : (
         <nav className="Header_logout_nav">
           <p>Welcome {userName}</p>
-          <div className="button grey_bg_color" onClick={handleSignOut}>
+          <div className="button grey_bg_color" onClick={signOut}>
             Sign Out
           </div>
         </nav>
