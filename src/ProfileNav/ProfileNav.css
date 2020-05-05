@@ -1,0 +1,29 @@
+.ProfileNav {
+  display: -ms-grid;
+  display: grid;
+  place-content: center;
+  position: absolute;
+  top: 50px;
+  right: 0;
+  width: 150px;
+  background-color: white;
+  z-index: 1;
+}
+
+.ProfileNav_list {
+  width: 100%;
+  padding: 0;
+  list-style: none;
+}
+
+.ProfileNav_list li {
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+  padding: 10px;
+}
+
+.ProfileNav_list li:hover {
+  background-color: #3686c9;
+}
+/*# sourceMappingURL=ProfileNav.css.map */

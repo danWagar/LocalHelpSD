@@ -5,7 +5,7 @@ interface iIcon {
   icon: string;
 }
 
-const SvgIconAndText: React.FC<iIcon> = props => {
+const NavIcon: React.FC<iIcon> = (props) => {
   const currentFillColor = '#64656A';
   const fillColor = '#3c3e4b';
   const complimentColor = '#b4c540';
@@ -159,4 +159,4 @@ const SvgIconAndText: React.FC<iIcon> = props => {
   return <>{getIcon()}</>;
 };
 
-export default SvgIconAndText;
+export default NavIcon;

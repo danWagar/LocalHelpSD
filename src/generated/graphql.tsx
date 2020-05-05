@@ -17,8 +17,8 @@ export type Scalars = {
 
 export type RootQueryType = {
    __typename?: 'RootQueryType';
-  user?: Maybe<User>;
-  profile?: Maybe<Profile>;
+  user?: Maybe<UserType>;
+  profile?: Maybe<ProfileType>;
 };
 
 
@@ -31,25 +31,26 @@ export type RootQueryTypeProfileArgs = {
   user_id?: Maybe<Scalars['Int']>;
 };
 
-export type User = {
-   __typename?: 'User';
+export type UserType = {
+   __typename?: 'UserType';
   id?: Maybe<Scalars['Int']>;
   user_name?: Maybe<Scalars['String']>;
 };
 
-export type Profile = {
-   __typename?: 'Profile';
+export type ProfileType = {
+   __typename?: 'ProfileType';
   id?: Maybe<Scalars['Int']>;
   user_id?: Maybe<Scalars['Int']>;
   avatar?: Maybe<Scalars['String']>;
   age?: Maybe<Scalars['Int']>;
+  neighborhood?: Maybe<Scalars['String']>;
   story?: Maybe<Scalars['String']>;
-  user?: Maybe<User>;
+  user?: Maybe<UserType>;
 };
 
 export type Mutation = {
    __typename?: 'Mutation';
-  addProfile?: Maybe<Profile>;
+  addProfile?: Maybe<ProfileType>;
 };
 
 
@@ -68,8 +69,8 @@ export type GetUserQueryVariables = {
 export type GetUserQuery = (
   { __typename?: 'RootQueryType' }
   & { user?: Maybe<(
-    { __typename?: 'User' }
-    & Pick<User, 'id' | 'user_name'>
+    { __typename?: 'UserType' }
+    & Pick<UserType, 'id' | 'user_name'>
   )> }
 );
 
@@ -81,8 +82,8 @@ export type GetProfileQueryVariables = {
 export type GetProfileQuery = (
   { __typename?: 'RootQueryType' }
   & { profile?: Maybe<(
-    { __typename?: 'Profile' }
-    & Pick<Profile, 'avatar' | 'age' | 'story'>
+    { __typename?: 'ProfileType' }
+    & Pick<ProfileType, 'avatar' | 'age' | 'story'>
   )> }
 );
 

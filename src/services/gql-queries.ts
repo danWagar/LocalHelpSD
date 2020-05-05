@@ -14,11 +14,11 @@ const gqlQueries = {
     query getProfile($user_id: Int) {
       profile(user_id: $user_id) {
         avatar
-        age
+        neighborhood
         story
       }
     }
-  `
+  `,
 };
 
 export default gqlQueries;

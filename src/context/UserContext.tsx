@@ -5,23 +5,23 @@ type Props = {
 };
 
 type Context = {
-  userName: string;
+  userName: string | null;
   userId: number | null;
-  setUserName: Dispatch<SetStateAction<string>>;
+  setUserName: Dispatch<SetStateAction<string | null>>;
   setUserId: Dispatch<SetStateAction<number | null>>;
 };
 
 const initialContext: Context = {
-  userName: '',
+  userName: null,
   userId: null,
-  setUserName: (value: SetStateAction<string>) => {},
-  setUserId: (value: SetStateAction<number | null>) => {}
+  setUserName: (value: SetStateAction<string | null>) => {},
+  setUserId: (value: SetStateAction<number | null>) => {},
 };
 
 const UserContext = createContext<Context>(initialContext);
 
-const UserContextProvider: React.FC = props => {
-  const [userName, setUserName] = useState<string>(initialContext.userName);
+const UserContextProvider: React.FC = (props) => {
+  const [userName, setUserName] = useState<string | null>(initialContext.userName);
   const [userId, setUserId] = useState<number | null>(initialContext.userId);
 
   return (

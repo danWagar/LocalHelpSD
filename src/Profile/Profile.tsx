@@ -1,30 +1,45 @@
-import React, { useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { useQuery } from '@apollo/react-hooks';
 import gqlQueries from '../services/gql-queries';
-import { GetProfileQuery, GetProfileQueryVariables } from '../generated/graphql';
+import { ProfileType, GetProfileQuery, GetProfileQueryVariables } from '../generated/graphql';
 import { UserContext } from '../context/UserContext';
-import './Profile.css'
+import './Profile.css';
 
 const Profile: React.FC = () => {
   const user = useContext(UserContext);
+  const [profile, setProfile] = useState<ProfileType | null>(null);
 
-  console.log(typeof user.userId);
-  console.log(user.userId);
+  const { data, loading, error } = useQuery<GetProfileQuery, GetProfileQueryVariables>(
+    gqlQueries.GET_PROFILE,
+    {
+      variables: { user_id: user.userId },
+      skip: !!profile,
+    }
+  );
 
-  const { data, loading, error } = useQuery<GetProfileQuery, GetProfileQueryVariables>(gqlQueries.GET_PROFILE, {
-    variables: { user_id: user.userId }
-  });
+  console.log(data);
+  console.log(profile);
 
-  if(loading) return <div>Loading</div>;
-  if(error) return <div> Oops! Something went wrong. {error.message}</div>
+  if (loading) return <div>Loading</div>;
+  if (error) return <div> Oops! Something went wrong. {error.message}</div>;
+
+  if (data && data.profile) {
+    setProfile(data.profile);
+  }
 
   return (
     <main className="Profile">
-      <div>
-        <h1>{user.userName}</h1>
-        <h1>{data?.profile?.age}</h1>
-        <h1>{data?.profile?.story}</h1>
+      <div className="Profile_user_header">
+        <img src={profile?.avatar || ''} alt={user.userName + "'s profile picture"} />
+        <div className="Profile_user_info">
+          <h2>{user.userName}</h2>
+          <p>neighborhood: {profile?.neighborhood}</p>
+        </div>
+      </div>
+      <div className="Profile_user_story">
+        <h2>My Story</h2>
+        <p>{profile?.story}</p>
       </div>
     </main>
   );

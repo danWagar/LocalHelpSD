@@ -2,17 +2,16 @@ import React, { useContext } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { UserContext } from '../context/UserContext';
 import { AuthContext } from '../context/AuthContext';
+import { useSignOut } from '../myHooks/useSignOut';
 import './Header.css';
 
-interface iHeader {
-  signOut: () => void;
-}
-
-const Header: React.FC<iHeader> = props => {
-  const { signOut } = props;
+const Header: React.FC = () => {
+  const signOut = useSignOut();
   const history = useHistory();
   const { hasToken } = useContext(AuthContext);
   const { userName } = useContext(UserContext);
+
+  //const handleSignOut = (e: React.MouseEvent<HTMLDivElement>) => signOut();
 
   return (
     <header className="Header">

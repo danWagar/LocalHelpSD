@@ -1,0 +1,29 @@
+@import '../variables';
+
+.ProfileNav {
+  display: grid;
+  place-content: center;
+  position: absolute;
+  top: $lhsd_header_height;
+  right: 0;
+  width: 150px;
+  background-color: white;
+  z-index: 1;
+}
+
+.ProfileNav_list {
+  width: 100%;
+  padding: 0;
+  list-style: none;
+
+  & li {
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+  }
+
+  & li:hover {
+    background-color: $primary_color;
+  }
+}

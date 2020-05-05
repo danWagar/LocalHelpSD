@@ -5,7 +5,7 @@
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  height: 50px;
+  height: $lhsd_header_height;
   padding-left: 20px;
   padding-right: 20px;
   background-color: $emphasis_color;
@@ -27,7 +27,7 @@
   display: flex;
   justify-content: space-around;
   height: 70%;
-  width: 500px;
+  width: 400px;
 }
 
 .LhsdHeader_nav_section {
@@ -35,10 +35,6 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-
-  & svg {
-    height: 22px !important;
-  }
 
   & span {
     font-size: 0.8em;

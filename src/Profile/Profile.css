@@ -1,8 +1,41 @@
 .Profile {
   width: 100vw;
   height: calc(100vh - 70px);
-  display: -ms-grid;
-  display: grid;
-  place-content: center;
+  padding: 80px 30px 80px 50px;
+}
+
+.Profile_user_header,
+.Profile_user_story {
+  margin: 0 auto;
+  border: 1px solid #bdbdbd;
+  border-radius: 40px;
+  background-color: whitesmoke;
+}
+
+.Profile_user_header {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 85%;
+  height: 150px;
+  padding-left: 140px;
+}
+
+.Profile_user_header img {
+  position: absolute;
+  top: 0;
+  left: -30px;
+  width: 150px;
+  height: 150px;
+  background-color: #b4c540;
+  border-radius: 50%;
+  border: 3px solid #b4c540;
+}
+
+.Profile_user_story {
+  width: 70%;
+  padding: 25px 50px 25px 50px;
+  margin-top: 50px;
 }
 /*# sourceMappingURL=Profile.css.map */
