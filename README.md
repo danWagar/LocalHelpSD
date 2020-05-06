@@ -8,7 +8,9 @@ to select areas where they can help which will match them with members who need 
 Those who need help will be able to share their stories to help volunteers to relate and empathize with people
 on a more individual basis than might be experienced in a broader volunteer experience.
 
-### Technologies - React - React Hooks - TypeScript - Apollo Client
+### Technologies
+
+- React - React Hooks - TypeScript - Apollo Client
 
 ### Landing Page Screen Shot
 
