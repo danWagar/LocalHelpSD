@@ -11,14 +11,11 @@ const Header: React.FC = () => {
   const { hasToken } = useContext(AuthContext);
   const { userName } = useContext(UserContext);
 
-  //const handleSignOut = (e: React.MouseEvent<HTMLDivElement>) => signOut();
-
   return (
     <header className="Header">
       <h1 className="clickable" onClick={() => history.push('/')}>
         LOCAL HELP<span>SD</span>
       </h1>
-      {console.log(hasToken)}
       {!hasToken ? (
         <nav className="Header_login_nav">
           <Link to="/login">Login</Link>

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { useQuery } from '@apollo/react-hooks';
 import gqlQueries from './services/gql-queries';
@@ -14,7 +14,7 @@ import Home from './Home/Home';
 import './App.css';
 
 function App() {
-  const { setUserName, setUserId } = useContext(UserContext);
+  const { userName, setUserName, setUserId } = useContext(UserContext);
 
   const storedUserName = localStorage.getItem('user_name');
 
@@ -26,7 +26,7 @@ function App() {
   if (loading) return <div>Loading</div>;
 
   if (data && data.user) {
-    setUserName(data?.user?.user_name || '');
+    if (!userName) setUserName(data?.user?.user_name || '');
     setUserId(data?.user?.id || null);
   }
 

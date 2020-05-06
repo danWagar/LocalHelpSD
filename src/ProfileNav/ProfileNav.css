@@ -4,15 +4,17 @@
   place-content: center;
   position: absolute;
   top: 50px;
-  right: 0;
-  width: 150px;
-  background-color: white;
+  right: 5px;
+  width: 140px;
+  background-color: #3c3e4b;
+  color: white;
   z-index: 1;
 }
 
 .ProfileNav_list {
   width: 100%;
   padding: 0;
+  margin: 0;
   list-style: none;
 }
 
@@ -21,6 +23,10 @@
   width: 100%;
   text-align: center;
   padding: 10px;
+}
+
+.ProfileNav_list li:nth-child(odd) {
+  border-bottom: 1px solid grey;
 }
 
 .ProfileNav_list li:hover {

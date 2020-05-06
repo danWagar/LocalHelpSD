@@ -13,10 +13,7 @@ const ProfileNav: React.FC<iProfileNav> = (props) => {
   const history = useHistory();
 
   useEffect(() => {
-    //code from https://medium.com/@pitipatdop/little-neat-trick-to-capture-click-outside-with-react-hook-ba77c37c7e82
-    // add when mounted
     document.addEventListener('mousedown', handleClick);
-    // return function to be called when unmounted
     return () => {
       document.removeEventListener('mousedown', handleClick);
     };
@@ -24,7 +21,6 @@ const ProfileNav: React.FC<iProfileNav> = (props) => {
 
   const handleClick = (e: MouseEvent) => {
     if (container && container?.current?.contains(e.target as Node)) return;
-    // outside click
     props.callback();
   };
 

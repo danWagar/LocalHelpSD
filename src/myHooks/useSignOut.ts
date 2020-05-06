@@ -14,6 +14,7 @@ export function useSignOut() {
     setHasToken(false);
     setUserName(null);
     setUserId(null);
+    localStorage.removeItem('user_name');
     history.push('/');
   };
 }

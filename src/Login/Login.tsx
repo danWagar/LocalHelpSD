@@ -4,45 +4,46 @@ import { Input } from '../Form/Form';
 import AuthApiService from '../services/auth-api-service';
 import TokenService from '../services/token-service';
 import { AuthContext } from '../context/AuthContext';
+import { UserContext } from '../context/UserContext';
 import './Login.css';
 
 interface Props {
   onLoginSuccess: () => void;
 }
 
-const Login: React.FC<Props> = props => {
+const Login: React.FC<Props> = (props) => {
   Login.defaultProps = {
-    onLoginSuccess: () => {}
+    onLoginSuccess: () => {},
   };
 
   const [error, setError] = useState<string | null>(null);
 
   const history = useHistory();
 
-  const { hasToken, setHasToken } = useContext(AuthContext);
+  const { setHasToken } = useContext(AuthContext);
 
-  const onLoginSuccess = () => {
+  const { setUserName } = useContext(UserContext);
+
+  const onLoginSuccess = (user_name: string) => {
     setHasToken(TokenService.hasAuthToken());
-    history.push('/');
+    localStorage.setItem('user_name', user_name);
+    setUserName(user_name);
+    history.push('/lhsd/profile');
   };
 
   const handleSubmitJwtAuth = (ev: React.FormEvent<HTMLFormElement>) => {
     ev.preventDefault();
     setError(null);
     const { user_name, password } = ev.currentTarget;
-    localStorage.setItem('user_name', user_name.value);
     AuthApiService.postLogin({
       user_name: user_name.value,
-      password: password.value
+      password: password.value,
     })
-      .then(res => {
-        console.log('postLogin response');
-        user_name.value = '';
-        password.value = '';
+      .then((res) => {
         TokenService.saveAuthToken(res.authToken);
-        onLoginSuccess();
+        onLoginSuccess(user_name.value);
       })
-      .catch(res => {
+      .catch((res) => {
         setError(res.error);
       });
   };

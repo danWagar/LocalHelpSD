@@ -1,5 +1,4 @@
 import React, { useState, useContext } from 'react';
-import { Link, useHistory } from 'react-router-dom';
 import { useQuery } from '@apollo/react-hooks';
 import gqlQueries from '../services/gql-queries';
 import { ProfileType, GetProfileQuery, GetProfileQueryVariables } from '../generated/graphql';
@@ -18,11 +17,8 @@ const Profile: React.FC = () => {
     }
   );
 
-  console.log(data);
-  console.log(profile);
-
   if (loading) return <div>Loading</div>;
-  if (error) return <div> Oops! Something went wrong. {error.message}</div>;
+  if (error) return <div> Oops! Something went wrong. Please try refreshing.</div>;
 
   if (data && data.profile) {
     setProfile(data.profile);
