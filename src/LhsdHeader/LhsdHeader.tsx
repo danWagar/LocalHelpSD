@@ -23,6 +23,10 @@ const LhsdHeader: React.FC = () => {
     history.push('/lhsd/' + e.currentTarget.id);
   };
 
+  const handleProfileNavOutsideClick = () => {
+    setShowProfileNav(!showProfileNav);
+  };
+
   return (
     <header className="LhsdHeader">
       <h1 className="clickable" onClick={() => history.push('/')}>
@@ -42,7 +46,7 @@ const LhsdHeader: React.FC = () => {
           <NavIcon currentLocation={current === 'profile'} icon="profile" />
         </div>
       </nav>
-      {showProfileNav && <ProfileNav />}
+      {showProfileNav && <ProfileNav callback={handleProfileNavOutsideClick} />}
     </header>
   );
 };
