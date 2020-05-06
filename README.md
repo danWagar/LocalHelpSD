@@ -14,6 +14,12 @@ on a more individual basis than might be experienced in a broader volunteer expe
 
 <img src="src/images/LandingPage.PNG" width="800" alt="Landing Page Screen Shot" />
 
+### Profile Screen Shot
+
+Initial Profile layout, this is still under development
+
+ <img src="src/images/Profile.PNG" width="800" alt="Profile Screen Shot" />
+
 ### Style Guide Screen Shot
 
  <img src="src/images/StyleGuide.PNG" width="800" alt="Style Guide Screen Shot" />
