@@ -12,8 +12,8 @@ on a more individual basis than might be experienced in a broader volunteer expe
 
 ### Landing Page Screen Shot
 
-<img src="images/LandingPage.PNG" width="800" alt="Landing Page Screen Shot" />
+<img src="images/src/LandingPage.PNG" width="800" alt="Landing Page Screen Shot" />
 
 ### Style Guide Screen Shot
 
- <img src="images/StyleGuide.PNG" width="800" alt="Style Guide Screen Shot" />
+ <img src="images/src/StyleGuide.PNG" width="800" alt="Style Guide Screen Shot" />
