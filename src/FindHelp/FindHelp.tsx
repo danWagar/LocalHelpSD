@@ -4,11 +4,21 @@ import FormOne from './Forms/FormOne';
 import FormTwo from './Forms/FormTwo';
 import FormThree from './Forms/FormThree';
 import Register from './Forms/Register';
+import { formData } from './Forms/FormType';
 import classNames from 'classnames';
 import './FindHelp.css';
 
 const FindHelp: React.FC = () => {
   const [formPart, setFormPart] = useState<number>(0);
+  const [formDataInput, setFormDataInput] = useState<formData | null>(null);
+
+  const updateFormData = (data: formData) => {
+    setFormDataInput({ ...formDataInput, ...data });
+  };
+
+  const mutateProfile = () => {};
+
+  console.log(formDataInput);
 
   const formGoBack = () => {
     if (formPart > 0) setFormPart(formPart - 1);
@@ -21,19 +31,18 @@ const FindHelp: React.FC = () => {
   const getFormPart = () => {
     switch (formPart) {
       case 0:
-        return <FormZero />;
+        return <FormZero next={formGoNext} updateParentState={updateFormData} />;
       case 1:
-        return <FormOne />;
+        return <FormOne next={formGoNext} updateParentState={updateFormData} />;
       case 2:
         return <Register />;
       case 3:
-        return <FormThree />;
+        return <FormThree next={mutateProfile} updateParentState={updateFormData} />;
       default:
         return <p>Oops! Something went wrong. Try reloading the page.</p>;
     }
   };
 
-  const handleSubmit = () => {};
   return (
     <main className="FindHelp">
       <div className="left_container">
@@ -70,9 +79,6 @@ const FindHelp: React.FC = () => {
                 &lt; Back
               </div>
             )}
-            <div className="button emphasis_bg_color light_text_color" onClick={formGoNext}>
-              Next
-            </div>
           </div>
         </div>
       </div>
