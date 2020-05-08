@@ -1,14 +1,12 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { formData, iForm } from './FormType';
+import { formDataType, iForm } from './FormType';
 
 const FindHelpFormOne: React.FC<iForm> = (props) => {
-  const { next, updateParentState } = props;
-  const { handleSubmit, register, errors } = useForm<formData>();
-  let formData = null;
-  const onSubmit = (data: formData) => {
+  const { updateParentState } = props;
+  const { handleSubmit, register, errors } = useForm<formDataType>();
+  const onSubmit = (data: formDataType) => {
     updateParentState(data);
-    next();
   };
 
   return (

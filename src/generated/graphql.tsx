@@ -42,10 +42,17 @@ export type ProfileType = {
   id?: Maybe<Scalars['Int']>;
   user_id?: Maybe<Scalars['Int']>;
   avatar?: Maybe<Scalars['String']>;
-  age?: Maybe<Scalars['Int']>;
   neighborhood?: Maybe<Scalars['String']>;
   story?: Maybe<Scalars['String']>;
-  user?: Maybe<UserType>;
+  wants_help?: Maybe<Scalars['Boolean']>;
+  immunocompromised?: Maybe<Scalars['Boolean']>;
+  unemployment?: Maybe<Scalars['Boolean']>;
+  essential?: Maybe<Scalars['Boolean']>;
+  grocery_delivery?: Maybe<Scalars['Boolean']>;
+  walk_dogs?: Maybe<Scalars['Boolean']>;
+  donations?: Maybe<Scalars['Boolean']>;
+  counceling?: Maybe<Scalars['Boolean']>;
+  career_services?: Maybe<Scalars['Boolean']>;
 };
 
 export type Mutation = {
@@ -57,8 +64,17 @@ export type Mutation = {
 export type MutationAddProfileArgs = {
   user_id?: Maybe<Scalars['Int']>;
   avatar?: Maybe<Scalars['String']>;
-  age?: Maybe<Scalars['Int']>;
+  neighborhood?: Maybe<Scalars['String']>;
   story?: Maybe<Scalars['String']>;
+  wants_help?: Maybe<Scalars['Boolean']>;
+  immunocompromised?: Maybe<Scalars['Boolean']>;
+  unemployment?: Maybe<Scalars['Boolean']>;
+  essential?: Maybe<Scalars['Boolean']>;
+  grocery_delivery?: Maybe<Scalars['Boolean']>;
+  walk_dogs?: Maybe<Scalars['Boolean']>;
+  donations?: Maybe<Scalars['Boolean']>;
+  counceling?: Maybe<Scalars['Boolean']>;
+  career_services?: Maybe<Scalars['Boolean']>;
 };
 
 export type GetUserQueryVariables = {
@@ -83,7 +99,32 @@ export type GetProfileQuery = (
   { __typename?: 'RootQueryType' }
   & { profile?: Maybe<(
     { __typename?: 'ProfileType' }
-    & Pick<ProfileType, 'avatar' | 'age' | 'story'>
+    & Pick<ProfileType, 'avatar' | 'neighborhood' | 'story'>
+  )> }
+);
+
+export type MutationMutationVariables = {
+  user_id: Scalars['Int'];
+  avatar?: Maybe<Scalars['String']>;
+  neighborhood?: Maybe<Scalars['String']>;
+  story?: Maybe<Scalars['String']>;
+  wants_help: Scalars['Boolean'];
+  immunocompromised: Scalars['Boolean'];
+  unemployment: Scalars['Boolean'];
+  essential: Scalars['Boolean'];
+  grocery_delivery: Scalars['Boolean'];
+  walk_dogs: Scalars['Boolean'];
+  donations: Scalars['Boolean'];
+  counceling: Scalars['Boolean'];
+  career_services: Scalars['Boolean'];
+};
+
+
+export type MutationMutation = (
+  { __typename?: 'Mutation' }
+  & { addProfile?: Maybe<(
+    { __typename?: 'ProfileType' }
+    & Pick<ProfileType, 'id'>
   )> }
 );
 
@@ -145,7 +186,7 @@ export const GetProfileDocument = gql`
     query getProfile($user_id: Int) {
   profile(user_id: $user_id) {
     avatar
-    age
+    neighborhood
     story
   }
 }
@@ -195,3 +236,66 @@ export function useGetProfileLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryH
 export type GetProfileQueryHookResult = ReturnType<typeof useGetProfileQuery>;
 export type GetProfileLazyQueryHookResult = ReturnType<typeof useGetProfileLazyQuery>;
 export type GetProfileQueryResult = ApolloReactCommon.QueryResult<GetProfileQuery, GetProfileQueryVariables>;
+export const MutationDocument = gql`
+    mutation Mutation($user_id: Int!, $avatar: String, $neighborhood: String, $story: String, $wants_help: Boolean!, $immunocompromised: Boolean!, $unemployment: Boolean!, $essential: Boolean!, $grocery_delivery: Boolean!, $walk_dogs: Boolean!, $donations: Boolean!, $counceling: Boolean!, $career_services: Boolean!) {
+  addProfile(user_id: $user_id, avatar: $avatar, neighborhood: $neighborhood, story: $story, wants_help: $wants_help, immunocompromised: $immunocompromised, unemployment: $unemployment, essential: $essential, grocery_delivery: $grocery_delivery, walk_dogs: $walk_dogs, donations: $donations, counceling: $counceling, career_services: $career_services) {
+    id
+  }
+}
+    `;
+export type MutationMutationFn = ApolloReactCommon.MutationFunction<MutationMutation, MutationMutationVariables>;
+export type MutationComponentProps = Omit<ApolloReactComponents.MutationComponentOptions<MutationMutation, MutationMutationVariables>, 'mutation'>;
+
+    export const MutationComponent = (props: MutationComponentProps) => (
+      <ApolloReactComponents.Mutation<MutationMutation, MutationMutationVariables> mutation={MutationDocument} {...props} />
+    );
+    
+export type MutationProps<TChildProps = {}, TDataName extends string = 'mutate'> = {
+      [key in TDataName]: ApolloReactCommon.MutationFunction<MutationMutation, MutationMutationVariables>
+    } & TChildProps;
+export function withMutation<TProps, TChildProps = {}, TDataName extends string = 'mutate'>(operationOptions?: ApolloReactHoc.OperationOption<
+  TProps,
+  MutationMutation,
+  MutationMutationVariables,
+  MutationProps<TChildProps, TDataName>>) {
+    return ApolloReactHoc.withMutation<TProps, MutationMutation, MutationMutationVariables, MutationProps<TChildProps, TDataName>>(MutationDocument, {
+      alias: 'mutation',
+      ...operationOptions
+    });
+};
+
+/**
+ * __useMutationMutation__
+ *
+ * To run a mutation, you first call `useMutationMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useMutationMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [mutationMutation, { data, loading, error }] = useMutationMutation({
+ *   variables: {
+ *      user_id: // value for 'user_id'
+ *      avatar: // value for 'avatar'
+ *      neighborhood: // value for 'neighborhood'
+ *      story: // value for 'story'
+ *      wants_help: // value for 'wants_help'
+ *      immunocompromised: // value for 'immunocompromised'
+ *      unemployment: // value for 'unemployment'
+ *      essential: // value for 'essential'
+ *      grocery_delivery: // value for 'grocery_delivery'
+ *      walk_dogs: // value for 'walk_dogs'
+ *      donations: // value for 'donations'
+ *      counceling: // value for 'counceling'
+ *      career_services: // value for 'career_services'
+ *   },
+ * });
+ */
+export function useMutationMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<MutationMutation, MutationMutationVariables>) {
+        return ApolloReactHooks.useMutation<MutationMutation, MutationMutationVariables>(MutationDocument, baseOptions);
+      }
+export type MutationMutationHookResult = ReturnType<typeof useMutationMutation>;
+export type MutationMutationResult = ApolloReactCommon.MutationResult<MutationMutation>;
+export type MutationMutationOptions = ApolloReactCommon.BaseMutationOptions<MutationMutation, MutationMutationVariables>;

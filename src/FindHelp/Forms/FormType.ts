@@ -1,4 +1,4 @@
-export type formData = {
+export type formDataType = {
   immunocompromised?: boolean;
   unemployment?: boolean;
   essential?: boolean;
@@ -7,9 +7,25 @@ export type formData = {
   donations?: boolean;
   counceling?: boolean;
   career_services?: boolean;
+  story?: string;
+  neighborhood?: string;
+  avatar?: string;
+};
+
+export type formDataTypeRequired = {
+  immunocompromised: boolean;
+  unemployment: boolean;
+  essential: boolean;
+  grocery_delivery: boolean;
+  walk_dogs: boolean;
+  donations: boolean;
+  counceling: boolean;
+  career_services: boolean;
+  story?: string;
+  neighborhood?: string;
+  avatar?: string;
 };
 
 export interface iForm {
-  next: () => void;
-  updateParentState: (data: formData) => void;
+  updateParentState: (data: formDataType) => void;
 }

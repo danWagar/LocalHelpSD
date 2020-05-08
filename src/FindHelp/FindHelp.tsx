@@ -1,24 +1,46 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { useMutation } from '@apollo/react-hooks';
+import gqlQueries from '../services/gql-queries';
+import { ProfileType, MutationAddProfileArgs, useMutationMutation } from '../generated/graphql';
+import { UserContext } from '../context/UserContext';
 import FormZero from './Forms/FormZero';
 import FormOne from './Forms/FormOne';
-import FormTwo from './Forms/FormTwo';
 import FormThree from './Forms/FormThree';
 import Register from './Forms/Register';
-import { formData } from './Forms/FormType';
+import { formDataType, formDataTypeRequired } from './Forms/FormType';
 import classNames from 'classnames';
 import './FindHelp.css';
 
 const FindHelp: React.FC = () => {
   const [formPart, setFormPart] = useState<number>(0);
-  const [formDataInput, setFormDataInput] = useState<formData | null>(null);
+  const [formDataInput, setFormDataInput] = useState<formDataType | null>(null);
 
-  const updateFormData = (data: formData) => {
+  const user = useContext(UserContext);
+
+  const [mutationMutation, { data, loading, error }] = useMutationMutation({
+    variables: {
+      user_id: user.userId as number,
+      wants_help: true,
+      ...(formDataInput as formDataTypeRequired),
+    },
+  });
+
+  const updateFormData = (data: formDataType) => {
     setFormDataInput({ ...formDataInput, ...data });
   };
 
-  const mutateProfile = () => {};
+  const doMutateProfile = () => {
+    mutationMutation();
+  };
 
-  console.log(formDataInput);
+  useEffect(() => {
+    if (formDataInput) {
+      if (formDataInput.story && formDataInput.neighborhood) doMutateProfile();
+      else if (!formDataInput.story && !formDataInput.neighborhood) formGoNext();
+    }
+  }, [formDataInput]);
+
+  console.log('user is ', user);
 
   const formGoBack = () => {
     if (formPart > 0) setFormPart(formPart - 1);
@@ -31,17 +53,19 @@ const FindHelp: React.FC = () => {
   const getFormPart = () => {
     switch (formPart) {
       case 0:
-        return <FormZero next={formGoNext} updateParentState={updateFormData} />;
+        return <FormZero updateParentState={updateFormData} />;
       case 1:
-        return <FormOne next={formGoNext} updateParentState={updateFormData} />;
+        return <FormOne updateParentState={updateFormData} />;
       case 2:
-        return <Register />;
+        return <FormThree updateParentState={updateFormData} />;
       case 3:
-        return <FormThree next={mutateProfile} updateParentState={updateFormData} />;
+        return <Register />;
       default:
         return <p>Oops! Something went wrong. Try reloading the page.</p>;
     }
   };
+
+  console.log(formDataInput);
 
   return (
     <main className="FindHelp">
