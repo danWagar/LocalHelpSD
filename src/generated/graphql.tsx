@@ -44,10 +44,28 @@ export type ProfileType = {
   avatar?: Maybe<Scalars['String']>;
   neighborhood?: Maybe<Scalars['String']>;
   story?: Maybe<Scalars['String']>;
+  help?: Maybe<HelpType>;
+  help_status?: Maybe<HelpStatusType>;
+  help_options?: Maybe<HelpOptionType>;
+};
+
+export type HelpType = {
+   __typename?: 'HelpType';
   wants_help?: Maybe<Scalars['Boolean']>;
+};
+
+export type HelpStatusType = {
+   __typename?: 'HelpStatusType';
+  user_id?: Maybe<Scalars['Int']>;
   immunocompromised?: Maybe<Scalars['Boolean']>;
   unemployment?: Maybe<Scalars['Boolean']>;
   essential?: Maybe<Scalars['Boolean']>;
+};
+
+export type HelpOptionType = {
+   __typename?: 'HelpOptionType';
+  user_id?: Maybe<Scalars['Int']>;
+  wants_help?: Maybe<Scalars['Boolean']>;
   grocery_delivery?: Maybe<Scalars['Boolean']>;
   walk_dogs?: Maybe<Scalars['Boolean']>;
   donations?: Maybe<Scalars['Boolean']>;
@@ -99,7 +117,17 @@ export type GetProfileQuery = (
   { __typename?: 'RootQueryType' }
   & { profile?: Maybe<(
     { __typename?: 'ProfileType' }
-    & Pick<ProfileType, 'avatar' | 'neighborhood' | 'story'>
+    & Pick<ProfileType, 'id' | 'avatar' | 'neighborhood' | 'story'>
+    & { help?: Maybe<(
+      { __typename?: 'HelpType' }
+      & Pick<HelpType, 'wants_help'>
+    )>, help_status?: Maybe<(
+      { __typename?: 'HelpStatusType' }
+      & Pick<HelpStatusType, 'immunocompromised' | 'unemployment' | 'essential'>
+    )>, help_options?: Maybe<(
+      { __typename?: 'HelpOptionType' }
+      & Pick<HelpOptionType, 'grocery_delivery' | 'walk_dogs' | 'donations' | 'counceling' | 'career_services'>
+    )> }
   )> }
 );
 
@@ -185,9 +213,25 @@ export type GetUserQueryResult = ApolloReactCommon.QueryResult<GetUserQuery, Get
 export const GetProfileDocument = gql`
     query getProfile($user_id: Int) {
   profile(user_id: $user_id) {
+    id
     avatar
     neighborhood
     story
+    help {
+      wants_help
+    }
+    help_status {
+      immunocompromised
+      unemployment
+      essential
+    }
+    help_options {
+      grocery_delivery
+      walk_dogs
+      donations
+      counceling
+      career_services
+    }
   }
 }
     `;

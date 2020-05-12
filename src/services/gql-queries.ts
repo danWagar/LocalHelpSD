@@ -13,9 +13,25 @@ const gqlQueries = {
   GET_PROFILE: gql`
     query getProfile($user_id: Int) {
       profile(user_id: $user_id) {
+        id
         avatar
         neighborhood
         story
+        help {
+          wants_help
+        }
+        help_status {
+          immunocompromised
+          unemployment
+          essential
+        }
+        help_options {
+          grocery_delivery
+          walk_dogs
+          donations
+          counceling
+          career_services
+        }
       }
     }
   `,
