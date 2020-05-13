@@ -1,8 +1,6 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { useMutation } from '@apollo/react-hooks';
-import gqlQueries from '../services/gql-queries';
-import { ProfileType, MutationAddProfileArgs, useMutationMutation } from '../generated/graphql';
-import { UserContext } from '../context/UserContext';
+import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
+import { useMutationMutation } from '../generated/graphql';
 import FormZero from './Forms/FormZero';
 import FormOne from './Forms/FormOne';
 import FormThree from './Forms/FormThree';
@@ -15,32 +13,31 @@ const FindHelp: React.FC = () => {
   const [formPart, setFormPart] = useState<number>(0);
   const [formDataInput, setFormDataInput] = useState<formDataType | null>(null);
 
-  const user = useContext(UserContext);
+  const history = useHistory();
 
-  const [mutationMutation, { data, loading, error }] = useMutationMutation({
-    variables: {
-      user_id: user.userId as number,
-      wants_help: true,
-      ...(formDataInput as formDataTypeRequired),
-    },
-  });
+  const [mutationMutation, { data, loading, error }] = useMutationMutation();
 
   const updateFormData = (data: formDataType) => {
     setFormDataInput({ ...formDataInput, ...data });
   };
 
-  const doMutateProfile = () => {
-    mutationMutation();
+  const doMutateProfile = (id: number) => {
+    mutationMutation({
+      variables: {
+        user_id: id,
+        wants_help: true,
+        ...(formDataInput as formDataTypeRequired),
+      },
+    });
+
+    history.push('/login');
   };
 
   useEffect(() => {
     if (formDataInput) {
-      if (formDataInput.story && formDataInput.neighborhood) doMutateProfile();
-      else if (!formDataInput.story && !formDataInput.neighborhood) formGoNext();
+      formGoNext();
     }
   }, [formDataInput]);
-
-  console.log('user is ', user);
 
   const formGoBack = () => {
     if (formPart > 0) setFormPart(formPart - 1);
@@ -59,7 +56,7 @@ const FindHelp: React.FC = () => {
       case 2:
         return <FormThree updateParentState={updateFormData} />;
       case 3:
-        return <Register />;
+        return <Register onSuccess={doMutateProfile} />;
       default:
         return <p>Oops! Something went wrong. Try reloading the page.</p>;
     }
