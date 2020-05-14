@@ -6,18 +6,20 @@ import { UserContext } from '../context/UserContext';
 import './Profile.css';
 
 const Profile: React.FC = () => {
-  const user = useContext(UserContext);
+  const { user } = useContext(UserContext);
   const [profile, setProfile] = useState<ProfileType | null>(null);
 
-  console.log(user);
+  console.log('rendering profile');
   const { data, loading, error } = useGetProfileQuery({
     variables: {
-      user_id: user.userId,
+      user_id: user.id,
     },
     skip: !!profile,
   });
 
-  if (loading) return <div>Loading</div>;
+  if (loading) {
+    return <div>Loading</div>;
+  }
   if (error) return <div> Oops! Something went wrong. Please try refreshing.</div>;
 
   if (data && data.profile) {
@@ -46,9 +48,9 @@ const Profile: React.FC = () => {
   return (
     <main className="Profile">
       <div className="Profile_user_header">
-        <img src={profile?.avatar || ''} alt={user.userName + "'s profile picture"} />
+        <img src={profile?.avatar || ''} alt={user.firstName + ' ' + user.lastName + "'s profile picture"} />
         <div className="Profile_user_info">
-          <h2>{user.userName}</h2>
+          <h2>{user.firstName + ' ' + user.lastName}</h2>
           <p>neighborhood: {profile?.neighborhood}</p>
         </div>
         <div>

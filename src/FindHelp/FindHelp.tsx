@@ -5,7 +5,7 @@ import FormZero from './Forms/FormZero';
 import FormOne from './Forms/FormOne';
 import FormThree from './Forms/FormThree';
 import Register from './Forms/Register';
-import { formDataType, formDataTypeRequired } from './Forms/FormType';
+import { formDataType, formDataTypeRequired } from '../types';
 import classNames from 'classnames';
 import './FindHelp.css';
 

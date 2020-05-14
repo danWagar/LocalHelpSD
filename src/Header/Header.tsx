@@ -9,7 +9,7 @@ const Header: React.FC = () => {
   const signOut = useSignOut();
   const history = useHistory();
   const { hasToken } = useContext(AuthContext);
-  const { userName } = useContext(UserContext);
+  const { user } = useContext(UserContext);
 
   return (
     <header className="Header">
@@ -23,7 +23,7 @@ const Header: React.FC = () => {
         </nav>
       ) : (
         <nav className="Header_logout_nav">
-          <p>Welcome {userName}</p>
+          <p>Welcome {user.firstName + ' ' + user.lastName}</p>
           <div className="button grey_bg_color" onClick={signOut}>
             Sign Out
           </div>

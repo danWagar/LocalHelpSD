@@ -6,15 +6,14 @@ import TokenService from '../services/token-service';
 
 export function useSignOut() {
   const { setHasToken } = useContext(AuthContext);
-  const { setUserName, setUserId } = useContext(UserContext);
+  const { setUser } = useContext(UserContext);
   const history = useHistory();
 
   return () => {
     TokenService.clearAuthToken();
     setHasToken(false);
-    setUserName(null);
-    setUserId(null);
-    localStorage.removeItem('user_name');
+    setUser({ id: -1, email: '', firstName: '', lastName: '' });
+    localStorage.removeItem('user');
     history.push('/');
   };
 }

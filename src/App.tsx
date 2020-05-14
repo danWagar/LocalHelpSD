@@ -1,9 +1,7 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { useQuery } from '@apollo/react-hooks';
-import gqlQueries from './services/gql-queries';
-import { RootQueryType, RootQueryTypeUserArgs } from './generated/graphql';
-import { UserContext } from './context/UserContext';
+import React, { useContext, useEffect } from 'react';
+import { Route, Switch } from 'react-router-dom';
+import { useGetUserQuery } from './generated/graphql';
+import { UserContext, User } from './context/UserContext';
 import Header from './Header/Header';
 import LhsdHeader from './LhsdHeader/LhsdHeader';
 import LandingPage from './LandingPage/LandingPage';
@@ -14,24 +12,16 @@ import Home from './Home/Home';
 import './App.css';
 
 function App() {
-  const { userName, setUserName, setUserId } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
+  const storedUserString = localStorage.getItem('user');
 
-  const storedUserName = localStorage.getItem('user_name');
-
-  const { data, loading, error } = useQuery<RootQueryType, RootQueryTypeUserArgs>(gqlQueries.GET_USER, {
-    variables: { user_name: storedUserName },
-    skip: !storedUserName,
-  });
-
-  if (loading) return <div>Loading</div>;
-
-  if (data && data.user) {
-    if (!userName) setUserName(data?.user?.user_name || '');
-    setUserId(data?.user?.id || null);
+  if (storedUserString && !user.email) {
+    const storedUser = JSON.parse(localStorage.getItem('user') as string) as User;
+    setUser(storedUser);
   }
 
   return (
-    <Router>
+    <>
       <Switch>
         <Route path="/lhsd" component={() => <LhsdHeader />} />
         <Route path="/" component={() => <Header />} />
@@ -43,7 +33,7 @@ function App() {
         <Route exact path="/lhsd/home" component={Home} />
         <Route exact path="/lhsd/profile" component={Profile} />
       </Switch>
-    </Router>
+    </>
   );
 }
 

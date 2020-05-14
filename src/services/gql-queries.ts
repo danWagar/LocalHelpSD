@@ -2,10 +2,12 @@ import gql from 'graphql-tag';
 
 const gqlQueries = {
   GET_USER: gql`
-    query getUser($user_name: String) {
-      user(user_name: $user_name) {
+    query getUser($email: String) {
+      user(email: $email) {
         id
-        user_name
+        email
+        first_name
+        last_name
       }
     }
   `,

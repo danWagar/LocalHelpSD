@@ -1,6 +1,6 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { formDataType, iForm } from './FormType';
+import { formDataType, iForm } from '../../types';
 
 const FindHelpFormZero: React.FC<iForm> = (props) => {
   const { updateParentState } = props;

@@ -5,6 +5,11 @@ export type registerFormDataType = {
   password: string;
 };
 
+export type loginFormDataType = {
+  email: string;
+  password: string;
+};
+
 export type formDataType = {
   immunocompromised?: boolean;
   unemployment?: boolean;

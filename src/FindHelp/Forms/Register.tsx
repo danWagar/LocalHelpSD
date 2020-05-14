@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import AuthApiService from '../../services/auth-api-service';
 import { useForm } from 'react-hook-form';
-import { registerFormDataType } from './FormType';
+import { registerFormDataType } from '../../types';
 import { Required } from '../../Form/Form';
 
 interface iRegisterProps {
@@ -36,30 +36,6 @@ const Register: React.FC<iRegisterProps> = (props) => {
         setError(res.error);
       });
   };
-
-  // const handleSubmit = (ev: React.FormEvent<HTMLFormElement>) => {
-  //   ev.preventDefault();
-  //   console.log(ev.currentTarget);
-  //   const { email, first_name, last_name, password } = ev.currentTarget;
-
-  //   setError(null);
-  //   AuthApiService.postUser({
-  //     email: email,
-  //     first_name: first_name,
-  //     last_name: last_name,
-  //     password: password,
-  //   })
-  //     .then((user) => {
-  //       email = '';
-  //       first_name = '';
-  //       last_name = '';
-  //       password = '';
-  //       onRegisterSuccess();
-  //     })
-  //     .catch((res) => {
-  //       setError(res.error);
-  //     });
-  // };
 
   return (
     <form className="RegisterForm" onSubmit={handleSubmit(onSubmit)}>

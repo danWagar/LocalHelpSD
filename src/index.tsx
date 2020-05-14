@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter } from 'react-router-dom';
 import { ApolloClient } from 'apollo-client';
 import { InMemoryCache, NormalizedCacheObject } from 'apollo-cache-inmemory';
 import { HttpLink } from 'apollo-link-http';
@@ -13,12 +14,12 @@ import * as serviceWorker from './serviceWorker';
 
 const cache = new InMemoryCache();
 const link = new HttpLink({
-  uri: 'http://localhost:8000/api/graphql'
+  uri: 'http://localhost:8000/api/graphql',
 });
 
 const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
   cache,
-  link
+  link,
 });
 
 ReactDOM.render(
@@ -26,7 +27,9 @@ ReactDOM.render(
     <ApolloProvider client={client}>
       <AuthContextProvider>
         <UserContextProvider>
-          <App />
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
         </UserContextProvider>
       </AuthContextProvider>
     </ApolloProvider>

@@ -4,31 +4,29 @@ type Props = {
   children: React.ReactNode;
 };
 
+export type User = {
+  id: number;
+  email: string;
+  firstName: string;
+  lastName: string;
+};
+
 type Context = {
-  userName: string | null;
-  userId: number | null;
-  setUserName: Dispatch<SetStateAction<string | null>>;
-  setUserId: Dispatch<SetStateAction<number | null>>;
+  user: User;
+  setUser: Dispatch<SetStateAction<User>>;
 };
 
 const initialContext: Context = {
-  userName: null,
-  userId: null,
-  setUserName: (value: SetStateAction<string | null>) => {},
-  setUserId: (value: SetStateAction<number | null>) => {},
+  user: { id: -1, email: '', firstName: '', lastName: '' },
+  setUser: (value: SetStateAction<User>) => {},
 };
 
 const UserContext = createContext<Context>(initialContext);
 
 const UserContextProvider: React.FC = (props) => {
-  const [userName, setUserName] = useState<string | null>(initialContext.userName);
-  const [userId, setUserId] = useState<number | null>(initialContext.userId);
+  const [user, setUser] = useState<User>(initialContext.user);
 
-  return (
-    <UserContext.Provider value={{ userName, setUserName, userId, setUserId }}>
-      {props.children}
-    </UserContext.Provider>
-  );
+  return <UserContext.Provider value={{ user, setUser }}>{props.children}</UserContext.Provider>;
 };
 
 export { UserContext, UserContextProvider };

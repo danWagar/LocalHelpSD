@@ -23,7 +23,7 @@ export type RootQueryType = {
 
 
 export type RootQueryTypeUserArgs = {
-  user_name?: Maybe<Scalars['String']>;
+  email?: Maybe<Scalars['String']>;
 };
 
 
@@ -34,7 +34,9 @@ export type RootQueryTypeProfileArgs = {
 export type UserType = {
    __typename?: 'UserType';
   id?: Maybe<Scalars['Int']>;
-  user_name?: Maybe<Scalars['String']>;
+  email?: Maybe<Scalars['String']>;
+  first_name?: Maybe<Scalars['String']>;
+  last_name?: Maybe<Scalars['String']>;
 };
 
 export type ProfileType = {
@@ -96,7 +98,7 @@ export type MutationAddProfileArgs = {
 };
 
 export type GetUserQueryVariables = {
-  user_name?: Maybe<Scalars['String']>;
+  email?: Maybe<Scalars['String']>;
 };
 
 
@@ -104,7 +106,7 @@ export type GetUserQuery = (
   { __typename?: 'RootQueryType' }
   & { user?: Maybe<(
     { __typename?: 'UserType' }
-    & Pick<UserType, 'id' | 'user_name'>
+    & Pick<UserType, 'id' | 'email' | 'first_name' | 'last_name'>
   )> }
 );
 
@@ -158,10 +160,12 @@ export type MutationMutation = (
 
 
 export const GetUserDocument = gql`
-    query getUser($user_name: String) {
-  user(user_name: $user_name) {
+    query getUser($email: String) {
+  user(email: $email) {
     id
-    user_name
+    email
+    first_name
+    last_name
   }
 }
     `;
@@ -197,7 +201,7 @@ export function withGetUser<TProps, TChildProps = {}, TDataName extends string =
  * @example
  * const { data, loading, error } = useGetUserQuery({
  *   variables: {
- *      user_name: // value for 'user_name'
+ *      email: // value for 'email'
  *   },
  * });
  */
