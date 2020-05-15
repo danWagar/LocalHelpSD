@@ -1,0 +1,84 @@
+@import '../../variables';
+
+.LandingPage {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  margin-bottom: 0px;
+  color: white;
+}
+
+.LandingPage_left_container,
+.LandingPage_right_container {
+  position: fixed;
+  top: 0;
+  height: 100%;
+  display: grid;
+  place-items: center;
+}
+
+.LandingPage_left_container {
+  left: 0;
+  align-items: center;
+  width: 60vw;
+  background-color: $emphasis-color;
+}
+
+.LandingPage_left_content {
+  width: 60%;
+
+  & h1 {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    font-style: italic;
+  }
+
+  & p {
+    text-align: center;
+    font-size: 1.2em;
+  }
+}
+
+.LandingPage_right_container {
+  width: 40vw;
+  right: 0;
+  background: linear-gradient(rgba(54, 134, 201, 0.75), rgba(54, 134, 201, 0.75)),
+    url('../../images/corona_volunteers.jpg');
+  background-position: 20%;
+  background-size: cover;
+}
+
+.LandingPage_right_content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  & span {
+    font-size: 1.6em;
+    font-weight: 600;
+    line-height: 3.2em;
+  }
+}
+
+.LandingPage_buttons_container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+}
+
+.LandingPage_big_button {
+  display: grid;
+  place-items: center;
+  font-size: 1.6em;
+  padding: 12px 20px 12px 20px;
+  background-color: $compliment-color;
+
+  &:first-child {
+    margin-right: 20px;
+  }
+}

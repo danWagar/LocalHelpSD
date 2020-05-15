@@ -7,10 +7,8 @@ import { HttpLink } from 'apollo-link-http';
 import { ApolloProvider } from '@apollo/react-hooks';
 import { UserContextProvider } from './context/UserContext';
 import { AuthContextProvider } from './context/AuthContext';
-import gql from 'graphql-tag';
 import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import App from './Components/App/App';
 
 const cache = new InMemoryCache();
 const link = new HttpLink({
