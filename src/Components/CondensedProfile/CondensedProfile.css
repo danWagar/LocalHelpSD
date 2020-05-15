@@ -1,0 +1,64 @@
+.CondensedProfile {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 300px;
+  height: 450px;
+  margin: 0 auto;
+  border: 1px solid #bdbdbd;
+  border-radius: 5px;
+  background-color: whitesmoke;
+}
+
+.CondensedProfile img {
+  width: 100px;
+  height: 100px;
+  background-color: #b4c540;
+  border-radius: 20px;
+  border: 3px solid #b4c540;
+}
+
+.CondensedProfile_user_info p {
+  margin: 10px;
+}
+
+.CondensedProfile_help_list {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+  width: 300px;
+  padding: 0;
+  list-style: none;
+  color: white;
+}
+
+.CondensedProfile_help_list li {
+  margin-top: 10px;
+  padding: 5px;
+  background-color: #3686c9;
+}
+
+.CondensedProfile_weighted {
+  font-weight: bold;
+  font-size: 1rem;
+}
+/*# sourceMappingURL=CondensedProfile.css.map */

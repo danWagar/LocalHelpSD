@@ -1,0 +1,54 @@
+@import '../../variables';
+
+.CondensedProfile {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  width: 300px;
+  height: 450px;
+  margin: 0 auto;
+  border: 1px solid rgb(189, 189, 189);
+  border-radius: 5px;
+  background-color: rgb(245, 245, 245);
+
+  & img {
+    width: 100px;
+    height: 100px;
+    background-color: $emphasis_color;
+    border-radius: 20px;
+    border: 3px solid $emphasis_color;
+  }
+}
+
+.CondensedProfile_user_info {
+  & p {
+    margin: 10px;
+  }
+}
+
+.CondensedProfile_help_list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  width: 300px;
+  padding: 0;
+  list-style: none;
+  color: white;
+
+  & li {
+    margin-top: 10px;
+    padding: 5px;
+    background-color: $primary_color;
+  }
+}
+
+.CondensedProfile_weighted {
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.CondensedProfile_user_story {
+}

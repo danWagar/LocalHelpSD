@@ -1,9 +1,9 @@
 import React, { useState, useContext } from 'react';
 import { ProfileType, useGetProfileQuery } from '../../generated/graphql';
 import { UserContext } from '../../context/UserContext';
-import './Profile.css';
+import './CondensedProfile.css';
 
-const Profile: React.FC = () => {
+const CondensedProfile: React.FC = () => {
   const { user } = useContext(UserContext);
   const [profile, setProfile] = useState<ProfileType | null>(null);
 
@@ -44,24 +44,22 @@ const Profile: React.FC = () => {
   };
 
   return (
-    <main className="Profile">
-      <div className="Profile_user_header">
-        <img src={profile?.avatar || ''} alt={user.firstName + ' ' + user.lastName + "'s profile picture"} />
-        <div className="Profile_user_info">
-          <h2>{user.firstName + ' ' + user.lastName}</h2>
-          <p>neighborhood: {profile?.neighborhood}</p>
-        </div>
-        <div>
-          <h3>Requesting Help</h3>
-          <ul>{profile?.help_options && getHelpOptions()}</ul>
-        </div>
+    <div className="CondensedProfile">
+      <img src={profile?.avatar || ''} alt={user.firstName + ' ' + user.lastName + "'s profile picture"} />
+      <div className="CondensedProfile_user_info">
+        <p className="CondensedProfile_weighted">{user.firstName + ' ' + user.lastName}</p>
+        <p>neighborhood: {profile?.neighborhood}</p>
       </div>
-      <div className="Profile_user_story">
-        <h2>My Story</h2>
+      <div>
+        <p className="CondensedProfile_weighted">Requesting Help</p>
+        <ul className="CondensedProfile_help_list">{profile?.help_options && getHelpOptions()}</ul>
+      </div>
+      <div className="CondensedProfile_user_story">
+        <p className="CondensedProfile_weighted">My Story</p>
         <p>{profile?.story}</p>
       </div>
-    </main>
+    </div>
   );
 };
 
-export default Profile;
+export default CondensedProfile;
