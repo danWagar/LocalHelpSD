@@ -23,7 +23,7 @@ const LhsdHeader: React.FC = () => {
     history.push('/lhsd/' + e.currentTarget.id);
   };
 
-  const handleProfileNavClose = () => {
+  const toggleShowProfileNav = () => {
     setShowProfileNav(!showProfileNav);
   };
 
@@ -46,7 +46,7 @@ const LhsdHeader: React.FC = () => {
           <NavIcon currentLocation={current === 'profile'} icon="profile" />
         </div>
       </nav>
-      {showProfileNav && <ProfileNav callback={handleProfileNavClose} />}
+      {showProfileNav && <ProfileNav toggleNav={toggleShowProfileNav} />}
     </header>
   );
 };

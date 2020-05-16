@@ -4,33 +4,44 @@ import useSignOut from '../../myHooks/useSignOut';
 import './ProfileNav.css';
 
 interface iProfileNav {
-  callback: () => void;
+  toggleNav: () => void;
 }
 
 const ProfileNav: React.FC<iProfileNav> = (props) => {
+  const { toggleNav } = props;
   const container = useRef<HTMLElement>(null);
   const signOut = useSignOut();
   const history = useHistory();
 
   useEffect(() => {
-    document.addEventListener('mousedown', handleClick);
+    document.addEventListener('mousedown', handleOutsideClick);
     return () => {
-      document.removeEventListener('mousedown', handleClick);
+      document.removeEventListener('mousedown', handleOutsideClick);
     };
   }, []);
 
-  const handleClick = (e: MouseEvent) => {
+  const handleOutsideClick = (e: MouseEvent) => {
     if (container && container?.current?.contains(e.target as Node)) return;
-    props.callback();
+    toggleNav();
+  };
+
+  const handleClickSignOut = (e: React.MouseEvent<HTMLLIElement>) => {
+    toggleNav();
+    signOut();
+  };
+
+  const handleClickProfile = (e: React.MouseEvent<HTMLLIElement>) => {
+    toggleNav();
+    history.push('/lhsd/profile');
   };
 
   return (
     <nav ref={container} className="ProfileNav">
       <ul className="ProfileNav_list">
-        <li className="clickable" onClick={() => history.push('/lhsd/profile')}>
+        <li className="clickable" onClick={handleClickProfile}>
           Profile
         </li>
-        <li className="clickable" onClick={signOut}>
+        <li className="clickable" onClick={handleClickSignOut}>
           Sign Out
         </li>
       </ul>
