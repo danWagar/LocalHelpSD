@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
-import { useSignOut } from '../../myHooks/useSignOut';
+import useSignOut from '../../myHooks/useSignOut';
 import './ProfileNav.css';
 
 interface iProfileNav {

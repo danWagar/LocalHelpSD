@@ -4,7 +4,7 @@ import { AuthContext } from '../context/AuthContext';
 import { UserContext } from '../context/UserContext';
 import TokenService from '../services/token-service';
 
-export function useSignOut() {
+export default function useSignOut() {
   const { setHasToken } = useContext(AuthContext);
   const { setUser } = useContext(UserContext);
   const history = useHistory();

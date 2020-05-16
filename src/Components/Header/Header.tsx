@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { UserContext } from '../../context/UserContext';
 import { AuthContext } from '../../context/AuthContext';
-import { useSignOut } from '../../myHooks/useSignOut';
+import useSignOut from '../../myHooks/useSignOut';
 import './Header.css';
 
 const Header: React.FC = () => {

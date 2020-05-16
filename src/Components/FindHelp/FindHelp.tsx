@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import { useMutationMutation } from '../../generated/graphql';
+import { useMutate_ProfileMutation } from '../../generated/graphql';
 import FormZero from '../Forms/FormZero';
 import FormOne from '../Forms/FormOne';
 import FormThree from '../Forms/FormThree';
@@ -15,7 +15,7 @@ const FindHelp: React.FC = () => {
 
   const history = useHistory();
 
-  const [mutationMutation, { data, loading, error }] = useMutationMutation();
+  const [mutationMutation, { data, loading, error }] = useMutate_ProfileMutation();
 
   const updateFormData = (data: formDataType) => {
     setFormDataInput({ ...formDataInput, ...data });

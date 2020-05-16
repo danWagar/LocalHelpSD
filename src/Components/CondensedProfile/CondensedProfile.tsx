@@ -3,26 +3,15 @@ import { ProfileType, useGetProfileQuery } from '../../generated/graphql';
 import { UserContext } from '../../context/UserContext';
 import './CondensedProfile.css';
 
-const CondensedProfile: React.FC = () => {
+interface iCondensedProfile {
+  profile: ProfileType;
+}
+
+const CondensedProfile: React.FC<iCondensedProfile> = (props) => {
+  const { profile } = props;
+  const userName = profile?.user?.first_name + ' ' + profile?.user?.last_name;
+  console.log(profile);
   const { user } = useContext(UserContext);
-  const [profile, setProfile] = useState<ProfileType | null>(null);
-
-  console.log('rendering profile');
-  const { data, loading, error } = useGetProfileQuery({
-    variables: {
-      user_id: user.id,
-    },
-    skip: !!profile,
-  });
-
-  if (loading) {
-    return <div>Loading</div>;
-  }
-  if (error) return <div> Oops! Something went wrong. Please try refreshing.</div>;
-
-  if (data && data.profile) {
-    setProfile(data.profile);
-  }
 
   function typedKeys<T>(o: T): (keyof T)[] {
     // type cast should be safe because that's what really Object.keys() does
@@ -45,9 +34,9 @@ const CondensedProfile: React.FC = () => {
 
   return (
     <div className="CondensedProfile">
-      <img src={profile?.avatar || ''} alt={user.firstName + ' ' + user.lastName + "'s profile picture"} />
+      <img src={profile?.avatar || ''} alt={userName + "'s profile picture"} />
       <div className="CondensedProfile_user_info">
-        <p className="CondensedProfile_weighted">{user.firstName + ' ' + user.lastName}</p>
+        <p className="CondensedProfile_weighted">{userName}</p>
         <p>neighborhood: {profile?.neighborhood}</p>
       </div>
       <div>
