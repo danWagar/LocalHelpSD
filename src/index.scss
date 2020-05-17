@@ -13,16 +13,31 @@ body {
   background-color: #eeeeee;
 }
 
+textarea,
+input {
+  font-family: 'Roboto', sans-serif;
+  font-size: 1em;
+}
+
+input {
+  padding: 5px;
+}
+
+button,
 .button {
   display: block;
   padding: 8px 12px 8px 12px;
   width: max-content;
-  border: 0;
+  border: none;
   cursor: pointer;
 }
 
 .clickable {
   cursor: pointer;
+}
+
+.bold {
+  font-weight: bold;
 }
 
 .emphasis_bg_color {
@@ -31,6 +46,10 @@ body {
 
 .compliment_bg_color {
   background-color: $compliment-color;
+}
+
+.primary_bg_color {
+  background-color: $primary-color;
 }
 
 .grey_bg_color {

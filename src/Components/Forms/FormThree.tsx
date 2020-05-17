@@ -22,9 +22,7 @@ const FindHelpFormThree: React.FC<iForm> = (props) => {
           <option value="Grantville">Grantville</option>
         </select>
       </label>
-      <button className="button" type="submit">
-        Next
-      </button>
+      <button type="submit">Next</button>
     </form>
   );
 };

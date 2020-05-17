@@ -1,14 +1,15 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import { ProfileType, useGetProfileQuery } from '../../generated/graphql';
 import { UserContext } from '../../context/UserContext';
 import './CondensedProfile.css';
 
 interface iCondensedProfile {
   profile: ProfileType;
+  toggleShowMessage: (profile: ProfileType) => void;
 }
 
 const CondensedProfile: React.FC<iCondensedProfile> = (props) => {
-  const { profile } = props;
+  const { profile, toggleShowMessage } = props;
   const userName = profile?.user?.first_name + ' ' + profile?.user?.last_name;
   console.log(profile);
   const { user } = useContext(UserContext);
@@ -32,21 +33,26 @@ const CondensedProfile: React.FC<iCondensedProfile> = (props) => {
     return helpOptionsList.map((k) => <li>{k}</li>);
   };
 
+  const handleMessageClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    toggleShowMessage(profile);
+  };
+
   return (
     <div className="CondensedProfile">
       <img src={profile?.avatar || ''} alt={userName + "'s profile picture"} />
       <div className="CondensedProfile_user_info">
-        <p className="CondensedProfile_weighted">{userName}</p>
+        <p className="bold">{userName}</p>
         <p>neighborhood: {profile?.neighborhood}</p>
       </div>
       <div>
-        <p className="CondensedProfile_weighted">Requesting Help</p>
+        <p className="bold">Requesting Help</p>
         <ul className="CondensedProfile_help_list">{profile?.help_options && getHelpOptions()}</ul>
       </div>
       <div className="CondensedProfile_user_story">
-        <p className="CondensedProfile_weighted">My Story</p>
+        <p className="bold">My Story</p>
         <p>{profile?.story}</p>
       </div>
+      <div onClick={handleMessageClick}>Message</div>
     </div>
   );
 };

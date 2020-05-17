@@ -1,9 +1,10 @@
-import React, { useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import CondensedProfile from '../CondensedProfile/CondensedProfile';
-import { useGetProfileHelpInfoQuery, useGetProfileMatchesQuery } from '../../generated/graphql';
+import { useGetProfileHelpInfoQuery, useGetProfileMatchesQuery, ProfileType } from '../../generated/graphql';
 import { withApollo, WithApolloClient } from 'react-apollo';
 import { UserContext } from '../../context/UserContext';
-import useFetchProfile from '../../myHooks/useFetchProfile';
+import Message from '../Message/Message';
+import './Community.css';
 
 interface iCommunity {}
 
@@ -11,6 +12,13 @@ type Props = WithApolloClient<iCommunity>;
 
 const Community: React.FC<Props> = ({ client }) => {
   const { user } = useContext(UserContext);
+
+  const [messageTo, setMessageTo] = useState<ProfileType | null>(null);
+
+  const toggleShowMessage = (profile: ProfileType) => {
+    if (messageTo) setMessageTo(null);
+    else setMessageTo(profile);
+  };
 
   const res = useGetProfileHelpInfoQuery({ variables: { user_id: user.id } });
   console.log(res);
@@ -31,12 +39,13 @@ const Community: React.FC<Props> = ({ client }) => {
   console.log(data);
 
   return (
-    <>
+    <div className="Community">
       {data?.getProfileMatches?.map((profile) => {
         console.log(profile);
-        return <CondensedProfile profile={profile!} />;
+        return <CondensedProfile profile={profile!} toggleShowMessage={toggleShowMessage} />;
       })}
-    </>
+      {messageTo && <Message receiver={messageTo} />}
+    </div>
   );
 };
 

@@ -1,0 +1,14 @@
+.Community {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+  width: 100vw;
+  height: 100vh;
+  margin-top: 50px;
+}
+/*# sourceMappingURL=Community.css.map */

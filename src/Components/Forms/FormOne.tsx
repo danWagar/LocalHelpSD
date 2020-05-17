@@ -32,9 +32,7 @@ const FindHelpFormOne: React.FC<iForm> = (props) => {
         <input name="career_services" ref={register} type="checkbox" />
         Career services
       </label>
-      <button className="button" type="submit">
-        Next
-      </button>
+      <button type="submit">Next</button>
     </form>
   );
 };

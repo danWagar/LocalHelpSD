@@ -1,3 +1,8 @@
+export type messageFormDataType = {
+  subject: string;
+  message: string;
+};
+
 export type registerFormDataType = {
   email: string;
   first_name: string;
