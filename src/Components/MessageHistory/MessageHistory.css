@@ -18,4 +18,11 @@
       -ms-flex-direction: column;
           flex-direction: column;
 }
+
+.MessageHistory_date {
+  width: 100%;
+  margin: 5px 0px 5px 0px;
+  text-align: center;
+  background-color: lightgrey;
+}
 /*# sourceMappingURL=MessageHistory.css.map */
