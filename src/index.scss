@@ -36,8 +36,20 @@ button,
   cursor: pointer;
 }
 
+.align_start {
+  align-self: flex-start;
+}
+
+.align_end {
+  align-self: flex-end;
+}
+
 .bold {
   font-weight: bold;
+}
+
+.underline {
+  text-decoration: underline;
 }
 
 .emphasis_bg_color {

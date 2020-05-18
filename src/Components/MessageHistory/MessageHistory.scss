@@ -15,9 +15,35 @@
   flex-direction: column;
 }
 
+.MessageHistory_message_container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
 .MessageHistory_date {
   width: 100%;
   margin: 5px 0px 5px 0px;
   text-align: center;
-  background-color: lightgrey;
+  background-color: rgb(238, 237, 237);
+}
+
+.MessageHistory_time {
+  font-size: 0.85em;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  color: grey;
+}
+
+.MessageHistory_subject,
+.MessageHistory_body {
+  max-width: 70%;
+
+  &.align_start {
+    margin-left: 10px;
+  }
+
+  &.align_end {
+    margin-right: 10px;
+  }
 }

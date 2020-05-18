@@ -29,6 +29,10 @@ const Message: React.FC<iMessage> = (props) => {
 
   const [messagesMutation, { data, loading, error }] = useMutate_MessagesMutation();
 
+  const handleMinimize = () => {
+    console.log('minimize');
+  };
+
   return (
     <div className="Message">
       <MessageHistory receiver_id={receiver.user?.id!} sender_id={user.id} />
@@ -39,6 +43,7 @@ const Message: React.FC<iMessage> = (props) => {
           alt={receiver?.user?.first_name + ' ' + receiver?.user?.last_name + `'s avatar`}
         />
         <p className="bold">{receiver?.user?.first_name + ' ' + receiver?.user?.last_name}</p>
+        <div className="Message_minimize clickable" onClick={handleMinimize}></div>
       </div>
       <form className="Message_container" onSubmit={handleSubmit(onSubmit)}>
         <label className="Message_subject">

@@ -37,8 +37,22 @@ button,
   cursor: pointer;
 }
 
+.align_start {
+  -ms-flex-item-align: start;
+      align-self: flex-start;
+}
+
+.align_end {
+  -ms-flex-item-align: end;
+      align-self: flex-end;
+}
+
 .bold {
   font-weight: bold;
+}
+
+.underline {
+  text-decoration: underline;
 }
 
 .emphasis_bg_color {

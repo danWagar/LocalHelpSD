@@ -149,6 +149,8 @@ const gqlQueries = {
     query getMessageHistory($sender_id: Int!, $receiver_id: Int!) {
       getMessageHistory(sender_id: $sender_id, receiver_id: $receiver_id) {
         id
+        sender_id
+        receiver_id
         subject
         body
         date_sent

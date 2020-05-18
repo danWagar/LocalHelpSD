@@ -19,10 +19,43 @@
           flex-direction: column;
 }
 
+.MessageHistory_message_container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  width: 100%;
+}
+
 .MessageHistory_date {
   width: 100%;
   margin: 5px 0px 5px 0px;
   text-align: center;
-  background-color: lightgrey;
+  background-color: #eeeded;
+}
+
+.MessageHistory_time {
+  font-size: 0.85em;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  color: grey;
+}
+
+.MessageHistory_subject,
+.MessageHistory_body {
+  max-width: 70%;
+}
+
+.MessageHistory_subject.align_start,
+.MessageHistory_body.align_start {
+  margin-left: 10px;
+}
+
+.MessageHistory_subject.align_end,
+.MessageHistory_body.align_end {
+  margin-right: 10px;
 }
 /*# sourceMappingURL=MessageHistory.css.map */
