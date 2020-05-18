@@ -1,6 +1,6 @@
 export type messageFormDataType = {
   subject: string;
-  message: string;
+  body: string;
 };
 
 export type registerFormDataType = {

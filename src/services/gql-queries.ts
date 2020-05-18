@@ -71,7 +71,7 @@ const gqlQueries = {
       $counceling: Boolean!
       $career_services: Boolean!
     ) {
-      addProfile(
+      postProfile(
         user_id: $user_id
         avatar: $avatar
         neighborhood: $neighborhood
@@ -128,10 +128,30 @@ const gqlQueries = {
           career_services
         }
         user {
+          id
           email
           first_name
           last_name
         }
+      }
+    }
+  `,
+
+  MUTATE_MESSAGES: gql`
+    mutation Mutate_Messages($sender_id: Int!, $receiver_id: Int!, $subject: String, $body: String!) {
+      postMessage(sender_id: $sender_id, receiver_id: $receiver_id, subject: $subject, body: $body) {
+        id
+      }
+    }
+  `,
+
+  GET_MESSAGE_HISTORY: gql`
+    query getMessageHistory($sender_id: Int!, $receiver_id: Int!) {
+      getMessageHistory(sender_id: $sender_id, receiver_id: $receiver_id) {
+        id
+        subject
+        body
+        date_sent
       }
     }
   `,

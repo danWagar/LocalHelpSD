@@ -20,6 +20,7 @@ export type RootQueryType = {
   user?: Maybe<UserType>;
   profile?: Maybe<ProfileType>;
   getProfileMatches?: Maybe<Array<Maybe<ProfileType>>>;
+  getMessageHistory?: Maybe<Array<Maybe<MessageType>>>;
 };
 
 
@@ -40,6 +41,12 @@ export type RootQueryTypeGetProfileMatchesArgs = {
   donations?: Maybe<Scalars['Boolean']>;
   counceling?: Maybe<Scalars['Boolean']>;
   career_services?: Maybe<Scalars['Boolean']>;
+};
+
+
+export type RootQueryTypeGetMessageHistoryArgs = {
+  sender_id?: Maybe<Scalars['Int']>;
+  receiver_id?: Maybe<Scalars['Int']>;
 };
 
 export type UserType = {
@@ -87,13 +94,24 @@ export type HelpOptionType = {
   career_services?: Maybe<Scalars['Boolean']>;
 };
 
-export type Mutate_Profile = {
-   __typename?: 'MUTATE_PROFILE';
-  addProfile?: Maybe<ProfileType>;
+export type MessageType = {
+   __typename?: 'MessageType';
+  id?: Maybe<Scalars['Int']>;
+  sender_id?: Maybe<Scalars['Int']>;
+  receiver_id?: Maybe<Scalars['Int']>;
+  subject?: Maybe<Scalars['String']>;
+  body?: Maybe<Scalars['String']>;
+  date_sent?: Maybe<Scalars['String']>;
+};
+
+export type Mutation = {
+   __typename?: 'Mutation';
+  postProfile?: Maybe<ProfileType>;
+  postMessage?: Maybe<MessageType>;
 };
 
 
-export type Mutate_ProfileAddProfileArgs = {
+export type MutationPostProfileArgs = {
   user_id?: Maybe<Scalars['Int']>;
   avatar?: Maybe<Scalars['String']>;
   neighborhood?: Maybe<Scalars['String']>;
@@ -107,6 +125,14 @@ export type Mutate_ProfileAddProfileArgs = {
   donations?: Maybe<Scalars['Boolean']>;
   counceling?: Maybe<Scalars['Boolean']>;
   career_services?: Maybe<Scalars['Boolean']>;
+};
+
+
+export type MutationPostMessageArgs = {
+  sender_id?: Maybe<Scalars['Int']>;
+  receiver_id?: Maybe<Scalars['Int']>;
+  subject?: Maybe<Scalars['String']>;
+  body?: Maybe<Scalars['String']>;
 };
 
 export type GetUserQueryVariables = {
@@ -182,8 +208,8 @@ export type Mutate_ProfileMutationVariables = {
 
 
 export type Mutate_ProfileMutation = (
-  { __typename?: 'MUTATE_PROFILE' }
-  & { addProfile?: Maybe<(
+  { __typename?: 'Mutation' }
+  & { postProfile?: Maybe<(
     { __typename?: 'ProfileType' }
     & Pick<ProfileType, 'id'>
   )> }
@@ -215,35 +241,39 @@ export type GetProfileMatchesQuery = (
       & Pick<HelpOptionType, 'grocery_delivery' | 'walk_dogs' | 'donations' | 'counceling' | 'career_services'>
     )>, user?: Maybe<(
       { __typename?: 'UserType' }
-      & Pick<UserType, 'email' | 'first_name' | 'last_name'>
+      & Pick<UserType, 'id' | 'email' | 'first_name' | 'last_name'>
     )> }
   )>>> }
 );
 
-export type GetProfileUserQueryVariables = {
-  user_id?: Maybe<Scalars['Int']>;
+export type Mutate_MessagesMutationVariables = {
+  sender_id: Scalars['Int'];
+  receiver_id: Scalars['Int'];
+  subject?: Maybe<Scalars['String']>;
+  body: Scalars['String'];
 };
 
 
-export type GetProfileUserQuery = (
-  { __typename?: 'RootQueryType' }
-  & { profile?: Maybe<(
-    { __typename?: 'ProfileType' }
-    & Pick<ProfileType, 'id' | 'avatar' | 'neighborhood' | 'story'>
-    & { help?: Maybe<(
-      { __typename?: 'HelpType' }
-      & Pick<HelpType, 'wants_help'>
-    )>, help_status?: Maybe<(
-      { __typename?: 'HelpStatusType' }
-      & Pick<HelpStatusType, 'immunocompromised' | 'unemployment' | 'essential'>
-    )>, help_options?: Maybe<(
-      { __typename?: 'HelpOptionType' }
-      & Pick<HelpOptionType, 'grocery_delivery' | 'walk_dogs' | 'donations' | 'counceling' | 'career_services'>
-    )>, user?: Maybe<(
-      { __typename?: 'UserType' }
-      & Pick<UserType, 'first_name' | 'last_name'>
-    )> }
+export type Mutate_MessagesMutation = (
+  { __typename?: 'Mutation' }
+  & { postMessage?: Maybe<(
+    { __typename?: 'MessageType' }
+    & Pick<MessageType, 'id'>
   )> }
+);
+
+export type GetMessageHistoryQueryVariables = {
+  sender_id: Scalars['Int'];
+  receiver_id: Scalars['Int'];
+};
+
+
+export type GetMessageHistoryQuery = (
+  { __typename?: 'RootQueryType' }
+  & { getMessageHistory?: Maybe<Array<Maybe<(
+    { __typename?: 'MessageType' }
+    & Pick<MessageType, 'id' | 'subject' | 'body' | 'date_sent'>
+  )>>> }
 );
 
 
@@ -435,7 +465,7 @@ export type GetProfileHelpInfoLazyQueryHookResult = ReturnType<typeof useGetProf
 export type GetProfileHelpInfoQueryResult = ApolloReactCommon.QueryResult<GetProfileHelpInfoQuery, GetProfileHelpInfoQueryVariables>;
 export const Mutate_ProfileDocument = gql`
     mutation MUTATE_PROFILE($user_id: Int!, $avatar: String, $neighborhood: String, $story: String, $wants_help: Boolean!, $immunocompromised: Boolean!, $unemployment: Boolean!, $essential: Boolean!, $grocery_delivery: Boolean!, $walk_dogs: Boolean!, $donations: Boolean!, $counceling: Boolean!, $career_services: Boolean!) {
-  addProfile(user_id: $user_id, avatar: $avatar, neighborhood: $neighborhood, story: $story, wants_help: $wants_help, immunocompromised: $immunocompromised, unemployment: $unemployment, essential: $essential, grocery_delivery: $grocery_delivery, walk_dogs: $walk_dogs, donations: $donations, counceling: $counceling, career_services: $career_services) {
+  postProfile(user_id: $user_id, avatar: $avatar, neighborhood: $neighborhood, story: $story, wants_help: $wants_help, immunocompromised: $immunocompromised, unemployment: $unemployment, essential: $essential, grocery_delivery: $grocery_delivery, walk_dogs: $walk_dogs, donations: $donations, counceling: $counceling, career_services: $career_services) {
     id
   }
 }
@@ -519,6 +549,7 @@ export const GetProfileMatchesDocument = gql`
       career_services
     }
     user {
+      id
       email
       first_name
       last_name
@@ -576,77 +607,113 @@ export function useGetProfileMatchesLazyQuery(baseOptions?: ApolloReactHooks.Laz
 export type GetProfileMatchesQueryHookResult = ReturnType<typeof useGetProfileMatchesQuery>;
 export type GetProfileMatchesLazyQueryHookResult = ReturnType<typeof useGetProfileMatchesLazyQuery>;
 export type GetProfileMatchesQueryResult = ApolloReactCommon.QueryResult<GetProfileMatchesQuery, GetProfileMatchesQueryVariables>;
-export const GetProfileUserDocument = gql`
-    query getProfileUser($user_id: Int) {
-  profile {
+export const Mutate_MessagesDocument = gql`
+    mutation Mutate_Messages($sender_id: Int!, $receiver_id: Int!, $subject: String, $body: String!) {
+  postMessage(sender_id: $sender_id, receiver_id: $receiver_id, subject: $subject, body: $body) {
     id
-    avatar
-    neighborhood
-    story
-    help {
-      wants_help
-    }
-    help_status {
-      immunocompromised
-      unemployment
-      essential
-    }
-    help_options {
-      grocery_delivery
-      walk_dogs
-      donations
-      counceling
-      career_services
-    }
-    user {
-      first_name
-      last_name
-    }
   }
 }
     `;
-export type GetProfileUserComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<GetProfileUserQuery, GetProfileUserQueryVariables>, 'query'>;
+export type Mutate_MessagesMutationFn = ApolloReactCommon.MutationFunction<Mutate_MessagesMutation, Mutate_MessagesMutationVariables>;
+export type Mutate_MessagesComponentProps = Omit<ApolloReactComponents.MutationComponentOptions<Mutate_MessagesMutation, Mutate_MessagesMutationVariables>, 'mutation'>;
 
-    export const GetProfileUserComponent = (props: GetProfileUserComponentProps) => (
-      <ApolloReactComponents.Query<GetProfileUserQuery, GetProfileUserQueryVariables> query={GetProfileUserDocument} {...props} />
+    export const Mutate_MessagesComponent = (props: Mutate_MessagesComponentProps) => (
+      <ApolloReactComponents.Mutation<Mutate_MessagesMutation, Mutate_MessagesMutationVariables> mutation={Mutate_MessagesDocument} {...props} />
     );
     
-export type GetProfileUserProps<TChildProps = {}, TDataName extends string = 'data'> = {
-      [key in TDataName]: ApolloReactHoc.DataValue<GetProfileUserQuery, GetProfileUserQueryVariables>
+export type Mutate_MessagesProps<TChildProps = {}, TDataName extends string = 'mutate'> = {
+      [key in TDataName]: ApolloReactCommon.MutationFunction<Mutate_MessagesMutation, Mutate_MessagesMutationVariables>
     } & TChildProps;
-export function withGetProfileUser<TProps, TChildProps = {}, TDataName extends string = 'data'>(operationOptions?: ApolloReactHoc.OperationOption<
+export function withMutate_Messages<TProps, TChildProps = {}, TDataName extends string = 'mutate'>(operationOptions?: ApolloReactHoc.OperationOption<
   TProps,
-  GetProfileUserQuery,
-  GetProfileUserQueryVariables,
-  GetProfileUserProps<TChildProps, TDataName>>) {
-    return ApolloReactHoc.withQuery<TProps, GetProfileUserQuery, GetProfileUserQueryVariables, GetProfileUserProps<TChildProps, TDataName>>(GetProfileUserDocument, {
-      alias: 'getProfileUser',
+  Mutate_MessagesMutation,
+  Mutate_MessagesMutationVariables,
+  Mutate_MessagesProps<TChildProps, TDataName>>) {
+    return ApolloReactHoc.withMutation<TProps, Mutate_MessagesMutation, Mutate_MessagesMutationVariables, Mutate_MessagesProps<TChildProps, TDataName>>(Mutate_MessagesDocument, {
+      alias: 'mutateMessages',
       ...operationOptions
     });
 };
 
 /**
- * __useGetProfileUserQuery__
+ * __useMutate_MessagesMutation__
  *
- * To run a query within a React component, call `useGetProfileUserQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetProfileUserQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a mutation, you first call `useMutate_MessagesMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useMutate_MessagesMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [mutateMessagesMutation, { data, loading, error }] = useMutate_MessagesMutation({
+ *   variables: {
+ *      sender_id: // value for 'sender_id'
+ *      receiver_id: // value for 'receiver_id'
+ *      subject: // value for 'subject'
+ *      body: // value for 'body'
+ *   },
+ * });
+ */
+export function useMutate_MessagesMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Mutate_MessagesMutation, Mutate_MessagesMutationVariables>) {
+        return ApolloReactHooks.useMutation<Mutate_MessagesMutation, Mutate_MessagesMutationVariables>(Mutate_MessagesDocument, baseOptions);
+      }
+export type Mutate_MessagesMutationHookResult = ReturnType<typeof useMutate_MessagesMutation>;
+export type Mutate_MessagesMutationResult = ApolloReactCommon.MutationResult<Mutate_MessagesMutation>;
+export type Mutate_MessagesMutationOptions = ApolloReactCommon.BaseMutationOptions<Mutate_MessagesMutation, Mutate_MessagesMutationVariables>;
+export const GetMessageHistoryDocument = gql`
+    query getMessageHistory($sender_id: Int!, $receiver_id: Int!) {
+  getMessageHistory(sender_id: $sender_id, receiver_id: $receiver_id) {
+    id
+    subject
+    body
+    date_sent
+  }
+}
+    `;
+export type GetMessageHistoryComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<GetMessageHistoryQuery, GetMessageHistoryQueryVariables>, 'query'> & ({ variables: GetMessageHistoryQueryVariables; skip?: boolean; } | { skip: boolean; });
+
+    export const GetMessageHistoryComponent = (props: GetMessageHistoryComponentProps) => (
+      <ApolloReactComponents.Query<GetMessageHistoryQuery, GetMessageHistoryQueryVariables> query={GetMessageHistoryDocument} {...props} />
+    );
+    
+export type GetMessageHistoryProps<TChildProps = {}, TDataName extends string = 'data'> = {
+      [key in TDataName]: ApolloReactHoc.DataValue<GetMessageHistoryQuery, GetMessageHistoryQueryVariables>
+    } & TChildProps;
+export function withGetMessageHistory<TProps, TChildProps = {}, TDataName extends string = 'data'>(operationOptions?: ApolloReactHoc.OperationOption<
+  TProps,
+  GetMessageHistoryQuery,
+  GetMessageHistoryQueryVariables,
+  GetMessageHistoryProps<TChildProps, TDataName>>) {
+    return ApolloReactHoc.withQuery<TProps, GetMessageHistoryQuery, GetMessageHistoryQueryVariables, GetMessageHistoryProps<TChildProps, TDataName>>(GetMessageHistoryDocument, {
+      alias: 'getMessageHistory',
+      ...operationOptions
+    });
+};
+
+/**
+ * __useGetMessageHistoryQuery__
+ *
+ * To run a query within a React component, call `useGetMessageHistoryQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetMessageHistoryQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useGetProfileUserQuery({
+ * const { data, loading, error } = useGetMessageHistoryQuery({
  *   variables: {
- *      user_id: // value for 'user_id'
+ *      sender_id: // value for 'sender_id'
+ *      receiver_id: // value for 'receiver_id'
  *   },
  * });
  */
-export function useGetProfileUserQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetProfileUserQuery, GetProfileUserQueryVariables>) {
-        return ApolloReactHooks.useQuery<GetProfileUserQuery, GetProfileUserQueryVariables>(GetProfileUserDocument, baseOptions);
+export function useGetMessageHistoryQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetMessageHistoryQuery, GetMessageHistoryQueryVariables>) {
+        return ApolloReactHooks.useQuery<GetMessageHistoryQuery, GetMessageHistoryQueryVariables>(GetMessageHistoryDocument, baseOptions);
       }
-export function useGetProfileUserLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetProfileUserQuery, GetProfileUserQueryVariables>) {
-          return ApolloReactHooks.useLazyQuery<GetProfileUserQuery, GetProfileUserQueryVariables>(GetProfileUserDocument, baseOptions);
+export function useGetMessageHistoryLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetMessageHistoryQuery, GetMessageHistoryQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<GetMessageHistoryQuery, GetMessageHistoryQueryVariables>(GetMessageHistoryDocument, baseOptions);
         }
-export type GetProfileUserQueryHookResult = ReturnType<typeof useGetProfileUserQuery>;
-export type GetProfileUserLazyQueryHookResult = ReturnType<typeof useGetProfileUserLazyQuery>;
-export type GetProfileUserQueryResult = ApolloReactCommon.QueryResult<GetProfileUserQuery, GetProfileUserQueryVariables>;
+export type GetMessageHistoryQueryHookResult = ReturnType<typeof useGetMessageHistoryQuery>;
+export type GetMessageHistoryLazyQueryHookResult = ReturnType<typeof useGetMessageHistoryLazyQuery>;
+export type GetMessageHistoryQueryResult = ApolloReactCommon.QueryResult<GetMessageHistoryQuery, GetMessageHistoryQueryVariables>;

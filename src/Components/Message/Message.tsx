@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
-import { ProfileType, useGetProfileQuery } from '../../generated/graphql';
+import { ProfileType, useMutate_MessagesMutation } from '../../generated/graphql';
 import { messageFormDataType } from '../../types';
 import MessageHistory from '../MessageHistory/MessageHistory';
+import { UserContext } from '../../context/UserContext';
 import './Message.css';
 
 interface iMessage {
@@ -12,14 +13,25 @@ interface iMessage {
 const Message: React.FC<iMessage> = (props) => {
   const { receiver } = props;
 
+  const { user } = useContext(UserContext);
+
   const { handleSubmit, register, errors } = useForm<messageFormDataType>();
   const onSubmit = (data: messageFormDataType) => {
-    console.log(data);
+    messagesMutation({
+      variables: {
+        sender_id: user.id,
+        receiver_id: receiver.user?.id!,
+        subject: data.subject,
+        body: data.body,
+      },
+    });
   };
+
+  const [messagesMutation, { data, loading, error }] = useMutate_MessagesMutation();
 
   return (
     <div className="Message">
-      <MessageHistory />
+      <MessageHistory receiver_id={receiver.user?.id!} sender_id={user.id} />
       <div className="Message_header">
         <img
           className="Message_header_img"
