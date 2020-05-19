@@ -21,30 +21,27 @@ const Community: React.FC<Props> = ({ client }) => {
   };
 
   const res = useGetProfileHelpInfoQuery({ variables: { user_id: user.id } });
-  console.log(res);
 
   const help = res?.data?.profile?.help!;
   const help_options = res?.data?.profile?.help_options!;
   const vars = { ...help, ...help_options };
   delete vars['__typename'];
 
-  console.log(vars);
-
   const { data, loading, error } = useGetProfileMatchesQuery({
     variables: { ...vars },
   });
 
   if (loading) return <div> LOADING</div>;
-  console.log(error);
-  console.log(data);
+
+  console.log('messageTo is ', messageTo);
 
   return (
     <div className="Community">
       {data?.getProfileMatches?.map((profile) => {
-        console.log(profile);
+        //console.log(profile);
         return <CondensedProfile profile={profile!} toggleShowMessage={toggleShowMessage} />;
       })}
-      {messageTo && <Message receiver={messageTo} />}
+      {messageTo && <Message recipient={messageTo} />}
     </div>
   );
 };

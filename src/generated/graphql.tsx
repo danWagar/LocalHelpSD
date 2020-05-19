@@ -20,6 +20,7 @@ export type RootQueryType = {
   user?: Maybe<UserType>;
   profile?: Maybe<ProfileType>;
   getProfileMatches?: Maybe<Array<Maybe<ProfileType>>>;
+  getMessageThread?: Maybe<MessageThreadType>;
   getMessageHistory?: Maybe<Array<Maybe<MessageType>>>;
 };
 
@@ -44,9 +45,14 @@ export type RootQueryTypeGetProfileMatchesArgs = {
 };
 
 
+export type RootQueryTypeGetMessageThreadArgs = {
+  created_by?: Maybe<Scalars['Int']>;
+  recipient?: Maybe<Scalars['Int']>;
+};
+
+
 export type RootQueryTypeGetMessageHistoryArgs = {
-  sender_id?: Maybe<Scalars['Int']>;
-  receiver_id?: Maybe<Scalars['Int']>;
+  thread_id?: Maybe<Scalars['Int']>;
 };
 
 export type UserType = {
@@ -94,9 +100,17 @@ export type HelpOptionType = {
   career_services?: Maybe<Scalars['Boolean']>;
 };
 
+export type MessageThreadType = {
+   __typename?: 'MessageThreadType';
+  id?: Maybe<Scalars['Int']>;
+  created_by?: Maybe<Scalars['Int']>;
+  recipient?: Maybe<Scalars['Int']>;
+};
+
 export type MessageType = {
    __typename?: 'MessageType';
   id?: Maybe<Scalars['Int']>;
+  thread_id?: Maybe<Scalars['Int']>;
   sender_id?: Maybe<Scalars['Int']>;
   receiver_id?: Maybe<Scalars['Int']>;
   subject?: Maybe<Scalars['String']>;
@@ -129,6 +143,7 @@ export type MutationPostProfileArgs = {
 
 
 export type MutationPostMessageArgs = {
+  thread_id?: Maybe<Scalars['Int']>;
   sender_id?: Maybe<Scalars['Int']>;
   receiver_id?: Maybe<Scalars['Int']>;
   subject?: Maybe<Scalars['String']>;
@@ -247,6 +262,7 @@ export type GetProfileMatchesQuery = (
 );
 
 export type Mutate_MessagesMutationVariables = {
+  thread_id?: Maybe<Scalars['Int']>;
   sender_id: Scalars['Int'];
   receiver_id: Scalars['Int'];
   subject?: Maybe<Scalars['String']>;
@@ -262,9 +278,22 @@ export type Mutate_MessagesMutation = (
   )> }
 );
 
+export type GetMessageThreadQueryVariables = {
+  created_by: Scalars['Int'];
+  recipient: Scalars['Int'];
+};
+
+
+export type GetMessageThreadQuery = (
+  { __typename?: 'RootQueryType' }
+  & { getMessageThread?: Maybe<(
+    { __typename?: 'MessageThreadType' }
+    & Pick<MessageThreadType, 'id'>
+  )> }
+);
+
 export type GetMessageHistoryQueryVariables = {
-  sender_id: Scalars['Int'];
-  receiver_id: Scalars['Int'];
+  thread_id: Scalars['Int'];
 };
 
 
@@ -272,7 +301,7 @@ export type GetMessageHistoryQuery = (
   { __typename?: 'RootQueryType' }
   & { getMessageHistory?: Maybe<Array<Maybe<(
     { __typename?: 'MessageType' }
-    & Pick<MessageType, 'id' | 'sender_id' | 'receiver_id' | 'subject' | 'body' | 'date_sent'>
+    & Pick<MessageType, 'id' | 'thread_id' | 'sender_id' | 'receiver_id' | 'subject' | 'body' | 'date_sent'>
   )>>> }
 );
 
@@ -608,8 +637,8 @@ export type GetProfileMatchesQueryHookResult = ReturnType<typeof useGetProfileMa
 export type GetProfileMatchesLazyQueryHookResult = ReturnType<typeof useGetProfileMatchesLazyQuery>;
 export type GetProfileMatchesQueryResult = ApolloReactCommon.QueryResult<GetProfileMatchesQuery, GetProfileMatchesQueryVariables>;
 export const Mutate_MessagesDocument = gql`
-    mutation Mutate_Messages($sender_id: Int!, $receiver_id: Int!, $subject: String, $body: String!) {
-  postMessage(sender_id: $sender_id, receiver_id: $receiver_id, subject: $subject, body: $body) {
+    mutation Mutate_Messages($thread_id: Int, $sender_id: Int!, $receiver_id: Int!, $subject: String, $body: String!) {
+  postMessage(thread_id: $thread_id, sender_id: $sender_id, receiver_id: $receiver_id, subject: $subject, body: $body) {
     id
   }
 }
@@ -648,6 +677,7 @@ export function withMutate_Messages<TProps, TChildProps = {}, TDataName extends 
  * @example
  * const [mutateMessagesMutation, { data, loading, error }] = useMutate_MessagesMutation({
  *   variables: {
+ *      thread_id: // value for 'thread_id'
  *      sender_id: // value for 'sender_id'
  *      receiver_id: // value for 'receiver_id'
  *      subject: // value for 'subject'
@@ -661,10 +691,64 @@ export function useMutate_MessagesMutation(baseOptions?: ApolloReactHooks.Mutati
 export type Mutate_MessagesMutationHookResult = ReturnType<typeof useMutate_MessagesMutation>;
 export type Mutate_MessagesMutationResult = ApolloReactCommon.MutationResult<Mutate_MessagesMutation>;
 export type Mutate_MessagesMutationOptions = ApolloReactCommon.BaseMutationOptions<Mutate_MessagesMutation, Mutate_MessagesMutationVariables>;
-export const GetMessageHistoryDocument = gql`
-    query getMessageHistory($sender_id: Int!, $receiver_id: Int!) {
-  getMessageHistory(sender_id: $sender_id, receiver_id: $receiver_id) {
+export const GetMessageThreadDocument = gql`
+    query getMessageThread($created_by: Int!, $recipient: Int!) {
+  getMessageThread(created_by: $created_by, recipient: $recipient) {
     id
+  }
+}
+    `;
+export type GetMessageThreadComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<GetMessageThreadQuery, GetMessageThreadQueryVariables>, 'query'> & ({ variables: GetMessageThreadQueryVariables; skip?: boolean; } | { skip: boolean; });
+
+    export const GetMessageThreadComponent = (props: GetMessageThreadComponentProps) => (
+      <ApolloReactComponents.Query<GetMessageThreadQuery, GetMessageThreadQueryVariables> query={GetMessageThreadDocument} {...props} />
+    );
+    
+export type GetMessageThreadProps<TChildProps = {}, TDataName extends string = 'data'> = {
+      [key in TDataName]: ApolloReactHoc.DataValue<GetMessageThreadQuery, GetMessageThreadQueryVariables>
+    } & TChildProps;
+export function withGetMessageThread<TProps, TChildProps = {}, TDataName extends string = 'data'>(operationOptions?: ApolloReactHoc.OperationOption<
+  TProps,
+  GetMessageThreadQuery,
+  GetMessageThreadQueryVariables,
+  GetMessageThreadProps<TChildProps, TDataName>>) {
+    return ApolloReactHoc.withQuery<TProps, GetMessageThreadQuery, GetMessageThreadQueryVariables, GetMessageThreadProps<TChildProps, TDataName>>(GetMessageThreadDocument, {
+      alias: 'getMessageThread',
+      ...operationOptions
+    });
+};
+
+/**
+ * __useGetMessageThreadQuery__
+ *
+ * To run a query within a React component, call `useGetMessageThreadQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetMessageThreadQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetMessageThreadQuery({
+ *   variables: {
+ *      created_by: // value for 'created_by'
+ *      recipient: // value for 'recipient'
+ *   },
+ * });
+ */
+export function useGetMessageThreadQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetMessageThreadQuery, GetMessageThreadQueryVariables>) {
+        return ApolloReactHooks.useQuery<GetMessageThreadQuery, GetMessageThreadQueryVariables>(GetMessageThreadDocument, baseOptions);
+      }
+export function useGetMessageThreadLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetMessageThreadQuery, GetMessageThreadQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<GetMessageThreadQuery, GetMessageThreadQueryVariables>(GetMessageThreadDocument, baseOptions);
+        }
+export type GetMessageThreadQueryHookResult = ReturnType<typeof useGetMessageThreadQuery>;
+export type GetMessageThreadLazyQueryHookResult = ReturnType<typeof useGetMessageThreadLazyQuery>;
+export type GetMessageThreadQueryResult = ApolloReactCommon.QueryResult<GetMessageThreadQuery, GetMessageThreadQueryVariables>;
+export const GetMessageHistoryDocument = gql`
+    query getMessageHistory($thread_id: Int!) {
+  getMessageHistory(thread_id: $thread_id) {
+    id
+    thread_id
     sender_id
     receiver_id
     subject
@@ -705,8 +789,7 @@ export function withGetMessageHistory<TProps, TChildProps = {}, TDataName extend
  * @example
  * const { data, loading, error } = useGetMessageHistoryQuery({
  *   variables: {
- *      sender_id: // value for 'sender_id'
- *      receiver_id: // value for 'receiver_id'
+ *      thread_id: // value for 'thread_id'
  *   },
  * });
  */

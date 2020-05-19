@@ -11,7 +11,6 @@ interface iCondensedProfile {
 const CondensedProfile: React.FC<iCondensedProfile> = (props) => {
   const { profile, toggleShowMessage } = props;
   const userName = profile?.user?.first_name + ' ' + profile?.user?.last_name;
-  console.log(profile);
   const { user } = useContext(UserContext);
 
   function typedKeys<T>(o: T): (keyof T)[] {

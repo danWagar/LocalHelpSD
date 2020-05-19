@@ -138,17 +138,38 @@ const gqlQueries = {
   `,
 
   MUTATE_MESSAGES: gql`
-    mutation Mutate_Messages($sender_id: Int!, $receiver_id: Int!, $subject: String, $body: String!) {
-      postMessage(sender_id: $sender_id, receiver_id: $receiver_id, subject: $subject, body: $body) {
+    mutation Mutate_Messages(
+      $thread_id: Int
+      $sender_id: Int!
+      $receiver_id: Int!
+      $subject: String
+      $body: String!
+    ) {
+      postMessage(
+        thread_id: $thread_id
+        sender_id: $sender_id
+        receiver_id: $receiver_id
+        subject: $subject
+        body: $body
+      ) {
+        id
+      }
+    }
+  `,
+
+  GET_MESSAGE_THREAD: gql`
+    query getMessageThread($created_by: Int!, $recipient: Int!) {
+      getMessageThread(created_by: $created_by, recipient: $recipient) {
         id
       }
     }
   `,
 
   GET_MESSAGE_HISTORY: gql`
-    query getMessageHistory($sender_id: Int!, $receiver_id: Int!) {
-      getMessageHistory(sender_id: $sender_id, receiver_id: $receiver_id) {
+    query getMessageHistory($thread_id: Int!) {
+      getMessageHistory(thread_id: $thread_id) {
         id
+        thread_id
         sender_id
         receiver_id
         subject

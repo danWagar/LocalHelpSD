@@ -5,8 +5,7 @@ import classNames from 'classnames';
 import './MessageHistory.css';
 
 interface iMessageHistory {
-  receiver_id: number;
-  sender_id: number;
+  thread_id: number;
 }
 
 type dateTimeType = {
@@ -20,15 +19,17 @@ type alignmentType = {
 };
 
 const MessageHistory: React.FC<iMessageHistory> = (props) => {
-  const { sender_id, receiver_id } = props;
+  const { thread_id } = props;
   const { user } = useContext(UserContext);
 
   const { data, loading, error } = useGetMessageHistoryQuery({
     variables: {
-      sender_id: sender_id,
-      receiver_id: receiver_id,
+      thread_id: thread_id,
     },
+    skip: !thread_id,
   });
+
+  console.log(data);
 
   const TStoDisplayDate = (ts: number) => {
     const date = new Date();

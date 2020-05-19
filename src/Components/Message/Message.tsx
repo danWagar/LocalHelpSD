@@ -1,48 +1,66 @@
-import React, { useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { useForm } from 'react-hook-form';
-import { ProfileType, useMutate_MessagesMutation } from '../../generated/graphql';
+import { ProfileType, useMutate_MessagesMutation, useGetMessageThreadQuery } from '../../generated/graphql';
 import { messageFormDataType } from '../../types';
 import MessageHistory from '../MessageHistory/MessageHistory';
 import { UserContext } from '../../context/UserContext';
 import './Message.css';
 
 interface iMessage {
-  receiver: ProfileType;
+  recipient: ProfileType;
 }
 
 const Message: React.FC<iMessage> = (props) => {
-  const { receiver } = props;
+  const { recipient } = props;
+
+  const [minimize, setMinimize] = useState<boolean>(true);
 
   const { user } = useContext(UserContext);
 
   const { handleSubmit, register, errors } = useForm<messageFormDataType>();
+
+  const MessageThreadQuery = useGetMessageThreadQuery({
+    variables: {
+      created_by: user.id,
+      recipient: recipient.user?.id!,
+    },
+  });
+
+  const [messagesMutation, { data, loading, error }] = useMutate_MessagesMutation();
+
+  if (loading || MessageThreadQuery.loading) return <div>Loading</div>;
+
+  const threadID = MessageThreadQuery?.data?.getMessageThread?.id;
+
   const onSubmit = (data: messageFormDataType) => {
+    console.log('threadID is ', threadID);
     messagesMutation({
       variables: {
+        thread_id: threadID || null,
         sender_id: user.id,
-        receiver_id: receiver.user?.id!,
+        receiver_id: recipient.user?.id!,
         subject: data.subject,
         body: data.body,
       },
     });
   };
 
-  const [messagesMutation, { data, loading, error }] = useMutate_MessagesMutation();
-
   const handleMinimize = () => {
     console.log('minimize');
   };
 
+  console.log(threadID);
+
   return (
     <div className="Message">
-      <MessageHistory receiver_id={receiver.user?.id!} sender_id={user.id} />
+      <MessageHistory thread_id={threadID!} />
       <div className="Message_header">
         <img
           className="Message_header_img"
-          src={receiver.avatar as string}
-          alt={receiver?.user?.first_name + ' ' + receiver?.user?.last_name + `'s avatar`}
+          src={recipient.avatar as string}
+          alt={recipient?.user?.first_name + ' ' + recipient?.user?.last_name + `'s avatar`}
         />
-        <p className="bold">{receiver?.user?.first_name + ' ' + receiver?.user?.last_name}</p>
+        <p className="bold">{recipient?.user?.first_name + ' ' + recipient?.user?.last_name}</p>
         <div className="Message_minimize clickable" onClick={handleMinimize}></div>
       </div>
       <form className="Message_container" onSubmit={handleSubmit(onSubmit)}>
