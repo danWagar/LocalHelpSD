@@ -21,6 +21,7 @@ export type RootQueryType = {
   profile?: Maybe<ProfileType>;
   getProfileMatches?: Maybe<Array<Maybe<ProfileType>>>;
   getMessageThread?: Maybe<MessageThreadType>;
+  getUserMessageThreads?: Maybe<Array<Maybe<MessageThreadType>>>;
   getMessageHistory?: Maybe<Array<Maybe<MessageType>>>;
 };
 
@@ -48,6 +49,11 @@ export type RootQueryTypeGetProfileMatchesArgs = {
 export type RootQueryTypeGetMessageThreadArgs = {
   created_by?: Maybe<Scalars['Int']>;
   recipient?: Maybe<Scalars['Int']>;
+};
+
+
+export type RootQueryTypeGetUserMessageThreadsArgs = {
+  user_id?: Maybe<Scalars['Int']>;
 };
 
 
@@ -182,12 +188,15 @@ export type GetProfileQuery = (
     )>, help_options?: Maybe<(
       { __typename?: 'HelpOptionType' }
       & Pick<HelpOptionType, 'grocery_delivery' | 'walk_dogs' | 'donations' | 'counceling' | 'career_services'>
+    )>, user?: Maybe<(
+      { __typename?: 'UserType' }
+      & Pick<UserType, 'id' | 'email' | 'first_name' | 'last_name'>
     )> }
   )> }
 );
 
 export type GetProfileHelpInfoQueryVariables = {
-  user_id?: Maybe<Scalars['Int']>;
+  user_id: Scalars['Int'];
 };
 
 
@@ -201,6 +210,23 @@ export type GetProfileHelpInfoQuery = (
     )>, help_options?: Maybe<(
       { __typename?: 'HelpOptionType' }
       & Pick<HelpOptionType, 'grocery_delivery' | 'walk_dogs' | 'donations' | 'counceling' | 'career_services'>
+    )> }
+  )> }
+);
+
+export type GetProfileUserInfoQueryVariables = {
+  user_id: Scalars['Int'];
+};
+
+
+export type GetProfileUserInfoQuery = (
+  { __typename?: 'RootQueryType' }
+  & { profile?: Maybe<(
+    { __typename?: 'ProfileType' }
+    & Pick<ProfileType, 'avatar'>
+    & { user?: Maybe<(
+      { __typename?: 'UserType' }
+      & Pick<UserType, 'id' | 'first_name' | 'last_name'>
     )> }
   )> }
 );
@@ -290,6 +316,19 @@ export type GetMessageThreadQuery = (
     { __typename?: 'MessageThreadType' }
     & Pick<MessageThreadType, 'id'>
   )> }
+);
+
+export type GetUserMessageThreadsQueryVariables = {
+  user_id: Scalars['Int'];
+};
+
+
+export type GetUserMessageThreadsQuery = (
+  { __typename?: 'RootQueryType' }
+  & { getUserMessageThreads?: Maybe<Array<Maybe<(
+    { __typename?: 'MessageThreadType' }
+    & Pick<MessageThreadType, 'id' | 'created_by' | 'recipient'>
+  )>>> }
 );
 
 export type GetMessageHistoryQueryVariables = {
@@ -383,6 +422,12 @@ export const GetProfileDocument = gql`
       counceling
       career_services
     }
+    user {
+      id
+      email
+      first_name
+      last_name
+    }
   }
 }
     `;
@@ -432,7 +477,7 @@ export type GetProfileQueryHookResult = ReturnType<typeof useGetProfileQuery>;
 export type GetProfileLazyQueryHookResult = ReturnType<typeof useGetProfileLazyQuery>;
 export type GetProfileQueryResult = ApolloReactCommon.QueryResult<GetProfileQuery, GetProfileQueryVariables>;
 export const GetProfileHelpInfoDocument = gql`
-    query getProfileHelpInfo($user_id: Int) {
+    query getProfileHelpInfo($user_id: Int!) {
   profile(user_id: $user_id) {
     help {
       wants_help
@@ -447,7 +492,7 @@ export const GetProfileHelpInfoDocument = gql`
   }
 }
     `;
-export type GetProfileHelpInfoComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<GetProfileHelpInfoQuery, GetProfileHelpInfoQueryVariables>, 'query'>;
+export type GetProfileHelpInfoComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<GetProfileHelpInfoQuery, GetProfileHelpInfoQueryVariables>, 'query'> & ({ variables: GetProfileHelpInfoQueryVariables; skip?: boolean; } | { skip: boolean; });
 
     export const GetProfileHelpInfoComponent = (props: GetProfileHelpInfoComponentProps) => (
       <ApolloReactComponents.Query<GetProfileHelpInfoQuery, GetProfileHelpInfoQueryVariables> query={GetProfileHelpInfoDocument} {...props} />
@@ -492,6 +537,63 @@ export function useGetProfileHelpInfoLazyQuery(baseOptions?: ApolloReactHooks.La
 export type GetProfileHelpInfoQueryHookResult = ReturnType<typeof useGetProfileHelpInfoQuery>;
 export type GetProfileHelpInfoLazyQueryHookResult = ReturnType<typeof useGetProfileHelpInfoLazyQuery>;
 export type GetProfileHelpInfoQueryResult = ApolloReactCommon.QueryResult<GetProfileHelpInfoQuery, GetProfileHelpInfoQueryVariables>;
+export const GetProfileUserInfoDocument = gql`
+    query getProfileUserInfo($user_id: Int!) {
+  profile(user_id: $user_id) {
+    avatar
+    user {
+      id
+      first_name
+      last_name
+    }
+  }
+}
+    `;
+export type GetProfileUserInfoComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<GetProfileUserInfoQuery, GetProfileUserInfoQueryVariables>, 'query'> & ({ variables: GetProfileUserInfoQueryVariables; skip?: boolean; } | { skip: boolean; });
+
+    export const GetProfileUserInfoComponent = (props: GetProfileUserInfoComponentProps) => (
+      <ApolloReactComponents.Query<GetProfileUserInfoQuery, GetProfileUserInfoQueryVariables> query={GetProfileUserInfoDocument} {...props} />
+    );
+    
+export type GetProfileUserInfoProps<TChildProps = {}, TDataName extends string = 'data'> = {
+      [key in TDataName]: ApolloReactHoc.DataValue<GetProfileUserInfoQuery, GetProfileUserInfoQueryVariables>
+    } & TChildProps;
+export function withGetProfileUserInfo<TProps, TChildProps = {}, TDataName extends string = 'data'>(operationOptions?: ApolloReactHoc.OperationOption<
+  TProps,
+  GetProfileUserInfoQuery,
+  GetProfileUserInfoQueryVariables,
+  GetProfileUserInfoProps<TChildProps, TDataName>>) {
+    return ApolloReactHoc.withQuery<TProps, GetProfileUserInfoQuery, GetProfileUserInfoQueryVariables, GetProfileUserInfoProps<TChildProps, TDataName>>(GetProfileUserInfoDocument, {
+      alias: 'getProfileUserInfo',
+      ...operationOptions
+    });
+};
+
+/**
+ * __useGetProfileUserInfoQuery__
+ *
+ * To run a query within a React component, call `useGetProfileUserInfoQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetProfileUserInfoQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetProfileUserInfoQuery({
+ *   variables: {
+ *      user_id: // value for 'user_id'
+ *   },
+ * });
+ */
+export function useGetProfileUserInfoQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetProfileUserInfoQuery, GetProfileUserInfoQueryVariables>) {
+        return ApolloReactHooks.useQuery<GetProfileUserInfoQuery, GetProfileUserInfoQueryVariables>(GetProfileUserInfoDocument, baseOptions);
+      }
+export function useGetProfileUserInfoLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetProfileUserInfoQuery, GetProfileUserInfoQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<GetProfileUserInfoQuery, GetProfileUserInfoQueryVariables>(GetProfileUserInfoDocument, baseOptions);
+        }
+export type GetProfileUserInfoQueryHookResult = ReturnType<typeof useGetProfileUserInfoQuery>;
+export type GetProfileUserInfoLazyQueryHookResult = ReturnType<typeof useGetProfileUserInfoLazyQuery>;
+export type GetProfileUserInfoQueryResult = ApolloReactCommon.QueryResult<GetProfileUserInfoQuery, GetProfileUserInfoQueryVariables>;
 export const Mutate_ProfileDocument = gql`
     mutation MUTATE_PROFILE($user_id: Int!, $avatar: String, $neighborhood: String, $story: String, $wants_help: Boolean!, $immunocompromised: Boolean!, $unemployment: Boolean!, $essential: Boolean!, $grocery_delivery: Boolean!, $walk_dogs: Boolean!, $donations: Boolean!, $counceling: Boolean!, $career_services: Boolean!) {
   postProfile(user_id: $user_id, avatar: $avatar, neighborhood: $neighborhood, story: $story, wants_help: $wants_help, immunocompromised: $immunocompromised, unemployment: $unemployment, essential: $essential, grocery_delivery: $grocery_delivery, walk_dogs: $walk_dogs, donations: $donations, counceling: $counceling, career_services: $career_services) {
@@ -744,6 +846,60 @@ export function useGetMessageThreadLazyQuery(baseOptions?: ApolloReactHooks.Lazy
 export type GetMessageThreadQueryHookResult = ReturnType<typeof useGetMessageThreadQuery>;
 export type GetMessageThreadLazyQueryHookResult = ReturnType<typeof useGetMessageThreadLazyQuery>;
 export type GetMessageThreadQueryResult = ApolloReactCommon.QueryResult<GetMessageThreadQuery, GetMessageThreadQueryVariables>;
+export const GetUserMessageThreadsDocument = gql`
+    query getUserMessageThreads($user_id: Int!) {
+  getUserMessageThreads(user_id: $user_id) {
+    id
+    created_by
+    recipient
+  }
+}
+    `;
+export type GetUserMessageThreadsComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<GetUserMessageThreadsQuery, GetUserMessageThreadsQueryVariables>, 'query'> & ({ variables: GetUserMessageThreadsQueryVariables; skip?: boolean; } | { skip: boolean; });
+
+    export const GetUserMessageThreadsComponent = (props: GetUserMessageThreadsComponentProps) => (
+      <ApolloReactComponents.Query<GetUserMessageThreadsQuery, GetUserMessageThreadsQueryVariables> query={GetUserMessageThreadsDocument} {...props} />
+    );
+    
+export type GetUserMessageThreadsProps<TChildProps = {}, TDataName extends string = 'data'> = {
+      [key in TDataName]: ApolloReactHoc.DataValue<GetUserMessageThreadsQuery, GetUserMessageThreadsQueryVariables>
+    } & TChildProps;
+export function withGetUserMessageThreads<TProps, TChildProps = {}, TDataName extends string = 'data'>(operationOptions?: ApolloReactHoc.OperationOption<
+  TProps,
+  GetUserMessageThreadsQuery,
+  GetUserMessageThreadsQueryVariables,
+  GetUserMessageThreadsProps<TChildProps, TDataName>>) {
+    return ApolloReactHoc.withQuery<TProps, GetUserMessageThreadsQuery, GetUserMessageThreadsQueryVariables, GetUserMessageThreadsProps<TChildProps, TDataName>>(GetUserMessageThreadsDocument, {
+      alias: 'getUserMessageThreads',
+      ...operationOptions
+    });
+};
+
+/**
+ * __useGetUserMessageThreadsQuery__
+ *
+ * To run a query within a React component, call `useGetUserMessageThreadsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetUserMessageThreadsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetUserMessageThreadsQuery({
+ *   variables: {
+ *      user_id: // value for 'user_id'
+ *   },
+ * });
+ */
+export function useGetUserMessageThreadsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetUserMessageThreadsQuery, GetUserMessageThreadsQueryVariables>) {
+        return ApolloReactHooks.useQuery<GetUserMessageThreadsQuery, GetUserMessageThreadsQueryVariables>(GetUserMessageThreadsDocument, baseOptions);
+      }
+export function useGetUserMessageThreadsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetUserMessageThreadsQuery, GetUserMessageThreadsQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<GetUserMessageThreadsQuery, GetUserMessageThreadsQueryVariables>(GetUserMessageThreadsDocument, baseOptions);
+        }
+export type GetUserMessageThreadsQueryHookResult = ReturnType<typeof useGetUserMessageThreadsQuery>;
+export type GetUserMessageThreadsLazyQueryHookResult = ReturnType<typeof useGetUserMessageThreadsLazyQuery>;
+export type GetUserMessageThreadsQueryResult = ApolloReactCommon.QueryResult<GetUserMessageThreadsQuery, GetUserMessageThreadsQueryVariables>;
 export const GetMessageHistoryDocument = gql`
     query getMessageHistory($thread_id: Int!) {
   getMessageHistory(thread_id: $thread_id) {

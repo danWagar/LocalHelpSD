@@ -34,12 +34,18 @@ const gqlQueries = {
           counceling
           career_services
         }
+        user {
+          id
+          email
+          first_name
+          last_name
+        }
       }
     }
   `,
 
   GET_PROFILE_HELP_INFO: gql`
-    query getProfileHelpInfo($user_id: Int) {
+    query getProfileHelpInfo($user_id: Int!) {
       profile(user_id: $user_id) {
         help {
           wants_help
@@ -50,6 +56,19 @@ const gqlQueries = {
           donations
           counceling
           career_services
+        }
+      }
+    }
+  `,
+
+  GET_PROFILE_USER_INFO: gql`
+    query getProfileUserInfo($user_id: Int!) {
+      profile(user_id: $user_id) {
+        avatar
+        user {
+          id
+          first_name
+          last_name
         }
       }
     }
@@ -161,6 +180,16 @@ const gqlQueries = {
     query getMessageThread($created_by: Int!, $recipient: Int!) {
       getMessageThread(created_by: $created_by, recipient: $recipient) {
         id
+      }
+    }
+  `,
+
+  GET_USER_MESSAGE_THREADS: gql`
+    query getUserMessageThreads($user_id: Int!) {
+      getUserMessageThreads(user_id: $user_id) {
+        id
+        created_by
+        recipient
       }
     }
   `,

@@ -110,4 +110,12 @@ button,
   background-position: 20%;
   background-size: cover;
 }
+
+.small_avatar {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  border: 2px solid white;
+  margin-right: 10px;
+}
 /*# sourceMappingURL=index.css.map */

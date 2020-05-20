@@ -1,4 +1,5 @@
 import React from 'react';
+import './NavIcon.css';
 
 interface iIcon {
   currentLocation: boolean;

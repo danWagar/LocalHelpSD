@@ -62,8 +62,6 @@ const FindHelp: React.FC = () => {
     }
   };
 
-  console.log(formDataInput);
-
   return (
     <main className="FindHelp">
       <div className="left_container">

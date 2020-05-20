@@ -29,13 +29,11 @@ const MessageHistory: React.FC<iMessageHistory> = (props) => {
     skip: !thread_id,
   });
 
-  console.log(data);
-
   const TStoDisplayDate = (ts: number) => {
     const date = new Date();
     date.setTime(ts);
     const month = date.toLocaleString('default', { month: 'long' });
-    const day = date.toJSON().slice(8, 10);
+    const day = date.toLocaleDateString('defautl', { day: 'numeric' });
     let time = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
     if (time.charAt(0) === '0') time = time.slice(1);
     return { monthDay: month + ' ' + day, time: time };

@@ -8,10 +8,13 @@ import './Message.css';
 
 interface iMessage {
   recipient: ProfileType;
+  threadID?: number | null;
+  toggleShowMessage: (profile?: ProfileType) => void;
 }
 
 const Message: React.FC<iMessage> = (props) => {
-  const { recipient } = props;
+  const { recipient, toggleShowMessage } = props;
+  let threadID = props.threadID;
 
   const [minimize, setMinimize] = useState<boolean>(true);
 
@@ -24,16 +27,16 @@ const Message: React.FC<iMessage> = (props) => {
       created_by: user.id,
       recipient: recipient.user?.id!,
     },
+    skip: threadID !== null,
   });
 
   const [messagesMutation, { data, loading, error }] = useMutate_MessagesMutation();
 
   if (loading || MessageThreadQuery.loading) return <div>Loading</div>;
 
-  const threadID = MessageThreadQuery?.data?.getMessageThread?.id;
+  if (MessageThreadQuery.data) threadID = MessageThreadQuery?.data?.getMessageThread?.id;
 
   const onSubmit = (data: messageFormDataType) => {
-    console.log('threadID is ', threadID);
     messagesMutation({
       variables: {
         thread_id: threadID || null,
@@ -46,22 +49,22 @@ const Message: React.FC<iMessage> = (props) => {
   };
 
   const handleMinimize = () => {
-    console.log('minimize');
+    toggleShowMessage();
   };
-
-  console.log(threadID);
 
   return (
     <div className="Message">
       <MessageHistory thread_id={threadID!} />
       <div className="Message_header">
         <img
-          className="Message_header_img"
+          className="small_avatar"
           src={recipient.avatar as string}
           alt={recipient?.user?.first_name + ' ' + recipient?.user?.last_name + `'s avatar`}
         />
         <p className="bold">{recipient?.user?.first_name + ' ' + recipient?.user?.last_name}</p>
-        <div className="Message_minimize clickable" onClick={handleMinimize}></div>
+        <div className="Message_minimize_container clickable" onClick={handleMinimize}>
+          <div className="Message_minimize"></div>
+        </div>
       </div>
       <form className="Message_container" onSubmit={handleSubmit(onSubmit)}>
         <label className="Message_subject">

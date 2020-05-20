@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { UserContext, User } from '../../context/UserContext';
 import Header from '../Header/Header';
@@ -9,9 +9,11 @@ import Login from '../Login/Login';
 import Profile from '../Profile/Profile';
 import Community from '../Community/Community';
 import Home from '../Home/Home';
+import MessageNav from '../MessageNav/MessageNav';
 import './App.css';
 
 function App() {
+  const [showMessageNav, setShowMessageNav] = useState<boolean>(false);
   const { user, setUser } = useContext(UserContext);
   const storedUserString = localStorage.getItem('user');
 
@@ -20,10 +22,14 @@ function App() {
     setUser(storedUser);
   }
 
+  const handleClickMessageNav = () => {
+    setShowMessageNav(!showMessageNav);
+  };
+
   return (
     <>
       <Switch>
-        <Route path="/lhsd" component={() => <LhsdHeader />} />
+        <Route path="/lhsd" component={() => <LhsdHeader handleClickMessageNav={handleClickMessageNav} />} />
         <Route path="/" component={() => <Header />} />
       </Switch>
       <Switch>
@@ -34,6 +40,7 @@ function App() {
         <Route exact path="/lhsd/profile" component={Profile} />
         <Route exact path="/lhsd/community" component={Community} />
       </Switch>
+      {showMessageNav && <MessageNav />}
     </>
   );
 }

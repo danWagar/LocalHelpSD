@@ -1,0 +1,19 @@
+@import '../../variables';
+
+.MessageNavItem {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  list-style: none;
+  border-top: 1px solid grey;
+  padding: 10px;
+
+  &:first-child {
+    border-top: none;
+  }
+
+  &:hover {
+    background-color: $primary-color-transparent;
+  }
+}

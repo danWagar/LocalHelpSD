@@ -6,9 +6,9 @@ import './Profile.css';
 
 const Profile: React.FC = () => {
   const { user } = useContext(UserContext);
+
   const [profile, setProfile] = useState<ProfileType | null>(null);
 
-  console.log('rendering profile');
   const { data, loading, error } = useFetchProfile(user.id, !!profile);
 
   if (loading) {

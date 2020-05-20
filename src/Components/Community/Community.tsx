@@ -15,9 +15,9 @@ const Community: React.FC<Props> = ({ client }) => {
 
   const [messageTo, setMessageTo] = useState<ProfileType | null>(null);
 
-  const toggleShowMessage = (profile: ProfileType) => {
+  const toggleShowMessage = (profile: ProfileType | undefined) => {
     if (messageTo) setMessageTo(null);
-    else setMessageTo(profile);
+    else if (profile) setMessageTo(profile);
   };
 
   const res = useGetProfileHelpInfoQuery({ variables: { user_id: user.id } });
@@ -33,15 +33,13 @@ const Community: React.FC<Props> = ({ client }) => {
 
   if (loading) return <div> LOADING</div>;
 
-  console.log('messageTo is ', messageTo);
-
   return (
     <div className="Community">
       {data?.getProfileMatches?.map((profile) => {
         //console.log(profile);
         return <CondensedProfile profile={profile!} toggleShowMessage={toggleShowMessage} />;
       })}
-      {messageTo && <Message recipient={messageTo} />}
+      {messageTo && <Message recipient={messageTo} threadID={null} toggleShowMessage={toggleShowMessage} />}
     </div>
   );
 };

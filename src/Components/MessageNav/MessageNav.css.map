@@ -1,0 +1,10 @@
+{
+    "version": 3,
+    "mappings": "AAEA,AAAA,WAAW,CAAC;EACV,QAAQ,EAAE,KAAK;EACf,KAAK,EAAE,KAAK;EACZ,MAAM,EAAE,CAAC;EACT,KAAK,EAAE,IAAI;CACZ;;AAED,AAAA,kBAAkB,CAAC;EACjB,gBAAgB,ECPA,OAAO;EDQvB,YAAY,EAAE,IAAI;EAClB,KAAK,EAAE,KAAK;EACZ,SAAS,EAAE,KAAK;EAChB,WAAW,EAAE,GAAG;CACjB;;AAED,AAAA,gBAAgB,CAAC;EACf,YAAY,EAAE,CAAC;EACf,MAAM,EAAE,CAAC;EACT,WAAW,EAAE,cAAc;EAC3B,YAAY,EAAE,cAAc;CAC7B",
+    "sources": [
+        "MessageNav.scss",
+        "../../variables.scss"
+    ],
+    "names": [],
+    "file": "MessageNav.css"
+}
