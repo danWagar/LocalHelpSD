@@ -79,8 +79,18 @@ button,
   color: #fff;
 }
 
+.dark_text_color {
+  color: #3c3e4b;
+}
+
 .bold {
   font-weight: 600;
+}
+
+.li_highlight {
+  margin: 5px;
+  padding: 5px;
+  background-color: #3686c9;
 }
 
 .left_container,

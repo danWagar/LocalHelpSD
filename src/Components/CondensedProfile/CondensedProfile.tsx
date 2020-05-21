@@ -1,11 +1,11 @@
 import React, { useContext } from 'react';
-import { ProfileType, useGetProfileQuery } from '../../generated/graphql';
+import { Profile, useGetProfileQuery } from '../../generated/graphql';
 import { UserContext } from '../../context/UserContext';
 import './CondensedProfile.css';
 
 interface iCondensedProfile {
-  profile: ProfileType;
-  toggleShowMessage: (profile: ProfileType) => void;
+  profile: Profile;
+  toggleShowMessage: (profile: Profile) => void;
 }
 
 const CondensedProfile: React.FC<iCondensedProfile> = (props) => {
@@ -29,7 +29,7 @@ const CondensedProfile: React.FC<iCondensedProfile> = (props) => {
         helpOptionsList.push(k);
       }
     });
-    return helpOptionsList.map((k) => <li>{k}</li>);
+    return helpOptionsList.map((k) => <li className="li_highlight">{k}</li>);
   };
 
   const handleMessageClick = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -38,20 +38,27 @@ const CondensedProfile: React.FC<iCondensedProfile> = (props) => {
 
   return (
     <div className="CondensedProfile">
-      <img src={profile?.avatar || ''} alt={userName + "'s profile picture"} />
-      <div className="CondensedProfile_user_info">
-        <p className="bold">{userName}</p>
-        <p>neighborhood: {profile?.neighborhood}</p>
+      <div className="CondensedProfile_inner"></div>
+      <div className="CondensedProfile_user">
+        <img src={profile?.avatar || ''} alt={userName + "'s profile picture"} />
+        <div className="CondensedProfile_user_info">
+          <p className="bold">{userName}</p>
+          <p>
+            <span className="bold">Neighborhood:</span> {profile?.neighborhood}
+          </p>
+        </div>
       </div>
-      <div>
-        <p className="bold">Requesting Help</p>
+      <div className="CondensedProfile_help">
+        <p className="bold">Requesting Help With:</p>
         <ul className="CondensedProfile_help_list">{profile?.help_options && getHelpOptions()}</ul>
       </div>
-      <div className="CondensedProfile_user_story">
+      <div className="CondensedProfile_story">
         <p className="bold">My Story</p>
-        <p>{profile?.story}</p>
+        <div className="CondensedProfile_story_container">{profile?.story}</div>
       </div>
-      <div onClick={handleMessageClick}>Message</div>
+      <div className="button emphasis_bg_color dark_text_color bold" onClick={handleMessageClick}>
+        Message
+      </div>
     </div>
   );
 };

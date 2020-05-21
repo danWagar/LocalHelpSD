@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { ProfileType, useGetProfileQuery } from '../../generated/graphql';
+import { Profile as ProfileType, useGetProfileQuery } from '../../generated/graphql';
 import { UserContext } from '../../context/UserContext';
 import useFetchProfile from '../../myHooks/useFetchProfile';
 import './Profile.css';
@@ -36,19 +36,26 @@ const Profile: React.FC = () => {
         helpOptionsList.push(k);
       }
     });
-    return helpOptionsList.map((k) => <li>{k}</li>);
+    return helpOptionsList.map((k) => <li className="li_highlight">{k}</li>);
   };
 
   return (
     <main className="Profile">
       <div className="Profile_user_header">
-        <img src={profile?.avatar || ''} alt={user.firstName + ' ' + user.lastName + "'s profile picture"} />
-        <div className="Profile_user_info">
-          <h2>{user.firstName + ' ' + user.lastName}</h2>
-          <p>neighborhood: {profile?.neighborhood}</p>
+        <div className="Profile_user_container">
+          <img
+            src={profile?.avatar || ''}
+            alt={user.firstName + ' ' + user.lastName + "'s profile picture"}
+          />
+          <div className="Profile_user_info">
+            <h2>{user.firstName + ' ' + user.lastName}</h2>
+            <p>
+              <span className="bold">Neighborhood:</span> {profile?.neighborhood}
+            </p>
+          </div>
         </div>
-        <div>
-          <h3>Requesting Help</h3>
+        <div className="Profile_help">
+          <h3>Requesting Help With</h3>
           <ul>{profile?.help_options && getHelpOptions()}</ul>
         </div>
       </div>

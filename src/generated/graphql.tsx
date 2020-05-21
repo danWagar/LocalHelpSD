@@ -13,184 +13,192 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  /** The `Upload` scalar type represents a file upload. */
+  Upload: any;
 };
 
-export type RootQueryType = {
-   __typename?: 'RootQueryType';
-  user?: Maybe<UserType>;
-  profile?: Maybe<ProfileType>;
-  getProfileMatches?: Maybe<Array<Maybe<ProfileType>>>;
-  getMessageThread?: Maybe<MessageThreadType>;
-  getUserMessageThreads?: Maybe<Array<Maybe<MessageThreadType>>>;
-  getMessageHistory?: Maybe<Array<Maybe<MessageType>>>;
+export type User = {
+   __typename?: 'User';
+  id: Scalars['Int'];
+  email: Scalars['String'];
+  first_name: Scalars['String'];
+  last_name: Scalars['String'];
 };
 
-
-export type RootQueryTypeUserArgs = {
-  email?: Maybe<Scalars['String']>;
+export type Help = {
+   __typename?: 'Help';
+  wants_help: Scalars['Boolean'];
 };
 
-
-export type RootQueryTypeProfileArgs = {
+export type HelpStatus = {
+   __typename?: 'HelpStatus';
   user_id?: Maybe<Scalars['Int']>;
+  immunocompromised: Scalars['Boolean'];
+  unemployment: Scalars['Boolean'];
+  essential: Scalars['Boolean'];
 };
 
-
-export type RootQueryTypeGetProfileMatchesArgs = {
-  wants_help?: Maybe<Scalars['Boolean']>;
-  grocery_delivery?: Maybe<Scalars['Boolean']>;
-  walk_dogs?: Maybe<Scalars['Boolean']>;
-  donations?: Maybe<Scalars['Boolean']>;
-  counceling?: Maybe<Scalars['Boolean']>;
-  career_services?: Maybe<Scalars['Boolean']>;
-};
-
-
-export type RootQueryTypeGetMessageThreadArgs = {
-  created_by?: Maybe<Scalars['Int']>;
-  recipient?: Maybe<Scalars['Int']>;
-};
-
-
-export type RootQueryTypeGetUserMessageThreadsArgs = {
+export type HelpOptions = {
+   __typename?: 'HelpOptions';
   user_id?: Maybe<Scalars['Int']>;
+  wants_help: Scalars['Boolean'];
+  grocery_delivery: Scalars['Boolean'];
+  walk_dogs: Scalars['Boolean'];
+  donations: Scalars['Boolean'];
+  counceling: Scalars['Boolean'];
+  career_services: Scalars['Boolean'];
 };
 
-
-export type RootQueryTypeGetMessageHistoryArgs = {
-  thread_id?: Maybe<Scalars['Int']>;
-};
-
-export type UserType = {
-   __typename?: 'UserType';
-  id?: Maybe<Scalars['Int']>;
-  email?: Maybe<Scalars['String']>;
-  first_name?: Maybe<Scalars['String']>;
-  last_name?: Maybe<Scalars['String']>;
-};
-
-export type ProfileType = {
-   __typename?: 'ProfileType';
+export type Profile = {
+   __typename?: 'Profile';
   id?: Maybe<Scalars['Int']>;
   user_id?: Maybe<Scalars['Int']>;
   avatar?: Maybe<Scalars['String']>;
   neighborhood?: Maybe<Scalars['String']>;
   story?: Maybe<Scalars['String']>;
-  help?: Maybe<HelpType>;
-  help_status?: Maybe<HelpStatusType>;
-  help_options?: Maybe<HelpOptionType>;
-  user?: Maybe<UserType>;
+  help?: Maybe<Help>;
+  help_status?: Maybe<HelpStatus>;
+  help_options?: Maybe<HelpOptions>;
+  user?: Maybe<User>;
 };
 
-export type HelpType = {
-   __typename?: 'HelpType';
-  wants_help?: Maybe<Scalars['Boolean']>;
+export type MessageThread = {
+   __typename?: 'MessageThread';
+  id: Scalars['Int'];
+  created_by: Scalars['Int'];
+  recipient: Scalars['Int'];
 };
 
-export type HelpStatusType = {
-   __typename?: 'HelpStatusType';
-  user_id?: Maybe<Scalars['Int']>;
-  immunocompromised?: Maybe<Scalars['Boolean']>;
-  unemployment?: Maybe<Scalars['Boolean']>;
-  essential?: Maybe<Scalars['Boolean']>;
-};
-
-export type HelpOptionType = {
-   __typename?: 'HelpOptionType';
-  user_id?: Maybe<Scalars['Int']>;
-  wants_help?: Maybe<Scalars['Boolean']>;
-  grocery_delivery?: Maybe<Scalars['Boolean']>;
-  walk_dogs?: Maybe<Scalars['Boolean']>;
-  donations?: Maybe<Scalars['Boolean']>;
-  counceling?: Maybe<Scalars['Boolean']>;
-  career_services?: Maybe<Scalars['Boolean']>;
-};
-
-export type MessageThreadType = {
-   __typename?: 'MessageThreadType';
-  id?: Maybe<Scalars['Int']>;
-  created_by?: Maybe<Scalars['Int']>;
-  recipient?: Maybe<Scalars['Int']>;
-};
-
-export type MessageType = {
-   __typename?: 'MessageType';
-  id?: Maybe<Scalars['Int']>;
-  thread_id?: Maybe<Scalars['Int']>;
-  sender_id?: Maybe<Scalars['Int']>;
-  receiver_id?: Maybe<Scalars['Int']>;
+export type Message = {
+   __typename?: 'Message';
+  id: Scalars['Int'];
+  thread_id: Scalars['Int'];
+  sender_id: Scalars['Int'];
+  receiver_id: Scalars['Int'];
   subject?: Maybe<Scalars['String']>;
-  body?: Maybe<Scalars['String']>;
-  date_sent?: Maybe<Scalars['String']>;
+  body: Scalars['String'];
+  date_sent: Scalars['String'];
+};
+
+export type Query = {
+   __typename?: 'Query';
+  user?: Maybe<User>;
+  profile?: Maybe<Profile>;
+  getProfileMatches?: Maybe<Array<Maybe<Profile>>>;
+  getMessageThread?: Maybe<MessageThread>;
+  getUserMessageThreads?: Maybe<Array<Maybe<MessageThread>>>;
+  getMessageHistory?: Maybe<Array<Maybe<Message>>>;
+};
+
+
+export type QueryUserArgs = {
+  email: Scalars['String'];
+};
+
+
+export type QueryProfileArgs = {
+  user_id: Scalars['Int'];
+};
+
+
+export type QueryGetProfileMatchesArgs = {
+  wants_help: Scalars['Boolean'];
+  grocery_delivery: Scalars['Boolean'];
+  walk_dogs: Scalars['Boolean'];
+  donations: Scalars['Boolean'];
+  counceling: Scalars['Boolean'];
+  career_services: Scalars['Boolean'];
+};
+
+
+export type QueryGetMessageThreadArgs = {
+  created_by: Scalars['Int'];
+  recipient: Scalars['Int'];
+};
+
+
+export type QueryGetUserMessageThreadsArgs = {
+  user_id: Scalars['Int'];
+};
+
+
+export type QueryGetMessageHistoryArgs = {
+  thread_id: Scalars['Int'];
 };
 
 export type Mutation = {
    __typename?: 'Mutation';
-  postProfile?: Maybe<ProfileType>;
-  postMessage?: Maybe<MessageType>;
+  postProfile?: Maybe<Profile>;
+  postMessage?: Maybe<Message>;
 };
 
 
 export type MutationPostProfileArgs = {
-  user_id?: Maybe<Scalars['Int']>;
+  user_id: Scalars['Int'];
   avatar?: Maybe<Scalars['String']>;
   neighborhood?: Maybe<Scalars['String']>;
   story?: Maybe<Scalars['String']>;
-  wants_help?: Maybe<Scalars['Boolean']>;
-  immunocompromised?: Maybe<Scalars['Boolean']>;
-  unemployment?: Maybe<Scalars['Boolean']>;
-  essential?: Maybe<Scalars['Boolean']>;
-  grocery_delivery?: Maybe<Scalars['Boolean']>;
-  walk_dogs?: Maybe<Scalars['Boolean']>;
-  donations?: Maybe<Scalars['Boolean']>;
-  counceling?: Maybe<Scalars['Boolean']>;
-  career_services?: Maybe<Scalars['Boolean']>;
+  wants_help: Scalars['Boolean'];
+  immunocompromised: Scalars['Boolean'];
+  unemployment: Scalars['Boolean'];
+  essential: Scalars['Boolean'];
+  grocery_delivery: Scalars['Boolean'];
+  walk_dogs: Scalars['Boolean'];
+  donations: Scalars['Boolean'];
+  counceling: Scalars['Boolean'];
+  career_services: Scalars['Boolean'];
 };
 
 
 export type MutationPostMessageArgs = {
   thread_id?: Maybe<Scalars['Int']>;
-  sender_id?: Maybe<Scalars['Int']>;
-  receiver_id?: Maybe<Scalars['Int']>;
+  sender_id: Scalars['Int'];
+  receiver_id: Scalars['Int'];
   subject?: Maybe<Scalars['String']>;
-  body?: Maybe<Scalars['String']>;
+  body: Scalars['String'];
 };
 
+export enum CacheControlScope {
+  Public = 'PUBLIC',
+  Private = 'PRIVATE'
+}
+
+
 export type GetUserQueryVariables = {
-  email?: Maybe<Scalars['String']>;
+  email: Scalars['String'];
 };
 
 
 export type GetUserQuery = (
-  { __typename?: 'RootQueryType' }
+  { __typename?: 'Query' }
   & { user?: Maybe<(
-    { __typename?: 'UserType' }
-    & Pick<UserType, 'id' | 'email' | 'first_name' | 'last_name'>
+    { __typename?: 'User' }
+    & Pick<User, 'id' | 'email' | 'first_name' | 'last_name'>
   )> }
 );
 
 export type GetProfileQueryVariables = {
-  user_id?: Maybe<Scalars['Int']>;
+  user_id: Scalars['Int'];
 };
 
 
 export type GetProfileQuery = (
-  { __typename?: 'RootQueryType' }
+  { __typename?: 'Query' }
   & { profile?: Maybe<(
-    { __typename?: 'ProfileType' }
-    & Pick<ProfileType, 'id' | 'avatar' | 'neighborhood' | 'story'>
+    { __typename?: 'Profile' }
+    & Pick<Profile, 'id' | 'avatar' | 'neighborhood' | 'story'>
     & { help?: Maybe<(
-      { __typename?: 'HelpType' }
-      & Pick<HelpType, 'wants_help'>
+      { __typename?: 'Help' }
+      & Pick<Help, 'wants_help'>
     )>, help_status?: Maybe<(
-      { __typename?: 'HelpStatusType' }
-      & Pick<HelpStatusType, 'immunocompromised' | 'unemployment' | 'essential'>
+      { __typename?: 'HelpStatus' }
+      & Pick<HelpStatus, 'immunocompromised' | 'unemployment' | 'essential'>
     )>, help_options?: Maybe<(
-      { __typename?: 'HelpOptionType' }
-      & Pick<HelpOptionType, 'grocery_delivery' | 'walk_dogs' | 'donations' | 'counceling' | 'career_services'>
+      { __typename?: 'HelpOptions' }
+      & Pick<HelpOptions, 'grocery_delivery' | 'walk_dogs' | 'donations' | 'counceling' | 'career_services'>
     )>, user?: Maybe<(
-      { __typename?: 'UserType' }
-      & Pick<UserType, 'id' | 'email' | 'first_name' | 'last_name'>
+      { __typename?: 'User' }
+      & Pick<User, 'id' | 'email' | 'first_name' | 'last_name'>
     )> }
   )> }
 );
@@ -201,15 +209,15 @@ export type GetProfileHelpInfoQueryVariables = {
 
 
 export type GetProfileHelpInfoQuery = (
-  { __typename?: 'RootQueryType' }
+  { __typename?: 'Query' }
   & { profile?: Maybe<(
-    { __typename?: 'ProfileType' }
+    { __typename?: 'Profile' }
     & { help?: Maybe<(
-      { __typename?: 'HelpType' }
-      & Pick<HelpType, 'wants_help'>
+      { __typename?: 'Help' }
+      & Pick<Help, 'wants_help'>
     )>, help_options?: Maybe<(
-      { __typename?: 'HelpOptionType' }
-      & Pick<HelpOptionType, 'grocery_delivery' | 'walk_dogs' | 'donations' | 'counceling' | 'career_services'>
+      { __typename?: 'HelpOptions' }
+      & Pick<HelpOptions, 'grocery_delivery' | 'walk_dogs' | 'donations' | 'counceling' | 'career_services'>
     )> }
   )> }
 );
@@ -220,13 +228,13 @@ export type GetProfileUserInfoQueryVariables = {
 
 
 export type GetProfileUserInfoQuery = (
-  { __typename?: 'RootQueryType' }
+  { __typename?: 'Query' }
   & { profile?: Maybe<(
-    { __typename?: 'ProfileType' }
-    & Pick<ProfileType, 'avatar'>
+    { __typename?: 'Profile' }
+    & Pick<Profile, 'avatar'>
     & { user?: Maybe<(
-      { __typename?: 'UserType' }
-      & Pick<UserType, 'id' | 'first_name' | 'last_name'>
+      { __typename?: 'User' }
+      & Pick<User, 'id' | 'first_name' | 'last_name'>
     )> }
   )> }
 );
@@ -251,38 +259,38 @@ export type Mutate_ProfileMutationVariables = {
 export type Mutate_ProfileMutation = (
   { __typename?: 'Mutation' }
   & { postProfile?: Maybe<(
-    { __typename?: 'ProfileType' }
-    & Pick<ProfileType, 'id'>
+    { __typename?: 'Profile' }
+    & Pick<Profile, 'id'>
   )> }
 );
 
 export type GetProfileMatchesQueryVariables = {
-  wants_help?: Maybe<Scalars['Boolean']>;
-  grocery_delivery?: Maybe<Scalars['Boolean']>;
-  walk_dogs?: Maybe<Scalars['Boolean']>;
-  donations?: Maybe<Scalars['Boolean']>;
-  counceling?: Maybe<Scalars['Boolean']>;
-  career_services?: Maybe<Scalars['Boolean']>;
+  wants_help: Scalars['Boolean'];
+  grocery_delivery: Scalars['Boolean'];
+  walk_dogs: Scalars['Boolean'];
+  donations: Scalars['Boolean'];
+  counceling: Scalars['Boolean'];
+  career_services: Scalars['Boolean'];
 };
 
 
 export type GetProfileMatchesQuery = (
-  { __typename?: 'RootQueryType' }
+  { __typename?: 'Query' }
   & { getProfileMatches?: Maybe<Array<Maybe<(
-    { __typename?: 'ProfileType' }
-    & Pick<ProfileType, 'id' | 'avatar' | 'neighborhood' | 'story'>
+    { __typename?: 'Profile' }
+    & Pick<Profile, 'id' | 'avatar' | 'neighborhood' | 'story'>
     & { help?: Maybe<(
-      { __typename?: 'HelpType' }
-      & Pick<HelpType, 'wants_help'>
+      { __typename?: 'Help' }
+      & Pick<Help, 'wants_help'>
     )>, help_status?: Maybe<(
-      { __typename?: 'HelpStatusType' }
-      & Pick<HelpStatusType, 'immunocompromised' | 'unemployment' | 'essential'>
+      { __typename?: 'HelpStatus' }
+      & Pick<HelpStatus, 'immunocompromised' | 'unemployment' | 'essential'>
     )>, help_options?: Maybe<(
-      { __typename?: 'HelpOptionType' }
-      & Pick<HelpOptionType, 'grocery_delivery' | 'walk_dogs' | 'donations' | 'counceling' | 'career_services'>
+      { __typename?: 'HelpOptions' }
+      & Pick<HelpOptions, 'grocery_delivery' | 'walk_dogs' | 'donations' | 'counceling' | 'career_services'>
     )>, user?: Maybe<(
-      { __typename?: 'UserType' }
-      & Pick<UserType, 'id' | 'email' | 'first_name' | 'last_name'>
+      { __typename?: 'User' }
+      & Pick<User, 'id' | 'email' | 'first_name' | 'last_name'>
     )> }
   )>>> }
 );
@@ -299,8 +307,8 @@ export type Mutate_MessagesMutationVariables = {
 export type Mutate_MessagesMutation = (
   { __typename?: 'Mutation' }
   & { postMessage?: Maybe<(
-    { __typename?: 'MessageType' }
-    & Pick<MessageType, 'id'>
+    { __typename?: 'Message' }
+    & Pick<Message, 'id'>
   )> }
 );
 
@@ -311,10 +319,10 @@ export type GetMessageThreadQueryVariables = {
 
 
 export type GetMessageThreadQuery = (
-  { __typename?: 'RootQueryType' }
+  { __typename?: 'Query' }
   & { getMessageThread?: Maybe<(
-    { __typename?: 'MessageThreadType' }
-    & Pick<MessageThreadType, 'id'>
+    { __typename?: 'MessageThread' }
+    & Pick<MessageThread, 'id'>
   )> }
 );
 
@@ -324,10 +332,10 @@ export type GetUserMessageThreadsQueryVariables = {
 
 
 export type GetUserMessageThreadsQuery = (
-  { __typename?: 'RootQueryType' }
+  { __typename?: 'Query' }
   & { getUserMessageThreads?: Maybe<Array<Maybe<(
-    { __typename?: 'MessageThreadType' }
-    & Pick<MessageThreadType, 'id' | 'created_by' | 'recipient'>
+    { __typename?: 'MessageThread' }
+    & Pick<MessageThread, 'id' | 'created_by' | 'recipient'>
   )>>> }
 );
 
@@ -337,16 +345,16 @@ export type GetMessageHistoryQueryVariables = {
 
 
 export type GetMessageHistoryQuery = (
-  { __typename?: 'RootQueryType' }
+  { __typename?: 'Query' }
   & { getMessageHistory?: Maybe<Array<Maybe<(
-    { __typename?: 'MessageType' }
-    & Pick<MessageType, 'id' | 'thread_id' | 'sender_id' | 'receiver_id' | 'subject' | 'body' | 'date_sent'>
+    { __typename?: 'Message' }
+    & Pick<Message, 'id' | 'thread_id' | 'sender_id' | 'receiver_id' | 'subject' | 'body' | 'date_sent'>
   )>>> }
 );
 
 
 export const GetUserDocument = gql`
-    query getUser($email: String) {
+    query getUser($email: String!) {
   user(email: $email) {
     id
     email
@@ -355,7 +363,7 @@ export const GetUserDocument = gql`
   }
 }
     `;
-export type GetUserComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<GetUserQuery, GetUserQueryVariables>, 'query'>;
+export type GetUserComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<GetUserQuery, GetUserQueryVariables>, 'query'> & ({ variables: GetUserQueryVariables; skip?: boolean; } | { skip: boolean; });
 
     export const GetUserComponent = (props: GetUserComponentProps) => (
       <ApolloReactComponents.Query<GetUserQuery, GetUserQueryVariables> query={GetUserDocument} {...props} />
@@ -401,7 +409,7 @@ export type GetUserQueryHookResult = ReturnType<typeof useGetUserQuery>;
 export type GetUserLazyQueryHookResult = ReturnType<typeof useGetUserLazyQuery>;
 export type GetUserQueryResult = ApolloReactCommon.QueryResult<GetUserQuery, GetUserQueryVariables>;
 export const GetProfileDocument = gql`
-    query getProfile($user_id: Int) {
+    query getProfile($user_id: Int!) {
   profile(user_id: $user_id) {
     id
     avatar
@@ -431,7 +439,7 @@ export const GetProfileDocument = gql`
   }
 }
     `;
-export type GetProfileComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<GetProfileQuery, GetProfileQueryVariables>, 'query'>;
+export type GetProfileComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<GetProfileQuery, GetProfileQueryVariables>, 'query'> & ({ variables: GetProfileQueryVariables; skip?: boolean; } | { skip: boolean; });
 
     export const GetProfileComponent = (props: GetProfileComponentProps) => (
       <ApolloReactComponents.Query<GetProfileQuery, GetProfileQueryVariables> query={GetProfileDocument} {...props} />
@@ -658,7 +666,7 @@ export type Mutate_ProfileMutationHookResult = ReturnType<typeof useMutate_Profi
 export type Mutate_ProfileMutationResult = ApolloReactCommon.MutationResult<Mutate_ProfileMutation>;
 export type Mutate_ProfileMutationOptions = ApolloReactCommon.BaseMutationOptions<Mutate_ProfileMutation, Mutate_ProfileMutationVariables>;
 export const GetProfileMatchesDocument = gql`
-    query getProfileMatches($wants_help: Boolean, $grocery_delivery: Boolean, $walk_dogs: Boolean, $donations: Boolean, $counceling: Boolean, $career_services: Boolean) {
+    query getProfileMatches($wants_help: Boolean!, $grocery_delivery: Boolean!, $walk_dogs: Boolean!, $donations: Boolean!, $counceling: Boolean!, $career_services: Boolean!) {
   getProfileMatches(wants_help: $wants_help, grocery_delivery: $grocery_delivery, walk_dogs: $walk_dogs, donations: $donations, counceling: $counceling, career_services: $career_services) {
     id
     avatar
@@ -688,7 +696,7 @@ export const GetProfileMatchesDocument = gql`
   }
 }
     `;
-export type GetProfileMatchesComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<GetProfileMatchesQuery, GetProfileMatchesQueryVariables>, 'query'>;
+export type GetProfileMatchesComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<GetProfileMatchesQuery, GetProfileMatchesQueryVariables>, 'query'> & ({ variables: GetProfileMatchesQueryVariables; skip?: boolean; } | { skip: boolean; });
 
     export const GetProfileMatchesComponent = (props: GetProfileMatchesComponentProps) => (
       <ApolloReactComponents.Query<GetProfileMatchesQuery, GetProfileMatchesQueryVariables> query={GetProfileMatchesDocument} {...props} />

@@ -22,14 +22,14 @@ function App() {
     setUser(storedUser);
   }
 
-  const handleClickMessageNav = () => {
+  const toggleShowMessageNav = () => {
     setShowMessageNav(!showMessageNav);
   };
 
   return (
     <>
       <Switch>
-        <Route path="/lhsd" component={() => <LhsdHeader handleClickMessageNav={handleClickMessageNav} />} />
+        <Route path="/lhsd" component={() => <LhsdHeader handleClickMessageNav={toggleShowMessageNav} />} />
         <Route path="/" component={() => <Header />} />
       </Switch>
       <Switch>
@@ -40,7 +40,7 @@ function App() {
         <Route exact path="/lhsd/profile" component={Profile} />
         <Route exact path="/lhsd/community" component={Community} />
       </Switch>
-      {showMessageNav && <MessageNav />}
+      {showMessageNav && <MessageNav toggleShowMessageNav={toggleShowMessageNav} />}
     </>
   );
 }

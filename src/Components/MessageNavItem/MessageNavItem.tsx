@@ -1,11 +1,11 @@
 import React, { useContext } from 'react';
-import { MessageThreadType, useGetProfileUserInfoQuery, ProfileType } from '../../generated/graphql';
+import { MessageThread, useGetProfileUserInfoQuery, Profile } from '../../generated/graphql';
 import { UserContext } from '../../context/UserContext';
 import './MessageNavItem.css';
 
 interface iMessageNavItem {
-  thread: MessageThreadType;
-  toggleShowMessage: (profile: ProfileType, threadID: number) => void;
+  thread: MessageThread;
+  toggleShowMessage: (profile: Profile, threadID: number) => void;
 }
 
 const MessageNavItem: React.FC<iMessageNavItem> = (props) => {

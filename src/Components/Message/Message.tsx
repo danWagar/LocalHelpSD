@@ -1,15 +1,15 @@
 import React, { useState, useContext } from 'react';
 import { useForm } from 'react-hook-form';
-import { ProfileType, useMutate_MessagesMutation, useGetMessageThreadQuery } from '../../generated/graphql';
+import { Profile, useMutate_MessagesMutation, useGetMessageThreadQuery } from '../../generated/graphql';
 import { messageFormDataType } from '../../types';
 import MessageHistory from '../MessageHistory/MessageHistory';
 import { UserContext } from '../../context/UserContext';
 import './Message.css';
 
 interface iMessage {
-  recipient: ProfileType;
+  recipient: Profile;
   threadID?: number | null;
-  toggleShowMessage: (profile?: ProfileType) => void;
+  toggleShowMessage: (profile?: Profile) => void;
 }
 
 const Message: React.FC<iMessage> = (props) => {

@@ -2,7 +2,7 @@ import gql from 'graphql-tag';
 
 const gqlQueries = {
   GET_USER: gql`
-    query getUser($email: String) {
+    query getUser($email: String!) {
       user(email: $email) {
         id
         email
@@ -13,7 +13,7 @@ const gqlQueries = {
   `,
 
   GET_PROFILE: gql`
-    query getProfile($user_id: Int) {
+    query getProfile($user_id: Int!) {
       profile(user_id: $user_id) {
         id
         avatar
@@ -112,12 +112,12 @@ const gqlQueries = {
 
   GET_PROFILE_MATCHES: gql`
     query getProfileMatches(
-      $wants_help: Boolean
-      $grocery_delivery: Boolean
-      $walk_dogs: Boolean
-      $donations: Boolean
-      $counceling: Boolean
-      $career_services: Boolean
+      $wants_help: Boolean!
+      $grocery_delivery: Boolean!
+      $walk_dogs: Boolean!
+      $donations: Boolean!
+      $counceling: Boolean!
+      $career_services: Boolean!
     ) {
       getProfileMatches(
         wants_help: $wants_help

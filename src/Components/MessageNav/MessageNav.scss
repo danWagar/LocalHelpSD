@@ -5,14 +5,18 @@
   width: 300px;
   bottom: 0;
   right: 20px;
+  z-index: 10;
 }
 
 .MessageNav_header {
-  background-color: $text-color-dark;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
   padding-left: 15px;
-  color: white;
-  font-size: 1.1em;
   line-height: 3em;
+  font-size: 1.1em;
+  color: white;
+  background-color: $text-color-dark;
 }
 
 .MessageNav_list {
@@ -20,4 +24,5 @@
   margin: 0;
   border-left: 1px solid grey;
   border-right: 1px solid grey;
+  background-color: white;
 }

@@ -1,41 +1,91 @@
 .Profile {
-  width: 100vw;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+  width: 90vw;
+  margin: 0 auto;
   height: calc(100vh - 70px);
   padding: 80px 30px 80px 50px;
 }
 
 .Profile_user_header,
 .Profile_user_story {
-  margin: 0 auto;
   border: 1px solid #bdbdbd;
-  border-radius: 40px;
+  border-radius: 10px;
   background-color: whitesmoke;
+  height: 100%;
 }
 
 .Profile_user_header {
   position: relative;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-rows: (1fr)[16];
+      grid-template-rows: repeat(16, 1fr);
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 300px;
+  padding: 30px 10px 30px 10px;
+}
+
+.Profile_user_container {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  width: 85%;
-  height: 150px;
-  padding-left: 140px;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -ms-grid-row: 1;
+  -ms-grid-row-span: 7;
+  grid-row: 1/8;
+  text-align: center;
 }
 
-.Profile_user_header img {
-  position: absolute;
-  top: 0;
-  left: -30px;
+.Profile_user_container img {
   width: 150px;
   height: 150px;
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
   background-color: #b4c540;
-  border-radius: 50%;
+  border-radius: 25px;
   border: 3px solid #b4c540;
 }
 
+.Profile_help {
+  -ms-grid-row: 9;
+  -ms-grid-row-span: 7;
+  grid-row: 9/16;
+  -ms-flex-item-align: start;
+      align-self: flex-start;
+}
+
+.Profile_help ul {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  list-style: none;
+  padding: 0;
+}
+
+.Profile_help li {
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  color: white;
+}
+
 .Profile_user_story {
-  width: 70%;
+  width: 450px;
   padding: 25px 50px 25px 50px;
-  margin-top: 50px;
 }
 /*# sourceMappingURL=Profile.css.map */

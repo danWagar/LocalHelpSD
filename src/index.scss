@@ -76,8 +76,18 @@ button,
   color: $text-color-light;
 }
 
+.dark_text_color {
+  color: $text-color-dark;
+}
+
 .bold {
   font-weight: 600;
+}
+
+.li_highlight {
+  margin: 5px;
+  padding: 5px;
+  background-color: $primary_color;
 }
 
 .left_container,
