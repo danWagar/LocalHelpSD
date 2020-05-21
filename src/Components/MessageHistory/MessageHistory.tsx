@@ -1,11 +1,13 @@
-import React, { useContext } from 'react';
-import { useGetMessageHistoryQuery } from '../../generated/graphql';
+import React, { useContext, useEffect } from 'react';
+import { useMessageAddedSubscription, Message } from '../../generated/graphql';
 import { UserContext } from '../../context/UserContext';
 import classNames from 'classnames';
+// import useFetchMessageHistory from '../../myHooks/useFetchMessageHistory';
 import './MessageHistory.css';
 
 interface iMessageHistory {
   thread_id: number;
+  msgHistory: Message[];
 }
 
 type dateTimeType = {
@@ -19,15 +21,38 @@ type alignmentType = {
 };
 
 const MessageHistory: React.FC<iMessageHistory> = (props) => {
-  const { thread_id } = props;
+  const { thread_id, msgHistory } = props;
   const { user } = useContext(UserContext);
 
-  const { data, loading, error } = useGetMessageHistoryQuery({
-    variables: {
-      thread_id: thread_id,
-    },
-    skip: !thread_id,
-  });
+  // const messageHistory = useFetchMessageHistory(thread_id);
+
+  // const { ...result } = useGetMessageHistoryQuery({
+  //   variables: {
+  //     thread_id: thread_id,
+  //   },
+  //   skip: !thread_id,
+  // });
+
+  // const subscribeToNewMessages = () =>
+  //   subscribeToMore({
+  //     document: MessageAddedDocument,
+  //     variables: {},
+  //     updateQuery: (prev, { subscriptionData }) => {
+  //       console.log(subscriptionData.data);
+  //       if (!subscriptionData.data) return prev;
+  //       const newMessageItem = subscriptionData.data.getMessageHistory;
+
+  //       return Object.assign({}, prev, {
+  //         entry: {
+  //           message: [newMessageItem, ...prev.getMessageHistory!],
+  //         },
+  //       });
+  //     },
+  //   });
+
+  useEffect(() => {
+    console.log('message thread remoutned');
+  }, []);
 
   const TStoDisplayDate = (ts: number) => {
     const date = new Date();
@@ -60,7 +85,11 @@ const MessageHistory: React.FC<iMessageHistory> = (props) => {
   const parseMsgHistory = () => {
     let lastMsgDate = '';
     let lastMsgMilliseconds = 0;
-    return data?.getMessageHistory?.map((msg) => {
+    let messages = msgHistory;
+    // const newMsg = subscription.data?.messageAdded;
+    // if (newMsg && messages && newMsg.id !== messages[messages.length - 1].id) messages.push(newMsg);
+    console.log(messages);
+    return messages?.map((msg) => {
       const milliseconds = parseInt(msg?.date_sent!);
       const dateTime = TStoDisplayDate(milliseconds);
       const timeDifference = milliseconds - lastMsgMilliseconds;
@@ -70,13 +99,13 @@ const MessageHistory: React.FC<iMessageHistory> = (props) => {
         align_end: sentByUser,
       };
       const jsx = (
-        <div className="MessageHistory_Message">
+        <li key={msg.id} className="MessageHistory_Message">
           <div className="MessageHistory_message_container">
             {getDateTimeJSX(dateTime, lastMsgDate, timeDifference, alignment)}
             <span className={classNames('MessageHistory_subject bold', alignment)}>{msg?.subject}</span>
             <span className={classNames('MessageHistory_body', alignment)}>{msg?.body}</span>
           </div>
-        </div>
+        </li>
       );
       lastMsgDate = dateTime.monthDay;
       lastMsgMilliseconds = milliseconds;
@@ -84,9 +113,11 @@ const MessageHistory: React.FC<iMessageHistory> = (props) => {
     });
   };
 
-  if (loading) return <div>Loading</div>;
-
-  return <div className="MessageHistory">{parseMsgHistory()}</div>;
+  return (
+    <div className="MessageHistory">
+      <ul>{parseMsgHistory()}</ul>
+    </div>
+  );
 };
 
 export default MessageHistory;

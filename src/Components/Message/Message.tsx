@@ -1,6 +1,13 @@
-import React, { useState, useContext } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { useForm } from 'react-hook-form';
-import { Profile, useMutate_MessagesMutation, useGetMessageThreadQuery } from '../../generated/graphql';
+import {
+  Profile,
+  useMutate_MessagesMutation,
+  useGetMessageThreadQuery,
+  useMessageAddedSubscription,
+  Message as MessageType,
+  useGetMessageHistoryQuery,
+} from '../../generated/graphql';
 import { messageFormDataType } from '../../types';
 import MessageHistory from '../MessageHistory/MessageHistory';
 import { UserContext } from '../../context/UserContext';
@@ -16,11 +23,15 @@ const Message: React.FC<iMessage> = (props) => {
   const { recipient, toggleShowMessage } = props;
   let threadID = props.threadID;
 
-  const [minimize, setMinimize] = useState<boolean>(true);
+  //const [msgHistory, setMsgHistory] = useState<MessageType[]>([]);
 
   const { user } = useContext(UserContext);
 
   const { handleSubmit, register, errors } = useForm<messageFormDataType>();
+
+  useEffect(() => {
+    console.log('remounting Message');
+  }, []);
 
   const MessageThreadQuery = useGetMessageThreadQuery({
     variables: {
@@ -30,11 +41,20 @@ const Message: React.FC<iMessage> = (props) => {
     skip: threadID !== null,
   });
 
+  threadID = MessageThreadQuery.data?.getMessageThread?.id || props.threadID;
+
+  const msgHistoryResult = useGetMessageHistoryQuery({
+    variables: {
+      thread_id: threadID!,
+    },
+    skip: !threadID,
+  });
+
+  const subscription = useMessageAddedSubscription({
+    variables: {},
+  });
+
   const [messagesMutation, { data, loading, error }] = useMutate_MessagesMutation();
-
-  if (loading || MessageThreadQuery.loading) return <div>Loading</div>;
-
-  if (MessageThreadQuery.data) threadID = MessageThreadQuery?.data?.getMessageThread?.id;
 
   const onSubmit = (data: messageFormDataType) => {
     messagesMutation({
@@ -52,9 +72,15 @@ const Message: React.FC<iMessage> = (props) => {
     toggleShowMessage();
   };
 
+  let msgHistory: MessageType[] = [];
+  if (!msgHistoryResult.loading && msgHistoryResult.data)
+    msgHistory = [...msgHistoryResult.data?.getMessageHistory!] as MessageType[];
+  if (!subscription.loading && subscription.data) msgHistory.push(subscription.data?.messageAdded!);
+
+  if (MessageThreadQuery.loading) return <div>Loading</div>;
   return (
     <div className="Message">
-      <MessageHistory thread_id={threadID!} />
+      <MessageHistory thread_id={threadID!} msgHistory={msgHistory} />
       <div className="Message_header">
         <img
           className="small_avatar"

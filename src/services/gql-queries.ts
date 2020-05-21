@@ -180,6 +180,9 @@ const gqlQueries = {
     query getMessageThread($created_by: Int!, $recipient: Int!) {
       getMessageThread(created_by: $created_by, recipient: $recipient) {
         id
+        created_by
+        recipient
+        last_msg_timestamp
       }
     }
   `,
@@ -190,6 +193,7 @@ const gqlQueries = {
         id
         created_by
         recipient
+        last_msg_timestamp
       }
     }
   `,
@@ -197,6 +201,20 @@ const gqlQueries = {
   GET_MESSAGE_HISTORY: gql`
     query getMessageHistory($thread_id: Int!) {
       getMessageHistory(thread_id: $thread_id) {
+        id
+        thread_id
+        sender_id
+        receiver_id
+        subject
+        body
+        date_sent
+      }
+    }
+  `,
+
+  MESSAGE_ADDED: gql`
+    subscription messageAdded {
+      messageAdded {
         id
         thread_id
         sender_id

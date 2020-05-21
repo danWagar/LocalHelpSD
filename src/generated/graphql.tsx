@@ -62,13 +62,6 @@ export type Profile = {
   user?: Maybe<User>;
 };
 
-export type MessageThread = {
-   __typename?: 'MessageThread';
-  id: Scalars['Int'];
-  created_by: Scalars['Int'];
-  recipient: Scalars['Int'];
-};
-
 export type Message = {
    __typename?: 'Message';
   id: Scalars['Int'];
@@ -78,6 +71,14 @@ export type Message = {
   subject?: Maybe<Scalars['String']>;
   body: Scalars['String'];
   date_sent: Scalars['String'];
+};
+
+export type MessageThread = {
+   __typename?: 'MessageThread';
+  id: Scalars['Int'];
+  created_by: Scalars['Int'];
+  recipient: Scalars['Int'];
+  last_msg_timestamp: Scalars['String'];
 };
 
 export type Query = {
@@ -156,6 +157,11 @@ export type MutationPostMessageArgs = {
   receiver_id: Scalars['Int'];
   subject?: Maybe<Scalars['String']>;
   body: Scalars['String'];
+};
+
+export type Subscription = {
+   __typename?: 'Subscription';
+  messageAdded?: Maybe<Message>;
 };
 
 export enum CacheControlScope {
@@ -322,7 +328,7 @@ export type GetMessageThreadQuery = (
   { __typename?: 'Query' }
   & { getMessageThread?: Maybe<(
     { __typename?: 'MessageThread' }
-    & Pick<MessageThread, 'id'>
+    & Pick<MessageThread, 'id' | 'created_by' | 'recipient' | 'last_msg_timestamp'>
   )> }
 );
 
@@ -335,7 +341,7 @@ export type GetUserMessageThreadsQuery = (
   { __typename?: 'Query' }
   & { getUserMessageThreads?: Maybe<Array<Maybe<(
     { __typename?: 'MessageThread' }
-    & Pick<MessageThread, 'id' | 'created_by' | 'recipient'>
+    & Pick<MessageThread, 'id' | 'created_by' | 'recipient' | 'last_msg_timestamp'>
   )>>> }
 );
 
@@ -350,6 +356,17 @@ export type GetMessageHistoryQuery = (
     { __typename?: 'Message' }
     & Pick<Message, 'id' | 'thread_id' | 'sender_id' | 'receiver_id' | 'subject' | 'body' | 'date_sent'>
   )>>> }
+);
+
+export type MessageAddedSubscriptionVariables = {};
+
+
+export type MessageAddedSubscription = (
+  { __typename?: 'Subscription' }
+  & { messageAdded?: Maybe<(
+    { __typename?: 'Message' }
+    & Pick<Message, 'id' | 'thread_id' | 'sender_id' | 'receiver_id' | 'subject' | 'body' | 'date_sent'>
+  )> }
 );
 
 
@@ -805,6 +822,9 @@ export const GetMessageThreadDocument = gql`
     query getMessageThread($created_by: Int!, $recipient: Int!) {
   getMessageThread(created_by: $created_by, recipient: $recipient) {
     id
+    created_by
+    recipient
+    last_msg_timestamp
   }
 }
     `;
@@ -860,6 +880,7 @@ export const GetUserMessageThreadsDocument = gql`
     id
     created_by
     recipient
+    last_msg_timestamp
   }
 }
     `;
@@ -966,3 +987,56 @@ export function useGetMessageHistoryLazyQuery(baseOptions?: ApolloReactHooks.Laz
 export type GetMessageHistoryQueryHookResult = ReturnType<typeof useGetMessageHistoryQuery>;
 export type GetMessageHistoryLazyQueryHookResult = ReturnType<typeof useGetMessageHistoryLazyQuery>;
 export type GetMessageHistoryQueryResult = ApolloReactCommon.QueryResult<GetMessageHistoryQuery, GetMessageHistoryQueryVariables>;
+export const MessageAddedDocument = gql`
+    subscription messageAdded {
+  messageAdded {
+    id
+    thread_id
+    sender_id
+    receiver_id
+    subject
+    body
+    date_sent
+  }
+}
+    `;
+export type MessageAddedComponentProps = Omit<ApolloReactComponents.SubscriptionComponentOptions<MessageAddedSubscription, MessageAddedSubscriptionVariables>, 'subscription'>;
+
+    export const MessageAddedComponent = (props: MessageAddedComponentProps) => (
+      <ApolloReactComponents.Subscription<MessageAddedSubscription, MessageAddedSubscriptionVariables> subscription={MessageAddedDocument} {...props} />
+    );
+    
+export type MessageAddedProps<TChildProps = {}, TDataName extends string = 'data'> = {
+      [key in TDataName]: ApolloReactHoc.DataValue<MessageAddedSubscription, MessageAddedSubscriptionVariables>
+    } & TChildProps;
+export function withMessageAdded<TProps, TChildProps = {}, TDataName extends string = 'data'>(operationOptions?: ApolloReactHoc.OperationOption<
+  TProps,
+  MessageAddedSubscription,
+  MessageAddedSubscriptionVariables,
+  MessageAddedProps<TChildProps, TDataName>>) {
+    return ApolloReactHoc.withSubscription<TProps, MessageAddedSubscription, MessageAddedSubscriptionVariables, MessageAddedProps<TChildProps, TDataName>>(MessageAddedDocument, {
+      alias: 'messageAdded',
+      ...operationOptions
+    });
+};
+
+/**
+ * __useMessageAddedSubscription__
+ *
+ * To run a query within a React component, call `useMessageAddedSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useMessageAddedSubscription` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useMessageAddedSubscription({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useMessageAddedSubscription(baseOptions?: ApolloReactHooks.SubscriptionHookOptions<MessageAddedSubscription, MessageAddedSubscriptionVariables>) {
+        return ApolloReactHooks.useSubscription<MessageAddedSubscription, MessageAddedSubscriptionVariables>(MessageAddedDocument, baseOptions);
+      }
+export type MessageAddedSubscriptionHookResult = ReturnType<typeof useMessageAddedSubscription>;
+export type MessageAddedSubscriptionResult = ApolloReactCommon.SubscriptionResult<MessageAddedSubscription>;

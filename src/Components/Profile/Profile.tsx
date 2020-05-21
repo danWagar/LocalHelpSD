@@ -1,7 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { Profile as ProfileType, useGetProfileQuery } from '../../generated/graphql';
 import { UserContext } from '../../context/UserContext';
-import useFetchProfile from '../../myHooks/useFetchProfile';
 import './Profile.css';
 
 const Profile: React.FC = () => {
@@ -9,7 +8,10 @@ const Profile: React.FC = () => {
 
   const [profile, setProfile] = useState<ProfileType | null>(null);
 
-  const { data, loading, error } = useFetchProfile(user.id, !!profile);
+  const { data, loading, error } = useGetProfileQuery({
+    variables: { user_id: user.id },
+    skip: !!profile,
+  });
 
   if (loading) {
     return <div>Loading</div>;
