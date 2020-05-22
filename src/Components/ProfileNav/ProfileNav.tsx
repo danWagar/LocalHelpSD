@@ -1,4 +1,5 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useContext } from 'react';
+import { UserContext } from '../../context/UserContext';
 import { useHistory } from 'react-router-dom';
 import useSignOut from '../../myHooks/useSignOut';
 import './ProfileNav.css';
@@ -12,6 +13,7 @@ const ProfileNav: React.FC<iProfileNav> = (props) => {
   const container = useRef<HTMLElement>(null);
   const signOut = useSignOut();
   const history = useHistory();
+  const { user } = useContext(UserContext);
 
   useEffect(() => {
     document.addEventListener('mousedown', handleOutsideClick);
@@ -32,7 +34,7 @@ const ProfileNav: React.FC<iProfileNav> = (props) => {
 
   const handleClickProfile = (e: React.MouseEvent<HTMLLIElement>) => {
     toggleNav();
-    history.push('/lhsd/profile');
+    history.push(`/lhsd/profile/${user.id}`);
   };
 
   return (

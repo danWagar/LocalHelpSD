@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, RouteComponentProps } from 'react-router-dom';
 import { UserContext, User } from '../../context/UserContext';
 import Header from '../Header/Header';
 import LhsdHeader from '../LhsdHeader/LhsdHeader';
@@ -11,6 +11,10 @@ import Community from '../Community/Community';
 import Home from '../Home/Home';
 import MessageNav from '../MessageNav/MessageNav';
 import './App.css';
+
+interface matchParams {
+  id: string;
+}
 
 function App() {
   const [showMessageNav, setShowMessageNav] = useState<boolean>(false);
@@ -37,7 +41,13 @@ function App() {
         <Route exact path="/login" component={Login} />
         <Route exact path="/find-help" component={FindHelp} />
         <Route exact path="/lhsd/home" component={Home} />
-        <Route exact path="/lhsd/profile" component={Profile} />
+        <Route
+          exact
+          path="/lhsd/profile/:id"
+          render={(props: RouteComponentProps<matchParams>) => (
+            <Profile profileUserID={parseInt(props.match.params.id!)} />
+          )}
+        />
         <Route exact path="/lhsd/community" component={Community} />
       </Switch>
       {showMessageNav && <MessageNav toggleShowMessageNav={toggleShowMessageNav} />}

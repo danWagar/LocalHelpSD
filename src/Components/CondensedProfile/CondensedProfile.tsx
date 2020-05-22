@@ -1,4 +1,5 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import { Profile } from '../../generated/graphql';
 import * as uuid from 'uuid';
 import './CondensedProfile.css';
@@ -11,9 +12,10 @@ interface iCondensedProfile {
 const CondensedProfile: React.FC<iCondensedProfile> = (props) => {
   const { profile, toggleShowMessage } = props;
   const userName = profile?.user?.first_name + ' ' + profile?.user?.last_name;
+  const history = useHistory();
 
   function typedKeys<T>(o: T): (keyof T)[] {
-    // type cast should be safe because that's what really Object.keys() does
+    // type cast should be safe because that's really what Object.keys() does
     return Object.keys(o) as (keyof T)[];
   }
 
@@ -36,11 +38,16 @@ const CondensedProfile: React.FC<iCondensedProfile> = (props) => {
   };
 
   const handleMessageClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation();
     toggleShowMessage(profile);
   };
 
+  const handleContainerClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    history.push(`/lhsd/profile/${profile?.user?.id}`);
+  };
+
   return (
-    <div className="CondensedProfile">
+    <div className="CondensedProfile" onClick={handleContainerClick}>
       <div className="CondensedProfile_inner"></div>
       <div className="CondensedProfile_user">
         <img src={profile?.avatar || ''} alt={userName + "'s profile picture"} />

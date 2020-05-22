@@ -54,7 +54,7 @@ const Login: React.FC = () => {
       };
       localStorage.setItem('user', JSON.stringify(user));
       setUser(user);
-      history.push('/lhsd/profile');
+      history.push(`/lhsd/profile/${data.user.id}`);
     }
   }, [called, data]);
 
