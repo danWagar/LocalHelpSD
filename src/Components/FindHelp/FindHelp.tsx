@@ -15,7 +15,7 @@ const FindHelp: React.FC = () => {
 
   const history = useHistory();
 
-  const [mutationMutation, { data, loading, error }] = useMutate_ProfileMutation();
+  const [mutationMutation] = useMutate_ProfileMutation();
 
   const updateFormData = (data: formDataType) => {
     setFormDataInput({ ...formDataInput, ...data });

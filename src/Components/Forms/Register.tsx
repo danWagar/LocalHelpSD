@@ -29,7 +29,6 @@ const Register: React.FC<iRegisterProps> = (props) => {
       password: password,
     })
       .then((user) => {
-        console.log('registration was successful and the response is ', user);
         onSuccess(user.id);
       })
       .catch((res) => {

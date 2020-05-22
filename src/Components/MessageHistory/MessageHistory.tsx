@@ -1,12 +1,11 @@
 import React, { useContext, useEffect, useRef } from 'react';
-import { useMessageAddedSubscription, Message } from '../../generated/graphql';
+import { Message } from '../../generated/graphql';
 import { UserContext } from '../../context/UserContext';
 import classNames from 'classnames';
 // import useFetchMessageHistory from '../../myHooks/useFetchMessageHistory';
 import './MessageHistory.css';
 
 interface iMessageHistory {
-  thread_id: number;
   msgHistory: Message[];
 }
 
@@ -21,7 +20,7 @@ type alignmentType = {
 };
 
 const MessageHistory: React.FC<iMessageHistory> = (props) => {
-  const { thread_id, msgHistory } = props;
+  const { msgHistory } = props;
   const { user } = useContext(UserContext);
   const messageWindow = useRef<HTMLDivElement>(null);
 

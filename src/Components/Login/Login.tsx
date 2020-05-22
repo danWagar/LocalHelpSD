@@ -14,7 +14,7 @@ const Login: React.FC = () => {
 
   const { setHasToken } = useContext(AuthContext);
 
-  const { user, setUser } = useContext(UserContext);
+  const { setUser } = useContext(UserContext);
 
   const history = useHistory();
 

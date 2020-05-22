@@ -37,7 +37,6 @@ const Community: React.FC<Props> = ({ client }) => {
   return (
     <div className="Community">
       {data?.getProfileMatches?.map((profile) => {
-        //console.log(profile);
         return (
           <CondensedProfile
             key={profile?.user?.id}

@@ -1,6 +1,5 @@
-import React, { useContext } from 'react';
-import { Profile, useGetProfileQuery } from '../../generated/graphql';
-import { UserContext } from '../../context/UserContext';
+import React from 'react';
+import { Profile } from '../../generated/graphql';
 import * as uuid from 'uuid';
 import './CondensedProfile.css';
 
@@ -12,7 +11,6 @@ interface iCondensedProfile {
 const CondensedProfile: React.FC<iCondensedProfile> = (props) => {
   const { profile, toggleShowMessage } = props;
   const userName = profile?.user?.first_name + ' ' + profile?.user?.last_name;
-  const { user } = useContext(UserContext);
 
   function typedKeys<T>(o: T): (keyof T)[] {
     // type cast should be safe because that's what really Object.keys() does
@@ -24,9 +22,6 @@ const CondensedProfile: React.FC<iCondensedProfile> = (props) => {
     const helpOptionKeys = typedKeys(helpOptions);
 
     const helpOptionsList: string[] = [];
-
-    console.log(uuid.v4());
-    console.log(typeof uuid.v4());
 
     helpOptionKeys.forEach((k) => {
       if (helpOptions && k !== 'wants_help' && k !== '__typename' && helpOptions[k]) {

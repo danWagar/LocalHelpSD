@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import {
   Profile,
@@ -25,15 +25,9 @@ const Message: React.FC<iMessage> = (props) => {
   const { recipient, toggleShowMessage } = props;
   let threadID = props.threadID;
 
-  //const [msgHistory, setMsgHistory] = useState<MessageType[]>([]);
-
   const { user } = useContext(UserContext);
 
   const { handleSubmit, register, errors } = useForm<messageFormDataType>();
-
-  useEffect(() => {
-    console.log('remounting Message');
-  }, []);
 
   const MessageThreadQuery = useGetMessageThreadQuery({
     variables: {
@@ -52,7 +46,7 @@ const Message: React.FC<iMessage> = (props) => {
     skip: !threadID,
   });
 
-  const subscription = useMessageAddedSubscription({
+  useMessageAddedSubscription({
     variables: {},
   });
 
@@ -72,11 +66,9 @@ const Message: React.FC<iMessage> = (props) => {
           query: GetMessageHistoryDocument,
           variables: { thread_id: threadID },
         });
-        console.log(staleData);
-        console.log(data);
         const newMsg = data?.postMessage!;
         const staleDataArray = staleData?.getMessageHistory!;
-        //getMessageHistory?.getMessageHistory?.push(newMsg);
+
         cache.writeQuery({
           query: GetMessageHistoryDocument,
           variables: { thread_id: threadID },
@@ -93,10 +85,7 @@ const Message: React.FC<iMessage> = (props) => {
   if (MessageThreadQuery.loading) return <div>Loading</div>;
   return (
     <div className="Message">
-      <MessageHistory
-        thread_id={threadID!}
-        msgHistory={msgHistoryResult.data?.getMessageHistory! as MessageType[]}
-      />
+      <MessageHistory msgHistory={msgHistoryResult.data?.getMessageHistory! as MessageType[]} />
       <div className="Message_header">
         <img
           className="small_avatar"
