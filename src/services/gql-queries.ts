@@ -172,6 +172,12 @@ const gqlQueries = {
         body: $body
       ) {
         id
+        thread_id
+        sender_id
+        receiver_id
+        subject
+        body
+        date_sent
       }
     }
   `,

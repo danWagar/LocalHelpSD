@@ -314,7 +314,7 @@ export type Mutate_MessagesMutation = (
   { __typename?: 'Mutation' }
   & { postMessage?: Maybe<(
     { __typename?: 'Message' }
-    & Pick<Message, 'id'>
+    & Pick<Message, 'id' | 'thread_id' | 'sender_id' | 'receiver_id' | 'subject' | 'body' | 'date_sent'>
   )> }
 );
 
@@ -767,6 +767,12 @@ export const Mutate_MessagesDocument = gql`
     mutation Mutate_Messages($thread_id: Int, $sender_id: Int!, $receiver_id: Int!, $subject: String, $body: String!) {
   postMessage(thread_id: $thread_id, sender_id: $sender_id, receiver_id: $receiver_id, subject: $subject, body: $body) {
     id
+    thread_id
+    sender_id
+    receiver_id
+    subject
+    body
+    date_sent
   }
 }
     `;

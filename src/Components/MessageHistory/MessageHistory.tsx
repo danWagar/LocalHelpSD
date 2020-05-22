@@ -24,36 +24,6 @@ const MessageHistory: React.FC<iMessageHistory> = (props) => {
   const { thread_id, msgHistory } = props;
   const { user } = useContext(UserContext);
 
-  // const messageHistory = useFetchMessageHistory(thread_id);
-
-  // const { ...result } = useGetMessageHistoryQuery({
-  //   variables: {
-  //     thread_id: thread_id,
-  //   },
-  //   skip: !thread_id,
-  // });
-
-  // const subscribeToNewMessages = () =>
-  //   subscribeToMore({
-  //     document: MessageAddedDocument,
-  //     variables: {},
-  //     updateQuery: (prev, { subscriptionData }) => {
-  //       console.log(subscriptionData.data);
-  //       if (!subscriptionData.data) return prev;
-  //       const newMessageItem = subscriptionData.data.getMessageHistory;
-
-  //       return Object.assign({}, prev, {
-  //         entry: {
-  //           message: [newMessageItem, ...prev.getMessageHistory!],
-  //         },
-  //       });
-  //     },
-  //   });
-
-  useEffect(() => {
-    console.log('message thread remoutned');
-  }, []);
-
   const TStoDisplayDate = (ts: number) => {
     const date = new Date();
     date.setTime(ts);
@@ -86,9 +56,6 @@ const MessageHistory: React.FC<iMessageHistory> = (props) => {
     let lastMsgDate = '';
     let lastMsgMilliseconds = 0;
     let messages = msgHistory;
-    // const newMsg = subscription.data?.messageAdded;
-    // if (newMsg && messages && newMsg.id !== messages[messages.length - 1].id) messages.push(newMsg);
-    console.log(messages);
     return messages?.map((msg) => {
       const milliseconds = parseInt(msg?.date_sent!);
       const dateTime = TStoDisplayDate(milliseconds);

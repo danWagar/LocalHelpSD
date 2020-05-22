@@ -7,6 +7,8 @@ import {
   useMessageAddedSubscription,
   Message as MessageType,
   useGetMessageHistoryQuery,
+  GetMessageHistoryDocument,
+  GetMessageHistoryQuery,
 } from '../../generated/graphql';
 import { messageFormDataType } from '../../types';
 import MessageHistory from '../MessageHistory/MessageHistory';
@@ -54,16 +56,32 @@ const Message: React.FC<iMessage> = (props) => {
     variables: {},
   });
 
-  const [messagesMutation, { data, loading, error }] = useMutate_MessagesMutation();
+  const [messagesMutation] = useMutate_MessagesMutation();
 
-  const onSubmit = (data: messageFormDataType) => {
+  const onSubmit = (formData: messageFormDataType) => {
     messagesMutation({
       variables: {
         thread_id: threadID || null,
         sender_id: user.id,
         receiver_id: recipient.user?.id!,
-        subject: data.subject,
-        body: data.body,
+        subject: formData.subject,
+        body: formData.body,
+      },
+      update: (cache, { data }) => {
+        const staleData = cache.readQuery<GetMessageHistoryQuery>({
+          query: GetMessageHistoryDocument,
+          variables: { thread_id: threadID },
+        });
+        console.log(staleData);
+        console.log(data);
+        const newMsg = data?.postMessage!;
+        const staleDataArray = staleData?.getMessageHistory!;
+        //getMessageHistory?.getMessageHistory?.push(newMsg);
+        cache.writeQuery({
+          query: GetMessageHistoryDocument,
+          variables: { thread_id: threadID },
+          data: { getMessageHistory: [...staleDataArray, newMsg] },
+        });
       },
     });
   };
@@ -72,15 +90,13 @@ const Message: React.FC<iMessage> = (props) => {
     toggleShowMessage();
   };
 
-  let msgHistory: MessageType[] = [];
-  if (!msgHistoryResult.loading && msgHistoryResult.data)
-    msgHistory = [...msgHistoryResult.data?.getMessageHistory!] as MessageType[];
-  if (!subscription.loading && subscription.data) msgHistory.push(subscription.data?.messageAdded!);
-
   if (MessageThreadQuery.loading) return <div>Loading</div>;
   return (
     <div className="Message">
-      <MessageHistory thread_id={threadID!} msgHistory={msgHistory} />
+      <MessageHistory
+        thread_id={threadID!}
+        msgHistory={msgHistoryResult.data?.getMessageHistory! as MessageType[]}
+      />
       <div className="Message_header">
         <img
           className="small_avatar"
