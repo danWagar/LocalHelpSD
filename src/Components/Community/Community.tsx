@@ -38,7 +38,13 @@ const Community: React.FC<Props> = ({ client }) => {
     <div className="Community">
       {data?.getProfileMatches?.map((profile) => {
         //console.log(profile);
-        return <CondensedProfile profile={profile!} toggleShowMessage={toggleShowMessage} />;
+        return (
+          <CondensedProfile
+            key={profile?.user?.id}
+            profile={profile!}
+            toggleShowMessage={toggleShowMessage}
+          />
+        );
       })}
       {messageTo && <Message recipient={messageTo} threadID={null} toggleShowMessage={toggleShowMessage} />}
     </div>

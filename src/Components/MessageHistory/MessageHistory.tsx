@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 import { useMessageAddedSubscription, Message } from '../../generated/graphql';
 import { UserContext } from '../../context/UserContext';
 import classNames from 'classnames';
@@ -23,6 +23,12 @@ type alignmentType = {
 const MessageHistory: React.FC<iMessageHistory> = (props) => {
   const { thread_id, msgHistory } = props;
   const { user } = useContext(UserContext);
+  const messageWindow = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (messageWindow && messageWindow.current)
+      messageWindow.current.scrollTop = messageWindow.current.scrollHeight;
+  }, [msgHistory]);
 
   const TStoDisplayDate = (ts: number) => {
     const date = new Date();
@@ -81,7 +87,7 @@ const MessageHistory: React.FC<iMessageHistory> = (props) => {
   };
 
   return (
-    <div className="MessageHistory">
+    <div className="MessageHistory" ref={messageWindow}>
       <ul>{parseMsgHistory()}</ul>
     </div>
   );

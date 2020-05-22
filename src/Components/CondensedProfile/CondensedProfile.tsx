@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { Profile, useGetProfileQuery } from '../../generated/graphql';
 import { UserContext } from '../../context/UserContext';
+import * as uuid from 'uuid';
 import './CondensedProfile.css';
 
 interface iCondensedProfile {
@@ -24,12 +25,19 @@ const CondensedProfile: React.FC<iCondensedProfile> = (props) => {
 
     const helpOptionsList: string[] = [];
 
+    console.log(uuid.v4());
+    console.log(typeof uuid.v4());
+
     helpOptionKeys.forEach((k) => {
       if (helpOptions && k !== 'wants_help' && k !== '__typename' && helpOptions[k]) {
         helpOptionsList.push(k);
       }
     });
-    return helpOptionsList.map((k) => <li className="li_highlight">{k}</li>);
+    return helpOptionsList.map((k) => (
+      <li key={uuid.v4()} className="li_highlight">
+        {k}
+      </li>
+    ));
   };
 
   const handleMessageClick = (e: React.MouseEvent<HTMLDivElement>) => {

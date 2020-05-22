@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { MessageThread, useGetProfileUserInfoQuery, Profile } from '../../generated/graphql';
 import { UserContext } from '../../context/UserContext';
+import * as uuid from 'uuid';
 import './MessageNavItem.css';
 
 interface iMessageNavItem {
@@ -36,7 +37,7 @@ const MessageNavItem: React.FC<iMessageNavItem> = (props) => {
   const name = first_name + ' ' + last_name;
 
   return (
-    <li className="MessageNavItem clickable" onClick={handleItemClick}>
+    <li className="MessageNavItem clickable" onClick={handleItemClick} key={uuid.v4()}>
       <img className="small_avatar" src={avatar!} alt={`${name}'s avatar`} />
       {name}
     </li>

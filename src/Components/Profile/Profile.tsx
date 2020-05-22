@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { Profile as ProfileType, useGetProfileQuery } from '../../generated/graphql';
 import { UserContext } from '../../context/UserContext';
+import * as uuid from 'uuid';
 import './Profile.css';
 
 const Profile: React.FC = () => {
@@ -38,7 +39,11 @@ const Profile: React.FC = () => {
         helpOptionsList.push(k);
       }
     });
-    return helpOptionsList.map((k) => <li className="li_highlight">{k}</li>);
+    return helpOptionsList.map((k) => (
+      <li className="li_highlight" key={uuid.v4()}>
+        {k}
+      </li>
+    ));
   };
 
   return (

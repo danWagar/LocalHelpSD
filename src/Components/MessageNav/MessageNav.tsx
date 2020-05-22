@@ -48,7 +48,7 @@ const MessageNav: React.FC<iMessageNav> = (props) => {
         </div>
         <ul className="MessageNav_list">
           {data?.getUserMessageThreads?.map((thread) => {
-            return <MessageNavItem thread={thread!} toggleShowMessage={toggleShowMessage} />;
+            return <MessageNavItem key={thread?.id} thread={thread!} toggleShowMessage={toggleShowMessage} />;
           })}
         </ul>
       </div>
