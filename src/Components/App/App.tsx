@@ -5,6 +5,7 @@ import Header from '../Header/Header';
 import LhsdHeader from '../LhsdHeader/LhsdHeader';
 import LandingPage from '../LandingPage/LandingPage';
 import FindHelp from '../FindHelp/FindHelp';
+import HelpOthers from '../HelpOthers/HelpOthers';
 import Login from '../Login/Login';
 import Profile from '../Profile/Profile';
 import Community from '../Community/Community';
@@ -40,6 +41,7 @@ function App() {
         <Route exact path="/" component={LandingPage} />
         <Route exact path="/login" component={Login} />
         <Route exact path="/find-help" component={FindHelp} />
+        <Route exact path="/help-others" component={HelpOthers} />
         <Route exact path="/lhsd/home" component={Home} />
         <Route
           exact

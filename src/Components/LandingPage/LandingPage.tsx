@@ -24,13 +24,18 @@ const LandingPage: React.FC = () => {
         <div className="LandingPage_right_content">
           <span>I want to:</span>
           <div className="LandingPage_buttons_container">
-            <div className="LandingPage_big_button dark_text_color">Help Others</div>
-            <div
+            <button
+              className="LandingPage_big_button dark_text_color"
+              onClick={() => history.push('/help-others')}
+            >
+              Help Others
+            </button>
+            <button
               className="LandingPage_big_button dark_text_color"
               onClick={() => history.push('/find-help')}
             >
               Find Help
-            </div>
+            </button>
           </div>
         </div>
       </div>

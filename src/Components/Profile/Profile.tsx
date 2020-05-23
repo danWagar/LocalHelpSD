@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import { Profile as ProfileType, useGetProfileQuery } from '../../generated/graphql';
 import { UserContext } from '../../context/UserContext';
 import * as uuid from 'uuid';
@@ -13,9 +13,7 @@ const Profile: React.FC<iProfile> = (props) => {
   const { user } = useContext(UserContext);
   const thisUserID = profileUserID || user.id;
 
-  console.log(thisUserID);
-
-  const [profile, setProfile] = useState<ProfileType | null>(null);
+  let profile: ProfileType | undefined;
 
   const { data, loading, error } = useGetProfileQuery({
     variables: { user_id: thisUserID },
@@ -27,9 +25,7 @@ const Profile: React.FC<iProfile> = (props) => {
   }
   if (error) return <div> Oops! Something went wrong. Please try refreshing.</div>;
 
-  if (data && data.profile) {
-    setProfile(data.profile);
-  }
+  if (data?.profile) profile = data?.profile!;
 
   function typedKeys<T>(o: T): (keyof T)[] {
     // type cast should be safe because that's what really Object.keys() does

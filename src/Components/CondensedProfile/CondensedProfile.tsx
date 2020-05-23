@@ -47,7 +47,7 @@ const CondensedProfile: React.FC<iCondensedProfile> = (props) => {
   };
 
   return (
-    <div className="CondensedProfile" onClick={handleContainerClick}>
+    <div className="CondensedProfile clickable" onClick={handleContainerClick}>
       <div className="CondensedProfile_inner"></div>
       <div className="CondensedProfile_user">
         <img src={profile?.avatar || ''} alt={userName + "'s profile picture"} />
