@@ -16,27 +16,27 @@ Check below to see screen shots but do note that they very much preliminary and 
 
 ### Landing Page
 
-<img src="src/images/LandingPage.PNG" width="800" alt="Landing Page Screen Shot" />
+<img src="src/images/LandingPage.PNG" width="1000" alt="Landing Page Screen Shot" />
 
 ### Community Page
 
 Find other users who are looking to help, or for help, depending on if you register as a volunteer or someone seeking help.
 Users will be matched by 'help categories'.
 
-<img src="src/images/Community.PNG" width="800" alt="Community Page Screen Shot" />
+<img src="src/images/Community.PNG" width="1000" alt="Community Page Screen Shot" />
 
 ### Messaging
 
 Real time messaging via Apollo subscriptions
 
-<img src="src/images/Messaging.PNG" width="300" alt="Messaging Page Screen Shot" />
+<img src="src/images/Messaging.PNG" width="500" alt="Messaging Page Screen Shot" />
 
 ### Profile
 
 Initial Profile layout, this is still under development and the layout will be changing.
 
- <img src="src/images/Profile.PNG" width="800" alt="Profile Screen Shot" />
+ <img src="src/images/Profile.PNG" width="1000" alt="Profile Screen Shot" />
 
 ### Style Guide
 
- <img src="src/images/StyleGuide.PNG" width="800" alt="Style Guide Screen Shot" />
+ <img src="src/images/StyleGuide.PNG" width="1000" alt="Style Guide Screen Shot" />
