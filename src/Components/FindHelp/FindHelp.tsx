@@ -52,11 +52,17 @@ const FindHelp: React.FC = () => {
       case 0:
         return <StatusForm updateParentState={updateFormData} />;
       case 1:
-        return <HelpCategoriesForm updateParentState={updateFormData} legend="I want help with:" />;
+        return (
+          <HelpCategoriesForm
+            updateParentState={updateFormData}
+            handleBackClick={formGoBack}
+            legend="I want help with:"
+          />
+        );
       case 2:
-        return <ProfileForm updateParentState={updateFormData} />;
+        return <ProfileForm updateParentState={updateFormData} handleBackClick={formGoBack} />;
       case 3:
-        return <Register onSuccess={doMutateProfile} />;
+        return <Register onSuccess={doMutateProfile} handleBackClick={formGoBack} />;
       default:
         return <p>Oops! Something went wrong. Try reloading the page.</p>;
     }
@@ -90,16 +96,7 @@ const FindHelp: React.FC = () => {
         </div>
       </div>
       <div className="right_container">
-        <div className="FindHelp_form_container">
-          {getFormPart()}
-          <div className="FindHelp_form_nav">
-            {formPart > 0 && (
-              <div className="button grey_bg_color light_text_color" onClick={formGoBack}>
-                &lt; Back
-              </div>
-            )}
-          </div>
-        </div>
+        <div className="FindHelp_form_container">{getFormPart()}</div>
       </div>
     </main>
   );
