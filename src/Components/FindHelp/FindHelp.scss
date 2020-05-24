@@ -41,15 +41,18 @@
   width: 90%;
   background-color: #fafafa;
 
-  & div {
+  & button {
     margin-top: 10px;
   }
 }
 
-.FindHelp_form {
+.FindHelp_form,
+.FindHelp_Register {
   display: flex;
   flex-direction: column;
+}
 
+.FindHelp_form {
   & legend,
   & label {
     padding-bottom: 20px;
@@ -61,6 +64,26 @@
 
   & input {
     margin-top: 5px;
+  }
+
+  & .checkbox {
+    width: fit-content;
+  }
+
+  & textarea {
+    width: 300px;
+    height: 250px;
+  }
+}
+
+.FindHelp_Register {
+  & label {
+    margin-top: 20px;
+  }
+
+  & input {
+    margin-top: 5px;
+    width: 250px;
   }
 }
 

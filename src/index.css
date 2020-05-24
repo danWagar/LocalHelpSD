@@ -18,6 +18,10 @@ input {
   font-size: 1em;
 }
 
+textarea {
+  resize: none;
+}
+
 input {
   padding: 5px;
 }

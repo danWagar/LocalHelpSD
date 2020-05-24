@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useMutate_ProfileMutation } from '../../generated/graphql';
-import FormZero from '../Forms/FormZero';
-import FormOne from '../Forms/FormOne';
-import FormThree from '../Forms/FormThree';
+import StatusForm from '../Forms/StatusForm';
+import HelpCategoriesForm from '../Forms/HelpCategoriesForm';
+import ProfileForm from '../Forms/ProfileForm';
 import Register from '../Forms/Register';
 import { formDataType, formDataTypeRequired } from '../../types';
 import classNames from 'classnames';
@@ -50,11 +50,11 @@ const FindHelp: React.FC = () => {
   const getFormPart = () => {
     switch (formPart) {
       case 0:
-        return <FormZero updateParentState={updateFormData} />;
+        return <StatusForm updateParentState={updateFormData} />;
       case 1:
-        return <FormOne updateParentState={updateFormData} />;
+        return <HelpCategoriesForm updateParentState={updateFormData} legend="I want help with:" />;
       case 2:
-        return <FormThree updateParentState={updateFormData} />;
+        return <ProfileForm updateParentState={updateFormData} />;
       case 3:
         return <Register onSuccess={doMutateProfile} />;
       default:
@@ -84,8 +84,8 @@ const FindHelp: React.FC = () => {
             <li className={classNames({ text_highlight: formPart === 1 })}>
               Identify areas where you need help
             </li>
-            <li className={classNames({ text_highlight: formPart === 2 })}>Register</li>
-            <li className={classNames({ text_highlight: formPart === 3 })}>Create a profile</li>
+            <li className={classNames({ text_highlight: formPart === 2 })}>Create a profile</li>
+            <li className={classNames({ text_highlight: formPart === 3 })}>Register</li>
           </ol>
         </div>
       </div>

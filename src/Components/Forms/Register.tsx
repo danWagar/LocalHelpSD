@@ -6,6 +6,7 @@ import { Required } from '../Form/Form';
 
 interface iRegisterProps {
   onSuccess: (id: number) => void;
+  handleBackClick?: () => void;
 }
 
 const Register: React.FC<iRegisterProps> = (props) => {
@@ -13,7 +14,7 @@ const Register: React.FC<iRegisterProps> = (props) => {
     onSuccess: () => {},
   };
 
-  const { onSuccess } = props;
+  const { onSuccess, handleBackClick } = props;
 
   const [error, setError] = useState<string | null>(null);
 
@@ -29,6 +30,7 @@ const Register: React.FC<iRegisterProps> = (props) => {
       password: password,
     })
       .then((user) => {
+        console.log('registered new user ', user);
         onSuccess(user.id);
       })
       .catch((res) => {
@@ -37,28 +39,40 @@ const Register: React.FC<iRegisterProps> = (props) => {
   };
 
   return (
-    <form className="RegisterForm" onSubmit={handleSubmit(onSubmit)}>
-      <div role="alert">{error && <p className="red">{error}</p>}</div>
-      <label className="FindHelp_flex_label">
-        email <Required />
+    <>
+      <form id="RegisterForm" className="FindHelp_Register" onSubmit={handleSubmit(onSubmit)}>
+        <div role="alert">{error && <p className="red">{error}</p>}</div>
+        <label>
+          email <Required />
+        </label>
         <input name="email" type="text" ref={register} required id="RegisterForm__email"></input>
-      </label>
-      <label className="FindHelp_flex_label">
-        First Name <Required />
+
+        <label>
+          First Name <Required />{' '}
+        </label>
         <input name="first_name" type="text" ref={register} required id="RegisterForm__first_name"></input>
-      </label>
-      <label className="FindHelp_flex_label">
-        Last Name <Required />
+
+        <label>
+          Last Name <Required />
+        </label>
         <input name="last_name" type="text" ref={register} required id="RegisterForm__last_name"></input>
-      </label>
-      <label className="FindHelp_flex_label">
-        Password <Required />
+
+        <label>
+          Password <Required />
+        </label>
         <input name="password" type="password" ref={register} required id="RegisterForm__password"></input>
-      </label>
-      <button className="yellow_bg" type="submit">
-        REGISTER
-      </button>
-    </form>
+      </form>
+      <div className="FindHelp_form_nav">
+        {handleBackClick && (
+          <button className="grey_bg_color light_text_color bold" onClick={handleBackClick}>
+            &lt; Back
+          </button>
+        )}
+        <button className="primary_bg_color light_text_color bold" type="submit" form="RegisterForm">
+          Register
+        </button>
+      </div>
+    </>
   );
 };
 

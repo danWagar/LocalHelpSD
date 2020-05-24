@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useMutate_ProfileMutation } from '../../generated/graphql';
-import FormZero from '../Forms/FormZero';
-import FormOne from '../Forms/FormOne';
-import FormThree from '../Forms/FormThree';
+import HelpCategoriesForm from '../Forms/HelpCategoriesForm';
+import ProfileForm from '../Forms/ProfileForm';
 import Register from '../Forms/Register';
 import { formDataType, formDataTypeRequired } from '../../types';
 import classNames from 'classnames';
@@ -18,14 +17,20 @@ const HelpOthers: React.FC = () => {
   const [mutationMutation] = useMutate_ProfileMutation();
 
   const updateFormData = (data: formDataType) => {
+    console.log('updating form data with data ', data);
     setFormDataInput({ ...formDataInput, ...data });
   };
 
   const doMutateProfile = (id: number) => {
+    console.log('send new profile request with data ', formDataInput);
+
     mutationMutation({
       variables: {
         user_id: id,
-        wants_help: true,
+        wants_help: false,
+        immunocompromised: false,
+        unemployment: false,
+        essential: false,
         ...(formDataInput as formDataTypeRequired),
       },
     });
@@ -50,11 +55,11 @@ const HelpOthers: React.FC = () => {
   const getFormPart = () => {
     switch (formPart) {
       case 0:
-        return <FormOne updateParentState={updateFormData} />;
+        return <HelpCategoriesForm updateParentState={updateFormData} legend="I want to help with:" />;
       case 1:
-        return <FormThree updateParentState={updateFormData} />;
+        return <ProfileForm updateParentState={updateFormData} handleBackClick={formGoBack} />;
       case 2:
-        return <Register onSuccess={doMutateProfile} />;
+        return <Register onSuccess={doMutateProfile} handleBackClick={formGoBack} />;
       default:
         return <p>Oops! Something went wrong. Try reloading the page.</p>;
     }
@@ -73,22 +78,13 @@ const HelpOthers: React.FC = () => {
             <li className={classNames({ text_highlight: formPart === 0 })}>
               Identify areas where you want to volunteer
             </li>
-            <li className={classNames({ text_highlight: formPart === 1 })}>Register</li>
-            <li className={classNames({ text_highlight: formPart === 2 })}>Create a profile</li>
+            <li className={classNames({ text_highlight: formPart === 1 })}>Create a profile</li>
+            <li className={classNames({ text_highlight: formPart === 2 })}>Register</li>
           </ol>
         </div>
       </div>
       <div className="right_container">
-        <div className="FindHelp_form_container">
-          {getFormPart()}
-          <div className="FindHelp_form_nav">
-            {formPart > 0 && (
-              <div className="button grey_bg_color light_text_color" onClick={formGoBack}>
-                &lt; Back
-              </div>
-            )}
-          </div>
-        </div>
+        <div className="FindHelp_form_container">{getFormPart()}</div>
       </div>
     </main>
   );

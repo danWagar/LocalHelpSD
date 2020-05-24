@@ -48,11 +48,12 @@
   background-color: #fafafa;
 }
 
-.FindHelp_form_container div {
+.FindHelp_form_container button {
   margin-top: 10px;
 }
 
-.FindHelp_form {
+.FindHelp_form,
+.FindHelp_Register {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -73,6 +74,26 @@
 
 .FindHelp_form input {
   margin-top: 5px;
+}
+
+.FindHelp_form .checkbox {
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+
+.FindHelp_form textarea {
+  width: 300px;
+  height: 250px;
+}
+
+.FindHelp_Register label {
+  margin-top: 20px;
+}
+
+.FindHelp_Register input {
+  margin-top: 5px;
+  width: 250px;
 }
 
 .FindHelp_flex_label {

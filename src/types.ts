@@ -45,4 +45,5 @@ export type formDataTypeRequired = {
 
 export interface iForm {
   updateParentState: (data: formDataType) => void;
+  handleBackClick?: () => void;
 }

@@ -2,7 +2,7 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { formDataType, iForm } from '../../types';
 
-const FindHelpFormZero: React.FC<iForm> = (props) => {
+const StatusForm: React.FC<iForm> = (props) => {
   const { updateParentState } = props;
   const { handleSubmit, register, errors } = useForm<formDataType>();
   const onSubmit = (data: formDataType) => {
@@ -30,4 +30,4 @@ const FindHelpFormZero: React.FC<iForm> = (props) => {
   );
 };
 
-export default FindHelpFormZero;
+export default StatusForm;
