@@ -19,7 +19,7 @@ type alignmentType = {
   align_end: boolean;
 };
 
-const MessageHistory: React.FC<iMessageHistory> = (props) => {
+const MessageHistory: React.FC<iMessageHistory> = React.memo((props) => {
   const { msgHistory } = props;
   const { user } = useContext(UserContext);
   const messageWindow = useRef<HTMLDivElement>(null);
@@ -90,6 +90,6 @@ const MessageHistory: React.FC<iMessageHistory> = (props) => {
       <ul>{parseMsgHistory()}</ul>
     </div>
   );
-};
+});
 
 export default MessageHistory;

@@ -29,7 +29,7 @@ const Message: React.FC<iMessage> = (props) => {
 
   const { handleSubmit, register, errors } = useForm<messageFormDataType>();
 
-  const MessageThreadQuery = useGetMessageThreadQuery({
+  const messageThreadQuery = useGetMessageThreadQuery({
     variables: {
       created_by: user.id,
       recipient: recipient.user?.id!,
@@ -37,7 +37,7 @@ const Message: React.FC<iMessage> = (props) => {
     skip: threadID !== null,
   });
 
-  threadID = MessageThreadQuery.data?.getMessageThread?.id || props.threadID;
+  threadID = messageThreadQuery.data?.getMessageThread?.id || props.threadID;
 
   const msgHistoryResult = useGetMessageHistoryQuery({
     variables: {
@@ -47,7 +47,9 @@ const Message: React.FC<iMessage> = (props) => {
   });
 
   useMessageAddedSubscription({
-    variables: {},
+    variables: { thread_id: threadID! },
+    shouldResubscribe: true,
+    skip: !threadID,
   });
 
   const [messagesMutation] = useMutate_MessagesMutation();
@@ -62,17 +64,30 @@ const Message: React.FC<iMessage> = (props) => {
         body: formData.body,
       },
       update: (cache, { data }) => {
-        const staleData = cache.readQuery<GetMessageHistoryQuery>({
-          query: GetMessageHistoryDocument,
-          variables: { thread_id: threadID },
-        });
+        let staleData;
         const newMsg = data?.postMessage!;
-        const staleDataArray = staleData?.getMessageHistory!;
+        let success = true;
+        //when no messageThread exists there is no cached data, so we need a try catch
+        try {
+          staleData = cache.readQuery<GetMessageHistoryQuery>({
+            query: GetMessageHistoryDocument,
+            variables: { thread_id: threadID },
+          });
+        } catch (err) {
+          success = false;
+          //If no message thread exists messageMutation does not update until after new thread created
+          //so we will refetch the messageThreadQuery here
+          messageThreadQuery.refetch();
+        }
+
+        let updateCacheWith: MessageType[];
+        if (success) updateCacheWith = [...staleData?.getMessageHistory!, newMsg] as MessageType[];
+        else updateCacheWith = [newMsg];
 
         cache.writeQuery({
           query: GetMessageHistoryDocument,
           variables: { thread_id: threadID },
-          data: { getMessageHistory: [...staleDataArray, newMsg] },
+          data: { getMessageHistory: updateCacheWith },
         });
       },
     });
@@ -82,7 +97,8 @@ const Message: React.FC<iMessage> = (props) => {
     toggleShowMessage();
   };
 
-  if (MessageThreadQuery.loading) return <div>Loading</div>;
+  if (messageThreadQuery.loading) return <div>Loading</div>;
+
   return (
     <div className="Message">
       <MessageHistory msgHistory={msgHistoryResult.data?.getMessageHistory! as MessageType[]} />

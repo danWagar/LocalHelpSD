@@ -177,6 +177,7 @@ const gqlQueries = {
         receiver_id
         subject
         body
+        time_read
         date_sent
       }
     }
@@ -188,6 +189,7 @@ const gqlQueries = {
         id
         created_by
         recipient
+        unread_messages
         last_msg_timestamp
       }
     }
@@ -199,6 +201,7 @@ const gqlQueries = {
         id
         created_by
         recipient
+        unread_messages
         last_msg_timestamp
       }
     }
@@ -213,21 +216,35 @@ const gqlQueries = {
         receiver_id
         subject
         body
+        time_read
         date_sent
       }
     }
   `,
 
   MESSAGE_ADDED: gql`
-    subscription messageAdded {
-      messageAdded {
+    subscription messageAdded($thread_id: Int!) {
+      messageAdded(thread_id: $thread_id) {
         id
         thread_id
         sender_id
         receiver_id
         subject
         body
+        time_read
         date_sent
+      }
+    }
+  `,
+
+  MESSAGE_THREAD_UPDATED: gql`
+    subscription messageThreadUpdated($id: Int!) {
+      messageThreadUpdated(id: $id) {
+        id
+        created_by
+        recipient
+        unread_messages
+        last_msg_timestamp
       }
     }
   `,

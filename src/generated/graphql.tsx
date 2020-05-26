@@ -70,6 +70,7 @@ export type Message = {
   receiver_id: Scalars['Int'];
   subject?: Maybe<Scalars['String']>;
   body: Scalars['String'];
+  time_read?: Maybe<Scalars['String']>;
   date_sent: Scalars['String'];
 };
 
@@ -78,6 +79,7 @@ export type MessageThread = {
   id: Scalars['Int'];
   created_by: Scalars['Int'];
   recipient: Scalars['Int'];
+  unread_messages: Scalars['Boolean'];
   last_msg_timestamp: Scalars['String'];
 };
 
@@ -131,6 +133,7 @@ export type Mutation = {
    __typename?: 'Mutation';
   postProfile?: Maybe<Profile>;
   postMessage?: Maybe<Message>;
+  updateMessageTimeRead?: Maybe<Message>;
 };
 
 
@@ -159,9 +162,15 @@ export type MutationPostMessageArgs = {
   body: Scalars['String'];
 };
 
+
+export type MutationUpdateMessageTimeReadArgs = {
+  id: Scalars['Int'];
+};
+
 export type Subscription = {
    __typename?: 'Subscription';
   messageAdded?: Maybe<Message>;
+  messageThreadUpdated?: Maybe<MessageThread>;
 };
 
 export enum CacheControlScope {
@@ -314,7 +323,7 @@ export type Mutate_MessagesMutation = (
   { __typename?: 'Mutation' }
   & { postMessage?: Maybe<(
     { __typename?: 'Message' }
-    & Pick<Message, 'id' | 'thread_id' | 'sender_id' | 'receiver_id' | 'subject' | 'body' | 'date_sent'>
+    & Pick<Message, 'id' | 'thread_id' | 'sender_id' | 'receiver_id' | 'subject' | 'body' | 'time_read' | 'date_sent'>
   )> }
 );
 
@@ -328,7 +337,7 @@ export type GetMessageThreadQuery = (
   { __typename?: 'Query' }
   & { getMessageThread?: Maybe<(
     { __typename?: 'MessageThread' }
-    & Pick<MessageThread, 'id' | 'created_by' | 'recipient' | 'last_msg_timestamp'>
+    & Pick<MessageThread, 'id' | 'created_by' | 'recipient' | 'unread_messages' | 'last_msg_timestamp'>
   )> }
 );
 
@@ -341,7 +350,7 @@ export type GetUserMessageThreadsQuery = (
   { __typename?: 'Query' }
   & { getUserMessageThreads?: Maybe<Array<Maybe<(
     { __typename?: 'MessageThread' }
-    & Pick<MessageThread, 'id' | 'created_by' | 'recipient' | 'last_msg_timestamp'>
+    & Pick<MessageThread, 'id' | 'created_by' | 'recipient' | 'unread_messages' | 'last_msg_timestamp'>
   )>>> }
 );
 
@@ -354,7 +363,7 @@ export type GetMessageHistoryQuery = (
   { __typename?: 'Query' }
   & { getMessageHistory?: Maybe<Array<Maybe<(
     { __typename?: 'Message' }
-    & Pick<Message, 'id' | 'thread_id' | 'sender_id' | 'receiver_id' | 'subject' | 'body' | 'date_sent'>
+    & Pick<Message, 'id' | 'thread_id' | 'sender_id' | 'receiver_id' | 'subject' | 'body' | 'time_read' | 'date_sent'>
   )>>> }
 );
 
@@ -365,7 +374,18 @@ export type MessageAddedSubscription = (
   { __typename?: 'Subscription' }
   & { messageAdded?: Maybe<(
     { __typename?: 'Message' }
-    & Pick<Message, 'id' | 'thread_id' | 'sender_id' | 'receiver_id' | 'subject' | 'body' | 'date_sent'>
+    & Pick<Message, 'id' | 'thread_id' | 'sender_id' | 'receiver_id' | 'subject' | 'body' | 'time_read' | 'date_sent'>
+  )> }
+);
+
+export type MessageThreadUpdatedSubscriptionVariables = {};
+
+
+export type MessageThreadUpdatedSubscription = (
+  { __typename?: 'Subscription' }
+  & { messageThreadUpdated?: Maybe<(
+    { __typename?: 'MessageThread' }
+    & Pick<MessageThread, 'id' | 'created_by' | 'recipient' | 'unread_messages' | 'last_msg_timestamp'>
   )> }
 );
 
@@ -772,6 +792,7 @@ export const Mutate_MessagesDocument = gql`
     receiver_id
     subject
     body
+    time_read
     date_sent
   }
 }
@@ -830,6 +851,7 @@ export const GetMessageThreadDocument = gql`
     id
     created_by
     recipient
+    unread_messages
     last_msg_timestamp
   }
 }
@@ -886,6 +908,7 @@ export const GetUserMessageThreadsDocument = gql`
     id
     created_by
     recipient
+    unread_messages
     last_msg_timestamp
   }
 }
@@ -944,6 +967,7 @@ export const GetMessageHistoryDocument = gql`
     receiver_id
     subject
     body
+    time_read
     date_sent
   }
 }
@@ -1002,6 +1026,7 @@ export const MessageAddedDocument = gql`
     receiver_id
     subject
     body
+    time_read
     date_sent
   }
 }
@@ -1046,3 +1071,54 @@ export function useMessageAddedSubscription(baseOptions?: ApolloReactHooks.Subsc
       }
 export type MessageAddedSubscriptionHookResult = ReturnType<typeof useMessageAddedSubscription>;
 export type MessageAddedSubscriptionResult = ApolloReactCommon.SubscriptionResult<MessageAddedSubscription>;
+export const MessageThreadUpdatedDocument = gql`
+    subscription messageThreadUpdated {
+  messageThreadUpdated {
+    id
+    created_by
+    recipient
+    unread_messages
+    last_msg_timestamp
+  }
+}
+    `;
+export type MessageThreadUpdatedComponentProps = Omit<ApolloReactComponents.SubscriptionComponentOptions<MessageThreadUpdatedSubscription, MessageThreadUpdatedSubscriptionVariables>, 'subscription'>;
+
+    export const MessageThreadUpdatedComponent = (props: MessageThreadUpdatedComponentProps) => (
+      <ApolloReactComponents.Subscription<MessageThreadUpdatedSubscription, MessageThreadUpdatedSubscriptionVariables> subscription={MessageThreadUpdatedDocument} {...props} />
+    );
+    
+export type MessageThreadUpdatedProps<TChildProps = {}, TDataName extends string = 'data'> = {
+      [key in TDataName]: ApolloReactHoc.DataValue<MessageThreadUpdatedSubscription, MessageThreadUpdatedSubscriptionVariables>
+    } & TChildProps;
+export function withMessageThreadUpdated<TProps, TChildProps = {}, TDataName extends string = 'data'>(operationOptions?: ApolloReactHoc.OperationOption<
+  TProps,
+  MessageThreadUpdatedSubscription,
+  MessageThreadUpdatedSubscriptionVariables,
+  MessageThreadUpdatedProps<TChildProps, TDataName>>) {
+    return ApolloReactHoc.withSubscription<TProps, MessageThreadUpdatedSubscription, MessageThreadUpdatedSubscriptionVariables, MessageThreadUpdatedProps<TChildProps, TDataName>>(MessageThreadUpdatedDocument, {
+      alias: 'messageThreadUpdated',
+      ...operationOptions
+    });
+};
+
+/**
+ * __useMessageThreadUpdatedSubscription__
+ *
+ * To run a query within a React component, call `useMessageThreadUpdatedSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useMessageThreadUpdatedSubscription` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useMessageThreadUpdatedSubscription({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useMessageThreadUpdatedSubscription(baseOptions?: ApolloReactHooks.SubscriptionHookOptions<MessageThreadUpdatedSubscription, MessageThreadUpdatedSubscriptionVariables>) {
+        return ApolloReactHooks.useSubscription<MessageThreadUpdatedSubscription, MessageThreadUpdatedSubscriptionVariables>(MessageThreadUpdatedDocument, baseOptions);
+      }
+export type MessageThreadUpdatedSubscriptionHookResult = ReturnType<typeof useMessageThreadUpdatedSubscription>;
+export type MessageThreadUpdatedSubscriptionResult = ApolloReactCommon.SubscriptionResult<MessageThreadUpdatedSubscription>;
