@@ -189,7 +189,7 @@ const gqlQueries = {
         id
         created_by
         recipient
-        unread_messages
+        notify_user
         last_msg_timestamp
       }
     }
@@ -201,7 +201,7 @@ const gqlQueries = {
         id
         created_by
         recipient
-        unread_messages
+        notify_user
         last_msg_timestamp
       }
     }
@@ -238,12 +238,12 @@ const gqlQueries = {
   `,
 
   MESSAGE_THREAD_UPDATED: gql`
-    subscription messageThreadUpdated($id: Int!) {
-      messageThreadUpdated(id: $id) {
+    subscription messageThreadUpdated($user_id: Int!) {
+      messageThreadUpdated(user_id: $user_id) {
         id
         created_by
         recipient
-        unread_messages
+        notify_user
         last_msg_timestamp
       }
     }

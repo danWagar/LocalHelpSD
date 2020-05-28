@@ -11,6 +11,11 @@ import Profile from '../Profile/Profile';
 import Community from '../Community/Community';
 import Home from '../Home/Home';
 import MessageNav from '../MessageNav/MessageNav';
+import {
+  useGetUserMessageThreadsQuery,
+  MessageThread,
+  useMessageThreadUpdatedSubscription,
+} from '../../generated/graphql';
 import './App.css';
 
 interface matchParams {
@@ -22,19 +27,66 @@ function App() {
   const { user, setUser } = useContext(UserContext);
   const storedUserString = localStorage.getItem('user');
 
+  let messageThreads: MessageThread[] = [];
+  let newMessageCount = 0;
+
+  const subscription = useMessageThreadUpdatedSubscription({
+    variables: {
+      user_id: user.id,
+    },
+    skip: !user,
+  });
+
+  const userMessageThreads = useGetUserMessageThreadsQuery({
+    variables: {
+      user_id: user.id,
+    },
+    skip: !user,
+  });
+
+  if (userMessageThreads.loading) return <div>Loading</div>;
+
+  if (userMessageThreads.data?.getUserMessageThreads)
+    messageThreads = userMessageThreads?.data?.getUserMessageThreads as MessageThread[];
+
+  if (subscription.data?.messageThreadUpdated) userMessageThreads.refetch();
+
   if (storedUserString && !user.email) {
     const storedUser = JSON.parse(localStorage.getItem('user') as string) as User;
     setUser(storedUser);
+  }
+
+  // if (messageThreads.length > 0) {
+  //   messageThreads.some((thread) => thread.notify_user === user.id);
+  // }
+
+  if (messageThreads.length > 0) {
+    messageThreads.forEach((thread) => {
+      console.log('notify_user is ' + thread.notify_user);
+      console.log('user id is ', user.id);
+      if (thread.notify_user === user.id) {
+        newMessageCount++;
+      }
+    });
+
+    console.log('there are ' + newMessageCount + ' unread threads');
   }
 
   const toggleShowMessageNav = () => {
     setShowMessageNav(!showMessageNav);
   };
 
+  console.log('newMessageCount is ', newMessageCount);
+
   return (
     <>
       <Switch>
-        <Route path="/lhsd" component={() => <LhsdHeader handleClickMessageNav={toggleShowMessageNav} />} />
+        <Route
+          path="/lhsd"
+          component={() => (
+            <LhsdHeader handleClickMessageNav={toggleShowMessageNav} newMessageCount={newMessageCount} />
+          )}
+        />
         <Route path="/" component={() => <Header />} />
       </Switch>
       <Switch>

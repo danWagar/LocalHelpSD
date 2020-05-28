@@ -79,7 +79,7 @@ export type MessageThread = {
   id: Scalars['Int'];
   created_by: Scalars['Int'];
   recipient: Scalars['Int'];
-  unread_messages: Scalars['Boolean'];
+  notify_user: Scalars['Int'];
   last_msg_timestamp: Scalars['String'];
 };
 
@@ -171,6 +171,16 @@ export type Subscription = {
    __typename?: 'Subscription';
   messageAdded?: Maybe<Message>;
   messageThreadUpdated?: Maybe<MessageThread>;
+};
+
+
+export type SubscriptionMessageAddedArgs = {
+  thread_id: Scalars['Int'];
+};
+
+
+export type SubscriptionMessageThreadUpdatedArgs = {
+  user_id: Scalars['Int'];
 };
 
 export enum CacheControlScope {
@@ -337,7 +347,7 @@ export type GetMessageThreadQuery = (
   { __typename?: 'Query' }
   & { getMessageThread?: Maybe<(
     { __typename?: 'MessageThread' }
-    & Pick<MessageThread, 'id' | 'created_by' | 'recipient' | 'unread_messages' | 'last_msg_timestamp'>
+    & Pick<MessageThread, 'id' | 'created_by' | 'recipient' | 'notify_user' | 'last_msg_timestamp'>
   )> }
 );
 
@@ -350,7 +360,7 @@ export type GetUserMessageThreadsQuery = (
   { __typename?: 'Query' }
   & { getUserMessageThreads?: Maybe<Array<Maybe<(
     { __typename?: 'MessageThread' }
-    & Pick<MessageThread, 'id' | 'created_by' | 'recipient' | 'unread_messages' | 'last_msg_timestamp'>
+    & Pick<MessageThread, 'id' | 'created_by' | 'recipient' | 'notify_user' | 'last_msg_timestamp'>
   )>>> }
 );
 
@@ -367,7 +377,9 @@ export type GetMessageHistoryQuery = (
   )>>> }
 );
 
-export type MessageAddedSubscriptionVariables = {};
+export type MessageAddedSubscriptionVariables = {
+  thread_id: Scalars['Int'];
+};
 
 
 export type MessageAddedSubscription = (
@@ -378,14 +390,16 @@ export type MessageAddedSubscription = (
   )> }
 );
 
-export type MessageThreadUpdatedSubscriptionVariables = {};
+export type MessageThreadUpdatedSubscriptionVariables = {
+  user_id: Scalars['Int'];
+};
 
 
 export type MessageThreadUpdatedSubscription = (
   { __typename?: 'Subscription' }
   & { messageThreadUpdated?: Maybe<(
     { __typename?: 'MessageThread' }
-    & Pick<MessageThread, 'id' | 'created_by' | 'recipient' | 'unread_messages' | 'last_msg_timestamp'>
+    & Pick<MessageThread, 'id' | 'created_by' | 'recipient' | 'notify_user' | 'last_msg_timestamp'>
   )> }
 );
 
@@ -851,7 +865,7 @@ export const GetMessageThreadDocument = gql`
     id
     created_by
     recipient
-    unread_messages
+    notify_user
     last_msg_timestamp
   }
 }
@@ -908,7 +922,7 @@ export const GetUserMessageThreadsDocument = gql`
     id
     created_by
     recipient
-    unread_messages
+    notify_user
     last_msg_timestamp
   }
 }
@@ -1018,8 +1032,8 @@ export type GetMessageHistoryQueryHookResult = ReturnType<typeof useGetMessageHi
 export type GetMessageHistoryLazyQueryHookResult = ReturnType<typeof useGetMessageHistoryLazyQuery>;
 export type GetMessageHistoryQueryResult = ApolloReactCommon.QueryResult<GetMessageHistoryQuery, GetMessageHistoryQueryVariables>;
 export const MessageAddedDocument = gql`
-    subscription messageAdded {
-  messageAdded {
+    subscription messageAdded($thread_id: Int!) {
+  messageAdded(thread_id: $thread_id) {
     id
     thread_id
     sender_id
@@ -1063,6 +1077,7 @@ export function withMessageAdded<TProps, TChildProps = {}, TDataName extends str
  * @example
  * const { data, loading, error } = useMessageAddedSubscription({
  *   variables: {
+ *      thread_id: // value for 'thread_id'
  *   },
  * });
  */
@@ -1072,12 +1087,12 @@ export function useMessageAddedSubscription(baseOptions?: ApolloReactHooks.Subsc
 export type MessageAddedSubscriptionHookResult = ReturnType<typeof useMessageAddedSubscription>;
 export type MessageAddedSubscriptionResult = ApolloReactCommon.SubscriptionResult<MessageAddedSubscription>;
 export const MessageThreadUpdatedDocument = gql`
-    subscription messageThreadUpdated {
-  messageThreadUpdated {
+    subscription messageThreadUpdated($user_id: Int!) {
+  messageThreadUpdated(user_id: $user_id) {
     id
     created_by
     recipient
-    unread_messages
+    notify_user
     last_msg_timestamp
   }
 }
@@ -1114,6 +1129,7 @@ export function withMessageThreadUpdated<TProps, TChildProps = {}, TDataName ext
  * @example
  * const { data, loading, error } = useMessageThreadUpdatedSubscription({
  *   variables: {
+ *      user_id: // value for 'user_id'
  *   },
  * });
  */
