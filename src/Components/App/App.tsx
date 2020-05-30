@@ -84,13 +84,22 @@ function App() {
     setShowMessageNav(!showMessageNav);
   };
 
+  const handleSignout = () => {
+    setShowMessageNav(false);
+    setMessageInfo(null);
+  };
+
   return (
     <>
       <Switch>
         <Route
           path="/lhsd"
           component={() => (
-            <LhsdHeader handleClickMessageNav={toggleShowMessageNav} newMessageCount={newMessageCount} />
+            <LhsdHeader
+              handleClickMessageNav={toggleShowMessageNav}
+              newMessageCount={newMessageCount}
+              handleSignout={handleSignout}
+            />
           )}
         />
         <Route path="/" component={() => <Header />} />

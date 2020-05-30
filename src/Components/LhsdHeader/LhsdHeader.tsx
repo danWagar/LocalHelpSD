@@ -7,11 +7,12 @@ import './LhsdHeader.css';
 
 interface iLhsdHeader {
   handleClickMessageNav: () => void;
+  handleSignout: () => void;
   newMessageCount: number;
 }
 
 const LhsdHeader: React.FC<iLhsdHeader> = (props) => {
-  const { handleClickMessageNav, newMessageCount } = props;
+  const { handleClickMessageNav, newMessageCount, handleSignout } = props;
   const [current, setCurrent] = useState<string | null>(null);
   const [showProfileNav, setShowProfileNav] = useState<boolean>(false);
   const history = useHistory();
@@ -34,7 +35,8 @@ const LhsdHeader: React.FC<iLhsdHeader> = (props) => {
     history.push('/lhsd/' + e.currentTarget.id);
   };
 
-  const toggleShowProfileNav = () => {
+  const toggleShowProfileNav = (signout?: boolean) => {
+    if (signout) handleSignout();
     setShowProfileNav(!showProfileNav);
   };
 

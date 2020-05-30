@@ -5,7 +5,7 @@ import useSignOut from '../../myHooks/useSignOut';
 import './ProfileNav.css';
 
 interface iProfileNav {
-  toggleNav: () => void;
+  toggleNav: (signout?: boolean) => void;
 }
 
 const ProfileNav: React.FC<iProfileNav> = (props) => {
@@ -28,7 +28,7 @@ const ProfileNav: React.FC<iProfileNav> = (props) => {
   };
 
   const handleClickSignOut = (e: React.MouseEvent<HTMLLIElement>) => {
-    toggleNav();
+    toggleNav(true);
     signOut();
   };
 
