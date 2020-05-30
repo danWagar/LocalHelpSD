@@ -79,7 +79,7 @@ export type MessageThread = {
   id: Scalars['Int'];
   created_by: Scalars['Int'];
   recipient: Scalars['Int'];
-  notify_user: Scalars['Int'];
+  notify_user?: Maybe<Scalars['Int']>;
   last_msg_timestamp: Scalars['String'];
 };
 
@@ -134,6 +134,7 @@ export type Mutation = {
   postProfile?: Maybe<Profile>;
   postMessage?: Maybe<Message>;
   updateMessageTimeRead?: Maybe<Message>;
+  updateMessageThreadNotification?: Maybe<MessageThread>;
 };
 
 
@@ -164,6 +165,11 @@ export type MutationPostMessageArgs = {
 
 
 export type MutationUpdateMessageTimeReadArgs = {
+  thread_id: Scalars['Int'];
+};
+
+
+export type MutationUpdateMessageThreadNotificationArgs = {
   id: Scalars['Int'];
 };
 
@@ -332,6 +338,19 @@ export type Mutate_MessagesMutationVariables = {
 export type Mutate_MessagesMutation = (
   { __typename?: 'Mutation' }
   & { postMessage?: Maybe<(
+    { __typename?: 'Message' }
+    & Pick<Message, 'id' | 'thread_id' | 'sender_id' | 'receiver_id' | 'subject' | 'body' | 'time_read' | 'date_sent'>
+  )> }
+);
+
+export type UpdateMessageTimeReadMutationVariables = {
+  thread_id: Scalars['Int'];
+};
+
+
+export type UpdateMessageTimeReadMutation = (
+  { __typename?: 'Mutation' }
+  & { updateMessageTimeRead?: Maybe<(
     { __typename?: 'Message' }
     & Pick<Message, 'id' | 'thread_id' | 'sender_id' | 'receiver_id' | 'subject' | 'body' | 'time_read' | 'date_sent'>
   )> }
@@ -859,6 +878,64 @@ export function useMutate_MessagesMutation(baseOptions?: ApolloReactHooks.Mutati
 export type Mutate_MessagesMutationHookResult = ReturnType<typeof useMutate_MessagesMutation>;
 export type Mutate_MessagesMutationResult = ApolloReactCommon.MutationResult<Mutate_MessagesMutation>;
 export type Mutate_MessagesMutationOptions = ApolloReactCommon.BaseMutationOptions<Mutate_MessagesMutation, Mutate_MessagesMutationVariables>;
+export const UpdateMessageTimeReadDocument = gql`
+    mutation updateMessageTimeRead($thread_id: Int!) {
+  updateMessageTimeRead(thread_id: $thread_id) {
+    id
+    thread_id
+    sender_id
+    receiver_id
+    subject
+    body
+    time_read
+    date_sent
+  }
+}
+    `;
+export type UpdateMessageTimeReadMutationFn = ApolloReactCommon.MutationFunction<UpdateMessageTimeReadMutation, UpdateMessageTimeReadMutationVariables>;
+export type UpdateMessageTimeReadComponentProps = Omit<ApolloReactComponents.MutationComponentOptions<UpdateMessageTimeReadMutation, UpdateMessageTimeReadMutationVariables>, 'mutation'>;
+
+    export const UpdateMessageTimeReadComponent = (props: UpdateMessageTimeReadComponentProps) => (
+      <ApolloReactComponents.Mutation<UpdateMessageTimeReadMutation, UpdateMessageTimeReadMutationVariables> mutation={UpdateMessageTimeReadDocument} {...props} />
+    );
+    
+export type UpdateMessageTimeReadProps<TChildProps = {}, TDataName extends string = 'mutate'> = {
+      [key in TDataName]: ApolloReactCommon.MutationFunction<UpdateMessageTimeReadMutation, UpdateMessageTimeReadMutationVariables>
+    } & TChildProps;
+export function withUpdateMessageTimeRead<TProps, TChildProps = {}, TDataName extends string = 'mutate'>(operationOptions?: ApolloReactHoc.OperationOption<
+  TProps,
+  UpdateMessageTimeReadMutation,
+  UpdateMessageTimeReadMutationVariables,
+  UpdateMessageTimeReadProps<TChildProps, TDataName>>) {
+    return ApolloReactHoc.withMutation<TProps, UpdateMessageTimeReadMutation, UpdateMessageTimeReadMutationVariables, UpdateMessageTimeReadProps<TChildProps, TDataName>>(UpdateMessageTimeReadDocument, {
+      alias: 'updateMessageTimeRead',
+      ...operationOptions
+    });
+};
+
+/**
+ * __useUpdateMessageTimeReadMutation__
+ *
+ * To run a mutation, you first call `useUpdateMessageTimeReadMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateMessageTimeReadMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateMessageTimeReadMutation, { data, loading, error }] = useUpdateMessageTimeReadMutation({
+ *   variables: {
+ *      thread_id: // value for 'thread_id'
+ *   },
+ * });
+ */
+export function useUpdateMessageTimeReadMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<UpdateMessageTimeReadMutation, UpdateMessageTimeReadMutationVariables>) {
+        return ApolloReactHooks.useMutation<UpdateMessageTimeReadMutation, UpdateMessageTimeReadMutationVariables>(UpdateMessageTimeReadDocument, baseOptions);
+      }
+export type UpdateMessageTimeReadMutationHookResult = ReturnType<typeof useUpdateMessageTimeReadMutation>;
+export type UpdateMessageTimeReadMutationResult = ApolloReactCommon.MutationResult<UpdateMessageTimeReadMutation>;
+export type UpdateMessageTimeReadMutationOptions = ApolloReactCommon.BaseMutationOptions<UpdateMessageTimeReadMutation, UpdateMessageTimeReadMutationVariables>;
 export const GetMessageThreadDocument = gql`
     query getMessageThread($created_by: Int!, $recipient: Int!) {
   getMessageThread(created_by: $created_by, recipient: $recipient) {

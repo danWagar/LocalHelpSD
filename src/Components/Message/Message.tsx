@@ -54,6 +54,8 @@ const Message: React.FC<iMessage> = (props) => {
 
   const [messagesMutation] = useMutate_MessagesMutation();
 
+  if (messageThreadQuery.loading || msgHistoryResult.loading) return <div>Loading</div>;
+
   const onSubmit = (formData: messageFormDataType) => {
     messagesMutation({
       variables: {
@@ -96,8 +98,6 @@ const Message: React.FC<iMessage> = (props) => {
   const handleMinimize = () => {
     toggleShowMessage();
   };
-
-  if (messageThreadQuery.loading) return <div>Loading</div>;
 
   return (
     <div className="Message">

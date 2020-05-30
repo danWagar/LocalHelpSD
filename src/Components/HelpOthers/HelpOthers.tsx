@@ -17,7 +17,6 @@ const HelpOthers: React.FC = () => {
   const [mutationMutation] = useMutate_ProfileMutation();
 
   const updateFormData = (data: formDataType) => {
-    console.log('updating form data with data ', data);
     setFormDataInput({ ...formDataInput, ...data });
   };
 

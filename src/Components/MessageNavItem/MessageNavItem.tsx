@@ -40,6 +40,7 @@ const MessageNavItem: React.FC<iMessageNavItem> = (props) => {
     <li className="MessageNavItem clickable" onClick={handleItemClick} key={uuid.v4()}>
       <img className="small_avatar" src={avatar!} alt={`${name}'s avatar`} />
       {name}
+      {thread.notify_user === user.id && <div className="MessageNavItem_notification"></div>}
     </li>
   );
 };

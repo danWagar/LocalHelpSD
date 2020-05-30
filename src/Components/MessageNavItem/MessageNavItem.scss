@@ -1,6 +1,7 @@
 @import '../../variables';
 
 .MessageNavItem {
+  position: relative;
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -16,4 +17,14 @@
   &:hover {
     background-color: $primary-color-transparent;
   }
+}
+
+.MessageNavItem_notification {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  height: 15px;
+  width: 15px;
+  border-radius: 50%;
+  background-color: red;
 }

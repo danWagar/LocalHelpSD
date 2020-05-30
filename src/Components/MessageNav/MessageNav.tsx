@@ -7,23 +7,12 @@ import './MessageNav.css';
 
 interface iMessageNav {
   toggleShowMessageNav: () => void;
-}
-
-interface iMessageInfo {
-  profile: Profile;
-  threadID: number;
+  toggleShowMessage: (profile?: Profile, threadID?: number) => void;
 }
 
 const MessageNav: React.FC<iMessageNav> = (props) => {
-  const { toggleShowMessageNav } = props;
+  const { toggleShowMessageNav, toggleShowMessage } = props;
   const { user } = useContext(UserContext);
-
-  const [messageInfo, setMessageInfo] = useState<iMessageInfo | null>(null);
-
-  const toggleShowMessage = (profile?: Profile, threadID?: number) => {
-    if (messageInfo && profile?.user?.id === messageInfo.profile.user_id) setMessageInfo(null);
-    else if (profile && threadID) setMessageInfo({ profile: profile, threadID: threadID });
-  };
 
   const handleMinimize = () => {
     toggleShowMessageNav();
@@ -52,13 +41,6 @@ const MessageNav: React.FC<iMessageNav> = (props) => {
           })}
         </ul>
       </div>
-      {messageInfo && (
-        <Message
-          recipient={messageInfo?.profile!}
-          threadID={messageInfo?.threadID}
-          toggleShowMessage={toggleShowMessage}
-        />
-      )}
     </>
   );
 };

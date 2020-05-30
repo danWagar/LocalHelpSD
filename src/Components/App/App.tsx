@@ -11,10 +11,12 @@ import Profile from '../Profile/Profile';
 import Community from '../Community/Community';
 import Home from '../Home/Home';
 import MessageNav from '../MessageNav/MessageNav';
+import Message from '../Message/Message';
 import {
   useGetUserMessageThreadsQuery,
   MessageThread,
   useMessageThreadUpdatedSubscription,
+  Profile as ProfileType,
 } from '../../generated/graphql';
 import './App.css';
 
@@ -22,8 +24,14 @@ interface matchParams {
   id: string;
 }
 
+interface iMessageInfo {
+  profile: ProfileType;
+  threadID: number;
+}
+
 function App() {
   const [showMessageNav, setShowMessageNav] = useState<boolean>(false);
+  const [messageInfo, setMessageInfo] = useState<iMessageInfo | null>(null);
   const { user, setUser } = useContext(UserContext);
   const storedUserString = localStorage.getItem('user');
 
@@ -49,34 +57,32 @@ function App() {
   if (userMessageThreads.data?.getUserMessageThreads)
     messageThreads = userMessageThreads?.data?.getUserMessageThreads as MessageThread[];
 
-  if (subscription.data?.messageThreadUpdated) userMessageThreads.refetch();
+  if (subscription.data?.messageThreadUpdated) {
+    console.log('refetching userMessageThreads');
+    userMessageThreads.refetch();
+  }
 
   if (storedUserString && !user.email) {
     const storedUser = JSON.parse(localStorage.getItem('user') as string) as User;
     setUser(storedUser);
   }
 
-  // if (messageThreads.length > 0) {
-  //   messageThreads.some((thread) => thread.notify_user === user.id);
-  // }
-
   if (messageThreads.length > 0) {
     messageThreads.forEach((thread) => {
-      console.log('notify_user is ' + thread.notify_user);
-      console.log('user id is ', user.id);
       if (thread.notify_user === user.id) {
         newMessageCount++;
       }
     });
-
-    console.log('there are ' + newMessageCount + ' unread threads');
   }
+
+  const toggleShowMessage = (profile?: ProfileType, threadID?: number) => {
+    if (messageInfo && profile?.user?.id === messageInfo.profile.user_id) setMessageInfo(null);
+    else if (profile && threadID) setMessageInfo({ profile: profile, threadID: threadID });
+  };
 
   const toggleShowMessageNav = () => {
     setShowMessageNav(!showMessageNav);
   };
-
-  console.log('newMessageCount is ', newMessageCount);
 
   return (
     <>
@@ -104,7 +110,16 @@ function App() {
         />
         <Route exact path="/lhsd/community" component={Community} />
       </Switch>
-      {showMessageNav && <MessageNav toggleShowMessageNav={toggleShowMessageNav} />}
+      {showMessageNav && (
+        <MessageNav toggleShowMessageNav={toggleShowMessageNav} toggleShowMessage={toggleShowMessage} />
+      )}
+      {messageInfo && (
+        <Message
+          recipient={messageInfo?.profile!}
+          threadID={messageInfo?.threadID}
+          toggleShowMessage={toggleShowMessage}
+        />
+      )}
     </>
   );
 }

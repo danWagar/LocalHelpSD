@@ -183,6 +183,21 @@ const gqlQueries = {
     }
   `,
 
+  UPDATE_MESSAGE_TIME_READ: gql`
+    mutation updateMessageTimeRead($thread_id: Int!) {
+      updateMessageTimeRead(thread_id: $thread_id) {
+        id
+        thread_id
+        sender_id
+        receiver_id
+        subject
+        body
+        time_read
+        date_sent
+      }
+    }
+  `,
+
   GET_MESSAGE_THREAD: gql`
     query getMessageThread($created_by: Int!, $recipient: Int!) {
       getMessageThread(created_by: $created_by, recipient: $recipient) {

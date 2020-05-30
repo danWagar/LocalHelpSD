@@ -1,4 +1,5 @@
 .MessageNavItem {
+  position: relative;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -20,5 +21,15 @@
 
 .MessageNavItem:hover {
   background-color: #3687c980;
+}
+
+.MessageNavItem_notification {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  height: 15px;
+  width: 15px;
+  border-radius: 50%;
+  background-color: red;
 }
 /*# sourceMappingURL=MessageNavItem.css.map */

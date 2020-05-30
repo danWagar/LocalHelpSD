@@ -6,7 +6,6 @@ const ProfileForm: React.FC<iForm> = (props) => {
   const { updateParentState, handleBackClick } = props;
   const { handleSubmit, register, errors } = useForm<formDataType>();
   const onSubmit = (data: formDataType) => {
-    console.log('profile form submitted');
     updateParentState(data);
   };
 

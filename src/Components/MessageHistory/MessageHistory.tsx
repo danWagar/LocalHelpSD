@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useRef } from 'react';
-import { Message } from '../../generated/graphql';
+import { Message, useUpdateMessageTimeReadMutation } from '../../generated/graphql';
 import { UserContext } from '../../context/UserContext';
 import classNames from 'classnames';
 // import useFetchMessageHistory from '../../myHooks/useFetchMessageHistory';
@@ -24,9 +24,21 @@ const MessageHistory: React.FC<iMessageHistory> = React.memo((props) => {
   const { user } = useContext(UserContext);
   const messageWindow = useRef<HTMLDivElement>(null);
 
+  const [updateMessageTimeReadMutation, { data, loading, error }] = useUpdateMessageTimeReadMutation();
+
   useEffect(() => {
     if (messageWindow && messageWindow.current)
       messageWindow.current.scrollTop = messageWindow.current.scrollHeight;
+
+    const lastMessage = msgHistory[msgHistory.length - 1];
+
+    if (lastMessage.time_read === null && lastMessage.receiver_id === user.id) {
+      updateMessageTimeReadMutation({
+        variables: {
+          thread_id: lastMessage.thread_id,
+        },
+      });
+    }
   }, [msgHistory]);
 
   const TStoDisplayDate = (ts: number) => {

@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import { UserContext } from '../../context/UserContext';
-import { useMessageThreadUpdatedSubscription } from '../../generated/graphql';
 import ProfileNav from '../ProfileNav/ProfileNav';
 import NavIcon from '../NavIcon/NavIcon';
 import './LhsdHeader.css';
