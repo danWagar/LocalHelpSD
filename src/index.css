@@ -102,39 +102,50 @@ button:focus,
   background-color: #3686c9;
 }
 
-.left_container,
-.right_container {
-  position: fixed;
-  top: 0;
-  height: 100%;
-  display: -ms-grid;
-  display: grid;
-  place-items: center;
-}
-
-.left_container {
-  left: 0;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  width: 60vw;
-  background-color: #b4c540;
-}
-
-.right_container {
-  width: 40vw;
-  right: 0;
-  background: -webkit-gradient(linear, left top, left bottom, from(rgba(54, 134, 201, 0.75)), to(rgba(54, 134, 201, 0.75))), url("./images/corona_volunteers.jpg");
-  background: linear-gradient(rgba(54, 134, 201, 0.75), rgba(54, 134, 201, 0.75)), url("./images/corona_volunteers.jpg");
-  background-position: 20%;
-  background-size: cover;
-}
-
 .small_avatar {
   width: 45px;
   height: 45px;
   border-radius: 50%;
   border: 2px solid white;
   margin-right: 10px;
+}
+
+.left_container,
+.right_container {
+  height: 100%;
+}
+
+.left_container {
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background-color: #b4c540;
+}
+
+.right_container {
+  background-color: #3686c9;
+}
+
+@media (min-width: 750px) {
+  .left_container,
+  .right_container {
+    position: fixed;
+    top: 0;
+    display: -ms-grid;
+    display: grid;
+    place-items: center;
+  }
+  .left_container {
+    left: 0;
+    width: 60vw;
+  }
+  .right_container {
+    width: 40vw;
+    right: 0;
+    background: -webkit-gradient(linear, left top, left bottom, from(rgba(54, 134, 201, 0.75)), to(rgba(54, 134, 201, 0.75))), url("./images/corona_volunteers.jpg");
+    background: linear-gradient(rgba(54, 134, 201, 0.75), rgba(54, 134, 201, 0.75)), url("./images/corona_volunteers.jpg");
+    background-position: 20%;
+    background-size: cover;
+  }
 }
 /*# sourceMappingURL=index.css.map */

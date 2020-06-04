@@ -98,35 +98,48 @@ button,
   background-color: $primary_color;
 }
 
-.left_container,
-.right_container {
-  position: fixed;
-  top: 0;
-  height: 100%;
-  display: grid;
-  place-items: center;
-}
-
-.left_container {
-  left: 0;
-  align-items: center;
-  width: 60vw;
-  background-color: $emphasis-color;
-}
-
-.right_container {
-  width: 40vw;
-  right: 0;
-  background: linear-gradient(rgba(54, 134, 201, 0.75), rgba(54, 134, 201, 0.75)),
-    url('./images/corona_volunteers.jpg');
-  background-position: 20%;
-  background-size: cover;
-}
-
 .small_avatar {
   width: 45px;
   height: 45px;
   border-radius: 50%;
   border: 2px solid white;
   margin-right: 10px;
+}
+
+.left_container,
+.right_container {
+  height: 100%;
+}
+
+.left_container {
+  align-items: center;
+  background-color: $emphasis-color;
+}
+
+.right_container {
+  background-color: $primary-color;
+}
+
+@media (min-width: 750px) {
+  .left_container,
+  .right_container {
+    position: fixed;
+    top: 0;
+    display: grid;
+    place-items: center;
+  }
+
+  .left_container {
+    left: 0;
+    width: 60vw;
+  }
+
+  .right_container {
+    width: 40vw;
+    right: 0;
+    background: linear-gradient(rgba(54, 134, 201, 0.75), rgba(54, 134, 201, 0.75)),
+      url('./images/corona_volunteers.jpg');
+    background-position: 20%;
+    background-size: cover;
+  }
 }

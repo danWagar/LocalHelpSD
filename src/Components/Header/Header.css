@@ -23,6 +23,7 @@
 .Header h1 {
   font-family: 'Roboto Condensed', sans-serif;
   font-style: italic;
+  font-size: 1.4em;
 }
 
 .Header h1 span {
@@ -43,7 +44,6 @@
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  font-weight: 600;
   color: white;
 }
 
@@ -64,7 +64,20 @@
 }
 
 .Header_sign_up_btn {
-  background-color: #b4c540;
+  background-color: #3686c9;
   border-radius: 10px;
+}
+
+@media (min-width: 750px) {
+  .Header h1 {
+    font-size: 2em;
+  }
+  .Header_sign_up_btn {
+    background-color: #b4c540;
+  }
+  .Header_login_nav,
+  .Header_logout_nav {
+    font-weight: 600;
+  }
 }
 /*# sourceMappingURL=Header.css.map */

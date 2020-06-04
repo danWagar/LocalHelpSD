@@ -18,6 +18,7 @@
   & h1 {
     font-family: 'Roboto Condensed', sans-serif;
     font-style: italic;
+    font-size: 1.4em;
 
     & span {
       padding-left: 7px;
@@ -33,7 +34,6 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-weight: 600;
   color: white;
 
   & a,
@@ -52,6 +52,21 @@
 }
 
 .Header_sign_up_btn {
-  background-color: $emphasis-color;
+  background-color: $primary-color;
   border-radius: 10px;
+}
+
+@media (min-width: 750px) {
+  .Header h1 {
+    font-size: 2em;
+  }
+
+  .Header_sign_up_btn {
+    background-color: $emphasis-color;
+  }
+
+  .Header_login_nav,
+  .Header_logout_nav {
+    font-weight: 600;
+  }
 }
