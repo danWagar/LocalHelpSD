@@ -31,14 +31,21 @@
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -ms-flex-pack: distribute;
-      justify-content: space-around;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   height: 70%;
   width: 400px;
 }
 
 .LhsdHeader_nav_icon {
-  position: relative;
+  display: none;
+}
+
+.LhsdHeader_burger {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -49,14 +56,15 @@
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  width: 30px;
+  height: 24px;
 }
 
-.LhsdHeader_nav_icon span {
-  font-size: 0.8em;
-  font-weight: bold;
+.LhsdHeader_burger div {
+  width: 100%;
+  height: 20%;
+  background-color: #3c3e4b;
+  border-radius: 3px;
 }
 
 .LhsdHeader_msg_notification {
@@ -72,5 +80,74 @@
   border-radius: 50%;
   background-color: red;
   color: white;
+}
+
+.LhsdHeader_MobileNav {
+  position: absolute;
+  top: 50px;
+  left: 0;
+  height: calc(100vh - 50px);
+  width: 100vw;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  z-index: 2;
+}
+
+.LhsdHeader_MobileNav div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 100%;
+  height: calc((100vh - 50px) / 5);
+  padding-left: 20px;
+  font-size: 2em;
+  background-color: #3c3e4b;
+  color: #b4c540;
+  border-top: 3px solid grey;
+}
+
+.LhsdHeader_MobileNav div:first-child {
+  border-top: none;
+}
+
+@media (min-width: 750px) {
+  .LhsdHeader_nav {
+    -ms-flex-pack: distribute;
+        justify-content: space-around;
+    -webkit-box-align: initial;
+        -ms-flex-align: initial;
+            align-items: initial;
+  }
+  .LhsdHeader_burger {
+    display: none;
+  }
+  .LhsdHeader_nav_icon {
+    position: relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+  }
+  .LhsdHeader_nav_icon span {
+    font-size: 0.8em;
+    font-weight: bold;
+  }
 }
 /*# sourceMappingURL=LhsdHeader.css.map */

@@ -1,0 +1,31 @@
+@import '../../variables';
+
+.MobileNav {
+  position: absolute;
+  top: $lhsd_header_height;
+  left: 0;
+  height: calc(100vh - #{$lhsd_header_height});
+  width: 100vw;
+  z-index: 2;
+}
+
+.MobileNav_list {
+  margin: 0;
+  padding: 0;
+
+  & li {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: calc((100vh - #{$lhsd_header_height}) / 5);
+    padding-left: 20px;
+    font-size: 2em;
+    background-color: $text-color-dark;
+    color: $emphasis_color;
+    border-top: 3px solid grey;
+
+    &:first-child {
+      border-top: none;
+    }
+  }
+}
