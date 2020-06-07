@@ -8,6 +8,12 @@
       -ms-flex-pack: space-evenly;
           justify-content: space-evenly;
   width: 100%;
-  margin-top: 50px;
+  margin-top: 10px;
+}
+
+@media (min-width: 750px) {
+  .Community {
+    margin-top: 50px;
+  }
 }
 /*# sourceMappingURL=Community.css.map */

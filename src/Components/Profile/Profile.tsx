@@ -1,15 +1,17 @@
 import React, { useContext } from 'react';
+import { RouteProps, RouteComponentProps } from 'react-router-dom';
 import { Profile as ProfileType, useGetProfileQuery } from '../../generated/graphql';
 import { UserContext } from '../../context/UserContext';
 import * as uuid from 'uuid';
 import './Profile.css';
 
-interface iProfile {
-  profileUserID?: number;
+interface matchParams {
+  id: string;
 }
 
-const Profile: React.FC<iProfile> = (props) => {
-  const { profileUserID } = props;
+const Profile: React.FC = (props) => {
+  const routeProps = props as RouteComponentProps<matchParams>;
+  const profileUserID = parseInt(routeProps.match.params.id);
   const { user } = useContext(UserContext);
   const thisUserID = profileUserID || user.id;
 

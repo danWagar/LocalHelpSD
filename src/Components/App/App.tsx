@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { Route, Switch, RouteComponentProps } from 'react-router-dom';
 import { UserContext, User } from '../../context/UserContext';
+import PrivateRoute from '../Utils/PrivateRoute';
 import Header from '../Header/Header';
 import LhsdHeader from '../LhsdHeader/LhsdHeader';
 import LandingPage from '../LandingPage/LandingPage';
@@ -92,7 +93,7 @@ function App() {
   return (
     <>
       <Switch>
-        <Route
+        <PrivateRoute
           path="/lhsd"
           component={() => (
             <LhsdHeader
@@ -109,15 +110,9 @@ function App() {
         <Route exact path="/login" component={Login} />
         <Route exact path="/find-help" component={FindHelp} />
         <Route exact path="/help-others" component={HelpOthers} />
-        <Route exact path="/lhsd/home" component={Home} />
-        <Route
-          exact
-          path="/lhsd/profile/:id"
-          render={(props: RouteComponentProps<matchParams>) => (
-            <Profile profileUserID={parseInt(props.match.params.id!)} />
-          )}
-        />
-        <Route exact path="/lhsd/community" component={Community} />
+        <PrivateRoute exact path="/lhsd/home" component={Home} />
+        <PrivateRoute exact path="/lhsd/profile/:id" component={Profile} />
+        <PrivateRoute exact path="/lhsd/community" component={Community} />
       </Switch>
       {showMessageNav && (
         <MessageNav toggleShowMessageNav={toggleShowMessageNav} toggleShowMessage={toggleShowMessage} />
