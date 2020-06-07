@@ -1,15 +1,31 @@
 .FindHelp {
   width: 100vw;
   height: 100vh;
-  display: -ms-grid;
-  display: grid;
-  place-content: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
 }
 
 .FindHelp_left_content {
-  width: 500px;
-  font-size: 1.2em;
+  position: relative;
+  top: 50px;
+  padding: 10px 15px 0 15px;
+  width: 100vw;
+  height: 380px;
+  font-size: 1em;
   color: white;
+}
+
+.FindHelp_header {
+  display: none;
+}
+
+.FindHelp_explanation_list {
+  padding: 0;
 }
 
 .FindHelp_explanation_list li {
@@ -44,7 +60,7 @@
           align-items: center;
   padding: 20px;
   padding-top: 3em;
-  width: 90%;
+  width: 100vw;
   background-color: #fafafa;
 }
 
@@ -116,5 +132,32 @@
   -ms-flex-pack: distribute;
       justify-content: space-around;
   width: 60%;
+}
+
+@media (min-width: 750px) {
+  .FindHelp {
+    width: 100vw;
+    height: 100vh;
+    display: -ms-grid;
+    display: grid;
+    place-content: center;
+  }
+  .FindHelp_left_content {
+    position: initial;
+    width: 500px;
+    height: auto;
+    padding: 0;
+    font-size: 1.2em;
+    color: white;
+  }
+  .FindHelp_header {
+    display: initial;
+  }
+  .FindHelp_explanation_list {
+    padding-left: 25px;
+  }
+  .FindHelp_form_container {
+    width: 90%;
+  }
 }
 /*# sourceMappingURL=FindHelp.css.map */

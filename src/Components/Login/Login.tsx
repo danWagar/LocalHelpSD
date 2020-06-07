@@ -70,7 +70,7 @@ const Login: React.FC = () => {
           Password
           <input name="password" type="password" ref={register} required id="RegisterForm__password"></input>
         </label>
-        <button className="yellow_bg" type="submit">
+        <button className="rounded primary_bg_color light_text_color bold" type="submit">
           Login
         </button>
       </form>

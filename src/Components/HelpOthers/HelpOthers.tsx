@@ -68,7 +68,7 @@ const HelpOthers: React.FC = () => {
     <main className="FindHelp">
       <div className="left_container">
         <div className="FindHelp_left_content">
-          <h2>How It Works:</h2>
+          <h2 className="FindHelp_header">How It Works:</h2>
           <p>
             Creatiing a profile will help match areas where you would like to volunteer with those seeking
             help in the same areas. We will guide you through the process!

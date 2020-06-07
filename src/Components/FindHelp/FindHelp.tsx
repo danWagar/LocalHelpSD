@@ -72,7 +72,7 @@ const FindHelp: React.FC = () => {
     <main className="FindHelp">
       <div className="left_container">
         <div className="FindHelp_left_content">
-          <h2>How It Works:</h2>
+          <h2 className="FindHelp_header">How It Works:</h2>
           <p>
             Creatiing a profile will let those lookiing to volunteer understand how you have been affected and
             how they can help you. We will guide you through the process!

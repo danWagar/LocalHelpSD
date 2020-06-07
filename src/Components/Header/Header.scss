@@ -8,7 +8,7 @@
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  height: $header-height;
+  height: $mobile-header-height;
   padding-left: 20px;
   padding-right: 20px;
   color: white;
@@ -53,12 +53,15 @@
 
 .Header_sign_up_btn {
   background-color: $primary-color;
-  border-radius: 10px;
 }
 
 @media (min-width: 750px) {
-  .Header h1 {
-    font-size: 2em;
+  .Header {
+    height: $header-height;
+
+    & h1 {
+      font-size: 2em;
+    }
   }
 
   .Header_sign_up_btn {

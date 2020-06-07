@@ -7,6 +7,11 @@
   display: -ms-grid;
   display: grid;
   place-content: center;
+  background-color: #b4c540;
+}
+
+.Login.left_container, .Login.right_container {
+  display: none;
 }
 
 .Login_form,

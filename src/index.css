@@ -42,6 +42,10 @@ button:focus,
   border: 3px solid blue;
 }
 
+.rounded {
+  border-radius: 10px;
+}
+
 .clickable {
   cursor: pointer;
 }

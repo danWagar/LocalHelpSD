@@ -2,9 +2,9 @@
 
 .MobileNav {
   position: absolute;
-  top: $lhsd_header_height;
+  top: $lhsd-header-height;
   left: 0;
-  height: calc(100vh - #{$lhsd_header_height});
+  height: calc(100vh - #{$lhsd-header-height});
   width: 100vw;
   z-index: 5;
 }
@@ -17,7 +17,7 @@
     display: flex;
     align-items: center;
     width: 100%;
-    height: calc((100vh - #{$lhsd_header_height}) / 5);
+    height: calc((100vh - #{$lhsd-header-height}) / 5);
     padding-left: 20px;
     font-size: 2em;
     background-color: $text-color-dark;

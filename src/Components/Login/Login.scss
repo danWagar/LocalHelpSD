@@ -1,3 +1,5 @@
+@import '../../variables';
+
 .Login {
   position: fixed;
   top: 0;
@@ -6,6 +8,12 @@
   width: 100vw;
   display: grid;
   place-content: center;
+  background-color: $emphasis-color;
+
+  &.left_container,
+  &.right_container {
+    display: none;
+  }
 }
 
 .Login_form,
@@ -38,4 +46,7 @@
   font-size: 1.5rem;
   font-weight: 600;
   align-self: center;
+}
+
+@media (min-width: 750px) {
 }
