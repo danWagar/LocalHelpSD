@@ -82,42 +82,6 @@
   color: white;
 }
 
-.LhsdHeader_MobileNav {
-  position: absolute;
-  top: 50px;
-  left: 0;
-  height: calc(100vh - 50px);
-  width: 100vw;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  z-index: 2;
-}
-
-.LhsdHeader_MobileNav div {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  width: 100%;
-  height: calc((100vh - 50px) / 5);
-  padding-left: 20px;
-  font-size: 2em;
-  background-color: #3c3e4b;
-  color: #b4c540;
-  border-top: 3px solid grey;
-}
-
-.LhsdHeader_MobileNav div:first-child {
-  border-top: none;
-}
-
 @media (min-width: 750px) {
   .LhsdHeader_nav {
     -ms-flex-pack: distribute;

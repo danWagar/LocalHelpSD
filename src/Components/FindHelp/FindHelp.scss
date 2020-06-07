@@ -5,6 +5,16 @@
   height: 100vh;
   display: flex;
   flex-direction: column;
+  background-color: white;
+
+  & .left_container {
+    height: 280px;
+  }
+
+  & .right_container {
+    background-color: white;
+    height: calc(100vh - 280px - 50px);
+  }
 }
 
 .FindHelp_left_content {
@@ -12,7 +22,6 @@
   top: $mobile-header-height;
   padding: 10px 15px 0 15px;
   width: 100vw;
-  height: 380px;
   font-size: 1em;
   color: white;
 }
@@ -26,7 +35,7 @@
 
   & li {
     width: 100%;
-    padding: 10px;
+    padding: 5px;
     list-style-position: inside;
 
     & span {
@@ -47,7 +56,7 @@
   justify-content: center;
   align-items: center;
   padding: 20px;
-  padding-top: 3em;
+  padding-top: 2em;
   width: 100vw;
   background-color: #fafafa;
 
@@ -65,7 +74,7 @@
 .FindHelp_form {
   & legend,
   & label {
-    padding-bottom: 20px;
+    padding-bottom: 10px;
   }
 
   & legend {
@@ -82,18 +91,22 @@
 
   & textarea {
     width: 300px;
-    height: 250px;
+    height: 100px;
   }
 }
 
 .FindHelp_Register {
   & label {
-    margin-top: 20px;
+    margin-top: 10px;
   }
 
   & input {
     margin-top: 5px;
     width: 250px;
+  }
+
+  & legend {
+    font-weight: bold;
   }
 }
 
@@ -115,6 +128,14 @@
     height: 100vh;
     display: grid;
     place-content: center;
+
+    & .left_container {
+      height: 100vh;
+    }
+
+    & .right_container {
+      height: 100vh;
+    }
   }
 
   .FindHelp_left_content {
@@ -132,9 +153,32 @@
 
   .FindHelp_explanation_list {
     padding-left: 25px;
+
+    & li {
+      padding: 10px;
+    }
   }
 
   .FindHelp_form_container {
     width: 90%;
+    padding-top: 3em;
+  }
+
+  .FindHelp_form {
+    & legend,
+    & label {
+      padding-bottom: 20px;
+    }
+
+    & textarea {
+      width: 300px;
+      height: 250px;
+    }
+  }
+
+  .FindHelp_Register {
+    & label {
+      margin-top: 20px;
+    }
   }
 }

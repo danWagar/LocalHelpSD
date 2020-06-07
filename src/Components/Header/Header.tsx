@@ -19,7 +19,6 @@ const Header: React.FC = () => {
       {!hasToken ? (
         <nav className="Header_login_nav">
           <Link to="/login">Login</Link>
-          <div className="Header_sign_up_btn rounded button">Sign Up!</div>
         </nav>
       ) : (
         <nav className="Header_logout_nav">

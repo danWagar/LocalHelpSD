@@ -40,6 +40,7 @@ const Register: React.FC<iRegisterProps> = (props) => {
   return (
     <>
       <form id="RegisterForm" className="FindHelp_Register" onSubmit={handleSubmit(onSubmit)}>
+        <legend>Register</legend>
         <div role="alert">{error && <p className="red">{error}</p>}</div>
         <label>
           email <Required />

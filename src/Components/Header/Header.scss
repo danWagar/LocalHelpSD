@@ -32,7 +32,7 @@
 .Header_login_nav,
 .Header_logout_nav {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
   color: white;
 
@@ -44,7 +44,7 @@
 }
 
 .Header_login_nav {
-  width: 150px;
+  width: 70px;
 }
 
 .Header_logout_nav {
